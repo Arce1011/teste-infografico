@@ -4,7 +4,7 @@ body {
     color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Alterado para flex-start para long pages */
     min-height: 100vh;
     margin: 0;
     padding: 20px;
@@ -17,7 +17,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 700px;
+    max-width: 750px; /* Um pouco mais largo */
     text-align: center;
 }
 
@@ -69,7 +69,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 20px; /* Reduzido o gap */
     margin-top: 20px;
     padding: 20px;
     border: 1px solid #e0e0e0;
@@ -77,16 +77,23 @@ h1 {
     background-color: #f8f9fa;
 }
 
-.thermometer-container {
-    width: 120px; /* Largura do termômetro e rótulos */
+/* Novo container para o termômetro e seus rótulos */
+.thermometer-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 150px; /* Ajuste a largura conforme necessário */
+}
+
+.thermometer-container {
+    width: 40px; /* Largura da barra do termômetro */
+    height: 200px; /* Altura da barra */
+    position: relative; /* Para posicionar o preenchimento */
 }
 
 .thermometer-track {
-    width: 40px; /* Largura da barra do termômetro */
-    height: 200px;
+    width: 100%;
+    height: 100%;
     background-color: #e0e0e0;
     border-radius: 20px;
     position: relative;
@@ -102,71 +109,80 @@ h1 {
     position: absolute;
     bottom: 0;
     left: 0;
-    border-radius: 20px 20px 0 0;
+    border-radius: 18px 18px 0 0; /* Ajustado para o novo border-radius */
     transition: height 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
 /* Cores do termômetro */
 .fill-congruent { background-color: #2ecc71; } /* Verde */
-.fill-neutral { background-color: #f1c40f; } /* Amarelo */
+.fill-ambiguous { background-color: #f1c40f; } /* Amarelo - Renomeado de neutral */
 .fill-contradictory { background-color: #e74c3c; } /* Vermelho */
+.fill-neutral-default { background-color: #bdc3c7; } /* Cinza para estado inicial/não selecionado */
 
-.thermometer-labels {
-    width: 100%; /* Ocupa a largura do thermometer-container */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centraliza os textos */
-    margin-top: 10px;
-    font-size: 0.8em;
-    color: #555;
-}
 
-.thermometer-labels span {
+/* Rótulos do Termômetro */
+.thermometer-labels-top,
+.thermometer-labels-middle,
+.thermometer-labels-bottom {
     width: 100%;
     text-align: center;
+    font-size: 0.85em;
+    font-weight: bold;
+    color: #555;
     padding: 2px 0;
 }
-.thermometer-labels span:nth-child(1) { margin-top: -195px; font-weight: bold;} /* Alinha com o topo */
-.thermometer-labels span:nth-child(2) { margin-top: 65px; font-weight: bold;} /* Alinha com o meio */
-.thermometer-labels span:nth-child(3) { margin-top: 65px; font-weight: bold;} /* Alinha com a base */
+.thermometer-labels-top { margin-bottom: 5px; } /* Espaço antes do topo do termômetro */
+.thermometer-labels-middle { margin-top: calc(100px - 1em); margin-bottom: calc(100px - 1em); } /* Centraliza aproximadamente */
+.thermometer-labels-bottom { margin-top: 5px; } /* Espaço depois da base do termômetro */
 
 
 .result-display {
-    padding: 15px;
-    border-radius: 5px;
-    min-width: 250px;
+    padding: 20px; /* Aumentado padding */
+    border-radius: 8px; /* Aumentado border-radius */
+    min-width: 280px; /* Aumentado min-width */
     text-align: center;
     transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+    border-width: 2px; /* Borda mais grossa */
+    border-style: solid;
+    border-color: transparent; /* Começa transparente */
+    flex-grow: 1; /* Para ocupar espaço na visualização flex row */
 }
 
 #result-title {
     margin-top: 0;
     margin-bottom: 10px;
-    font-size: 1.4em;
+    font-size: 1.5em; /* Aumentado */
 }
 
 #result-description {
     margin-bottom: 0;
-    font-size: 1em;
-    line-height: 1.5;
+    font-size: 1.05em; /* Aumentado */
+    line-height: 1.6;  /* Aumentado */
+    white-space: pre-line; /* Para respeitar as quebras de linha do JS */
 }
 
 /* Classes de estado para o resultado */
 .result-congruent {
-    background-color: #eafaf1;
-    border: 1px solid #2ecc71;
-    color: #1e7e48;
+    background-color: #e8f5e9; /* Verde mais suave */
+    border-color: #66bb6a;
+    color: #2e7d32;
 }
-.result-neutral {
-    background-color: #fef9e7;
-    border: 1px solid #f1c40f;
-    color: #b08d0f;
+.result-ambiguous { /* Renomeado de neutral */
+    background-color: #fff9c4; /* Amarelo mais suave */
+    border-color: #ffee58;
+    color: #f57f17;
 }
 .result-contradictory {
-    background-color: #fdedec;
-    border: 1px solid #e74c3c;
-    color: #a93226;
+    background-color: #ffebee; /* Vermelho mais suave */
+    border-color: #ef5350;
+    color: #c62828;
 }
+.result-neutral-default { /* Para estado inicial */
+    background-color: #eceff1;
+    border-color: #b0bec5;
+    color: #37474f;
+}
+
 
 .footer-note {
     margin-top: 30px;
@@ -175,27 +191,21 @@ h1 {
 }
 
 /* Responsividade */
-@media (min-width: 600px) {
+@media (min-width: 700px) { /* Ajustado breakpoint */
     .controls {
         flex-direction: row;
         justify-content: space-between;
+        gap: 20px;
     }
     .control-group {
         flex: 1;
     }
-    .control-group:not(:last-child) {
-        margin-right: 10px; /* Espaçamento entre selects */
-    }
     .dashboard {
         flex-direction: row;
-        align-items: flex-start; /* Alinha itens ao topo */
-    }
-    .thermometer-container {
-        margin-bottom: 0; /* Remove margem inferior quando em linha */
+        align-items: flex-start;
+        gap: 30px;
     }
     .result-display {
-        flex: 1; /* Permite que o display de resultado ocupe o espaço restante */
-        margin-left: 20px;
         text-align: left;
     }
 }

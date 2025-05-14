@@ -15,29 +15,37 @@
             <div class="control-group">
                 <label for="verbal-phrase">1. Escolha uma Frase Verbal:</label>
                 <select id="verbal-phrase">
-                    <option value="entendi">Sim, entendi o projeto.</option>
-                    <option value="sugestoes">Estou aberto(a) a sugestões.</option>
-                    <option value="gostei-ideia">Gostei da sua ideia.</option>
-                    <option value="prazo">Conseguiremos cumprir o prazo.</option>
+                    <option value="entendi" data-intent="positive">Sim, entendi o projeto.</option>
+                    <option value="sugestoes" data-intent="open">Estou aberto(a) a sugestões.</option>
+                    <option value="gostei-ideia" data-intent="positive">Gostei da sua ideia.</option>
+                    <option value="prazo" data-intent="assertive">Conseguiremos cumprir o prazo.</option>
+                    <option value="nao-sei" data-intent="hesitant">Não tenho certeza sobre isso.</option>
                 </select>
             </div>
 
             <div class="control-group">
                 <label for="non-verbal-package">2. Escolha o Pacote Não Verbal:</label>
                 <select id="non-verbal-package">
-                    <!-- Opções serão preenchidas pelo JavaScript -->
+                    <option value="">-- Selecione um Pacote Não Verbal --</option>
+                    {/* Outras opções serão preenchidas pelo JavaScript */}
                 </select>
             </div>
         </div>
 
         <div class="dashboard">
-            <div class="thermometer-container">
-                <div class="thermometer-track">
-                    <div id="thermometer-fill" class="thermometer-fill"></div>
-                </div>
-                <div class="thermometer-labels">
+            <div class="thermometer-wrapper">
+                <div class="thermometer-labels-top">
                     <span>Congruente</span>
+                </div>
+                <div class="thermometer-container">
+                    <div class="thermometer-track">
+                        <div id="thermometer-fill" class="thermometer-fill"></div>
+                    </div>
+                </div>
+                <div class="thermometer-labels-middle">
                     <span>Neutra</span>
+                </div>
+                <div class="thermometer-labels-bottom">
                     <span>Confusa</span>
                 </div>
             </div>
