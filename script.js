@@ -1,244 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- PARTE 1: CONGRUÊNCIA ---
-    const situacoesCongruencia = [
-        { id: 1, texto: "Maria diz 'Estou muito feliz com o resultado!' sorrindo amplamente, com postura aberta e olhos brilhando.", respostaCorreta: "congruente", feedbackCongruente: "Correto! A linguagem verbal e não verbal de Maria estão alinhadas, transmitindo felicidade genuína.", feedbackNaoCongruente: "Na verdade, é congruente. A linguagem verbal e não verbal de Maria estão alinhadas." },
-        { id: 2, texto: "Carlos afirma 'Claro, estou prestando total atenção', enquanto olha para o celular e balança a perna rapidamente.", respostaCorreta: "nao-congruente", feedbackCongruente: "Incorreto. A atenção ao celular e a perna inquieta indicam distração ou nervosismo.", feedbackNaoCongruente: "Correto! Apesar da afirmação verbal, a linguagem não verbal indica distração ou nervosismo." },
-        { id: 3, texto: "Ana diz 'Este projeto é prioridade máxima', mas entrega o relatório com atraso e evita contato visual.", respostaCorreta: "nao-congruente", feedbackCongruente: "Incorreto. A ação (atraso) e a evitação do contato visual contradizem a afirmação verbal.", feedbackNaoCongruente: "Correto! A ação e a linguagem não verbal contradizem a fala, gerando desconfiança." },
-        { id: 4, texto: "Durante uma negociação, o cliente cruza os braços, mas diz: 'Sua proposta parece interessante'.", respostaCorreta: "nao-congruente", feedbackCongruente: "Observe melhor. Braços cruzados são um sinal de defesa ou desacordo, contrastando com a fala.", feedbackNaoCongruente: "Correto! Os sinais não verbais indicam hesitação, apesar da fala positiva. Um alerta!" }
-    ];
-
-    let situacaoAtualIndex = 0;
-    const situacaoTextoEl = document.getElementById('situacao-texto');
-    const feedbackCongruenciaEl = document.getElementById('feedback-congruencia');
-    const opcoesCongruenciaBotoes = document.querySelectorAll('.opcoes-congruencia button');
-    const btnAnterior = document.getElementById('anterior-situacao');
-    const btnProxima = document.getElementById('proxima-situacao');
-    const quizProgressEl = document.getElementById('quiz-progress');
-
-    function atualizarQuizProgress() {
-        if (quizProgressEl) {
-            quizProgressEl.textContent = `${situacaoAtualIndex + 1}/${situacoesCongruencia.length}`;
-        }
+    // --- BARRA DE PROGRESSO DA PÁGINA ---
+    const progressBar = document.getElementById('page-progress-bar');
+    if (progressBar) {
+        const updateProgressBar = () => {
+            const scrollTotal = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = window.scrollY;
+            const progress = (scrolled / scrollTotal) * 100;
+            progressBar.style.width = `${progress}%`;
+        };
+        window.addEventListener('scroll', updateProgressBar);
+        updateProgressBar(); // Initial call
     }
 
-    function carregarSituacao(index) {
-        if (!situacaoTextoEl || !feedbackCongruenciaEl || !opcoesCongruenciaBotoes.length || !btnAnterior || !btnProxima) return;
-
-        const situacao = situacoesCongruencia[index];
-        situacaoTextoEl.firstChild.textContent = situacao.texto + ' ';
-        feedbackCongruenciaEl.innerHTML = '';
-        feedbackCongruenciaEl.className = 'feedback';
-        opcoesCongruenciaBotoes.forEach(btn => btn.disabled = false);
-        btnAnterior.disabled = index === 0;
-        btnProxima.disabled = index === situacoesCongruencia.length - 1;
-        atualizarQuizProgress();
-    }
-
-    if (opcoesCongruenciaBotoes.length > 0) {
-        opcoesCongruenciaBotoes.forEach(botao => {
-            botao.addEventListener('click', () => {
-                const respostaUsuario = botao.dataset.resposta;
-                const situacaoAtual = situacoesCongruencia[situacaoAtualIndex];
-                opcoesCongruenciaBotoes.forEach(btn => btn.disabled = true);
-
-                if (respostaUsuario === situacaoAtual.respostaCorreta) {
-                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackCongruente;
-                    feedbackCongruenciaEl.classList.add('correto');
+    // --- CHECKLIST INTERATIVO ---
+    const checklistItems = document.querySelectorAll('.checklist li');
+    if (checklistItems.length > 0) {
+        checklistItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('checked');
+                const icon = item.querySelector('.check-icon');
+                if (item.classList.contains('checked')) {
+                    // A mudança de ícone agora é feita pelo CSS com ::before
                 } else {
-                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackNaoCongruente;
-                    feedbackCongruenciaEl.classList.add('incorreto');
+                    // O CSS reverte para o ícone padrão
                 }
             });
         });
-        btnProxima.addEventListener('click', () => {
-            if (situacaoAtualIndex < situacoesCongruencia.length - 1) {
-                situacaoAtualIndex++;
-                carregarSituacao(situacaoAtualIndex);
-            }
-        });
-        btnAnterior.addEventListener('click', () => {
-            if (situacaoAtualIndex > 0) {
-                situacaoAtualIndex--;
-                carregarSituacao(situacaoAtualIndex);
-            }
-        });
-        // Carregar primeira situação do quiz se elementos existem
-        carregarSituacao(situacaoAtualIndex);
     }
 
 
-    // --- PARTE 2: JOGO DE DECISÕES ---
-    const storyTextEl = document.getElementById('story-text');
-    const storyChoicesEl = document.getElementById('story-choices');
-    const audienceReactionEl = document.getElementById('audience-reaction');
-    const assertividadeBarEl = document.getElementById('assertividade-bar');
-    const reiniciarJogoBtn = document.getElementById('reiniciar-jogo');
-    const gameEndFeedbackEl = document.getElementById('game-end-feedback');
-
-    let assertividadeScore = 50;
-    const storyNodes = [ /* ... (mesmos storyNodes da versão anterior) ... */
-        { id: 0, text: "Jorge está se preparando. Ao entrar na sala de reunião para apresentar aos acionistas, ele...", choices: [
-            { text: "Entra com passos firmes, olhando para os acionistas e cumprimentando com um leve aceno de cabeça.", effect: 15, reaction: "Os acionistas parecem receptivos e atentos.", nextNode: 1 },
-            { text: "Entra apressado, olhando para suas anotações, sem fazer contato visual.", effect: -10, reaction: "Alguns acionistas trocam olhares, parecendo um pouco desconfortáveis.", nextNode: 1 },
-            { text: "Hesita na porta, respira fundo visivelmente e entra com ombros curvados.", effect: -15, reaction: "A hesitação de Jorge é palpável, gerando uma leve tensão.", nextNode: 1 }
-        ]},
-        { id: 1, text: "Jorge se posiciona. Antes de iniciar sua fala, ele...", choices: [
-            { text: "Ajusta o microfone, pausa brevemente para varrer a sala com o olhar e abre um leve sorriso confiante.", effect: 10, reaction: "A calma e confiança de Jorge começam a tranquilizar.", nextNode: 2 },
-            { text: "Começa a falar imediatamente, voz trêmula, folheando papéis nervosamente.", effect: -10, reaction: "A pressa e o nervosismo são evidentes, dificultando a conexão.", nextNode: 2 },
-            { text: "Limpa a garganta ruidosamente e olha fixamente para um ponto acima dos acionistas.", effect: -5, reaction: "A audiência percebe um certo distanciamento.", nextNode: 2 }
-        ]},
-        { id: 2, text: "No meio da apresentação, um acionista o interrompe com uma pergunta desafiadora. Jorge...", choices: [
-            { text: "Mantém a calma, ouve atentamente, faz contato visual e responde: 'Excelente pergunta. Isso se deve a um investimento estratégico que detalharei adiante.'", effect: 20, reaction: "Os acionistas apreciam a resposta direta e o controle da situação.", nextNode: 3 },
-            { text: "Fica visivelmente abalado, gagueja e diz: 'Hum... bem... podemos falar depois?'", effect: -20, reaction: "A insegurança de Jorge levanta dúvidas sobre sua preparação.", nextNode: 3 },
-            { text: "Responde defensivamente, elevando a voz: 'Se me permitir terminar, eu já ia chegar nesse ponto!'", effect: -15, reaction: "A defensividade cria um clima desconfortável.", nextNode: 3 }
-        ]},
-        { id: 3, text: "Ao final da apresentação, Jorge agradece. Para encerrar, ele...", choices: [
-            { text: "Sorri, faz contato visual com vários acionistas e diz com convicção: 'Estou à disposição para perguntas e confiante no futuro.'", effect: 15, reaction: "A apresentação termina em alta, com os acionistas demonstrando aprovação.", nextNode: 4 },
-            { text: "Recolhe seus papéis rapidamente, murmura um 'obrigado' e evita olhar para a plateia.", effect: -10, reaction: "O final abrupto deixa uma impressão de insegurança.", nextNode: 4 },
-            { text: "Permanece rígido, olhando para o presidente e pergunta: 'Alguma pergunta?' de forma seca.", effect: -5, reaction: "A formalidade excessiva não convida ao diálogo.", nextNode: 4 }
-        ]},
-        { id: 4, text: "A apresentação de Jorge terminou. Sua performance não verbal foi crucial.", choices: [] }
-    ];
-    let currentNodeId = 0;
-
-    function updateAssertividade(change) {
-        if (!assertividadeBarEl) return;
-        assertividadeScore += change;
-        assertividadeScore = Math.max(0, Math.min(100, assertividadeScore));
-        assertividadeBarEl.style.width = assertividadeScore + '%';
-        assertividadeBarEl.textContent = assertividadeScore + '%';
-        if (assertividadeScore < 30) assertividadeBarEl.style.backgroundColor = 'var(--accent-color)'; // Vermelho
-        else if (assertividadeScore < 70) assertividadeBarEl.style.backgroundColor = '#fca311'; // Laranja (warning)
-        else assertividadeBarEl.style.backgroundColor = '#2a9d8f'; // Verde (success)
-    }
-
-    function getGameEndFeedback(score) { /* ... (mesma função) ... */
-        if (score >= 85) return "Excelente! Sua comunicação não verbal foi muito assertiva e inspirou confiança.";
-        if (score >= 60) return "Bom trabalho! Você demonstrou boa assertividade, mas há espaço para refinar alguns sinais.";
-        if (score >= 30) return "Sua comunicação teve momentos de assertividade, mas alguns sinais não verbais podem ter prejudicado sua mensagem. Continue praticando!";
-        return "Parece que sua comunicação não verbal não foi muito eficaz desta vez. Revise os conceitos e tente novamente para melhorar sua assertividade.";
-    }
+    // --- QUIZ DE CONGRUÊNCIA (como na última versão completa) ---
+    // ... (código do quiz) ...
+    const situacoesCongruencia = [ { id: 1, texto: "Maria diz 'Estou muito feliz com o resultado!' sorrindo amplamente, com postura aberta e olhos brilhando.", respostaCorreta: "congruente", feedbackCongruente: "Correto! A linguagem verbal e não verbal de Maria estão alinhadas, transmitindo felicidade genuína.", feedbackNaoCongruente: "Na verdade, é congruente. A linguagem verbal e não verbal de Maria estão alinhadas." }, { id: 2, texto: "Carlos afirma 'Claro, estou prestando total atenção', enquanto olha para o celular e balança a perna rapidamente.", respostaCorreta: "nao-congruente", feedbackCongruente: "Incorreto. A atenção ao celular e a perna inquieta indicam distração ou nervosismo.", feedbackNaoCongruente: "Correto! Apesar da afirmação verbal, a linguagem não verbal indica distração ou nervosismo." }, { id: 3, texto: "Ana diz 'Este projeto é prioridade máxima', mas entrega o relatório com atraso e evita contato visual.", respostaCorreta: "nao-congruente", feedbackCongruente: "Incorreto. A ação (atraso) e a evitação do contato visual contradizem a afirmação verbal.", feedbackNaoCongruente: "Correto! A ação e a linguagem não verbal contradizem a fala, gerando desconfiança." }, { id: 4, texto: "Durante uma negociação, o cliente cruza os braços, mas diz: 'Sua proposta parece interessante'.", respostaCorreta: "nao-congruente", feedbackCongruente: "Observe melhor. Braços cruzados são um sinal de defesa ou desacordo, contrastando com a fala.", feedbackNaoCongruente: "Correto! Os sinais não verbais indicam hesitação, apesar da fala positiva. Um alerta!" } ]; let situacaoAtualIndex = 0; const situacaoTextoEl = document.getElementById('situacao-texto'); const feedbackCongruenciaEl = document.getElementById('feedback-congruencia'); const opcoesCongruenciaBotoes = document.querySelectorAll('.opcoes-congruencia button'); const btnAnterior = document.getElementById('anterior-situacao'); const btnProxima = document.getElementById('proxima-situacao'); const quizProgressEl = document.getElementById('quiz-progress'); function atualizarQuizProgress() { if (quizProgressEl) { quizProgressEl.textContent = `${situacaoAtualIndex + 1}/${situacoesCongruencia.length}`; } } function carregarSituacao(index) { if (!situacaoTextoEl || !feedbackCongruenciaEl || !opcoesCongruenciaBotoes.length || !btnAnterior || !btnProxima) return; const situacao = situacoesCongruencia[index]; situacaoTextoEl.firstChild.textContent = situacao.texto + ' '; feedbackCongruenciaEl.innerHTML = ''; feedbackCongruenciaEl.className = 'feedback'; opcoesCongruenciaBotoes.forEach(btn => btn.disabled = false); btnAnterior.disabled = index === 0; btnProxima.disabled = index === situacoesCongruencia.length - 1; atualizarQuizProgress(); } if (opcoesCongruenciaBotoes.length > 0) { opcoesCongruenciaBotoes.forEach(botao => { botao.addEventListener('click', () => { const respostaUsuario = botao.dataset.resposta; const situacaoAtual = situacoesCongruencia[situacaoAtualIndex]; opcoesCongruenciaBotoes.forEach(btn => btn.disabled = true); if (respostaUsuario === situacaoAtual.respostaCorreta) { feedbackCongruenciaEl.textContent = situacaoAtual.feedbackCongruente; feedbackCongruenciaEl.classList.add('correto'); } else { feedbackCongruenciaEl.textContent = situacaoAtual.feedbackNaoCongruente; feedbackCongruenciaEl.classList.add('incorreto'); } }); }); btnProxima.addEventListener('click', () => { if (situacaoAtualIndex < situacoesCongruencia.length - 1) { situacaoAtualIndex++; carregarSituacao(situacaoAtualIndex); } }); btnAnterior.addEventListener('click', () => { if (situacaoAtualIndex > 0) { situacaoAtualIndex--; carregarSituacao(situacaoAtualIndex); } }); carregarSituacao(situacaoAtualIndex); }
 
 
-    function loadStoryNode(nodeId) {
-    if (!storyTextEl || !storyChoicesEl || !audienceReactionEl || !gameEndFeedbackEl || !reiniciarJogoBtn) return;
-
-    const node = storyNodes.find(n => n.id === nodeId);
-    if (!node) return;
-
-    currentNodeId = nodeId;
-    storyTextEl.textContent = node.text;
-    storyChoicesEl.innerHTML = '';
-    gameEndFeedbackEl.textContent = '';
-
-    if (node.choices.length === 0) {
-        audienceReactionEl.textContent = `Sua pontuação final de assertividade foi ${assertividadeScore}%.`;
-        gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore);
-        reiniciarJogoBtn.style.display = 'block';
-        reiniciarJogoBtn.focus();
-        return;
-    }
-    reiniciarJogoBtn.style.display = 'none';
-
-    node.choices.forEach(choice => {
-        const button = document.createElement('button');
-        button.textContent = choice.text;
-        button.classList.add('modern-button'); // <<< ADICIONAR ESTA LINHA
-        button.addEventListener('click', () => {
-            updateAssertividade(choice.effect);
-            audienceReactionEl.textContent = choice.reaction;
-            loadStoryNode(choice.nextNode);
-        });
-        storyChoicesEl.appendChild(button);
-    });
-    if(storyChoicesEl.firstChild) storyChoicesEl.firstChild.focus();
-}
-
-    
-    if (reiniciarJogoBtn) {
-        reiniciarJogoBtn.addEventListener('click', () => {
-            assertividadeScore = 50;
-            updateAssertividade(0);
-            if(audienceReactionEl) audienceReactionEl.textContent = "Aguardando sua primeira ação...";
-            loadStoryNode(0);
-        });
-         // Carregar primeiro nó do jogo se elementos existem
-        loadStoryNode(currentNodeId);
-        updateAssertividade(0); // Inicializa a barra
-    }
+    // --- JOGO DE DECISÕES (como na última versão completa) ---
+    // ... (código do jogo) ...
+    const storyTextEl = document.getElementById('story-text'); const storyChoicesEl = document.getElementById('story-choices'); const audienceReactionEl = document.getElementById('audience-reaction'); const assertividadeBarEl = document.getElementById('assertividade-bar'); const reiniciarJogoBtn = document.getElementById('reiniciar-jogo'); const gameEndFeedbackEl = document.getElementById('game-end-feedback'); let assertividadeScore = 50; const storyNodes = [ { id: 0, text: "Jorge está se preparando. Ao entrar na sala de reunião para apresentar aos acionistas, ele...", choices: [ { text: "Entra com passos firmes, olhando para os acionistas e cumprimentando com um leve aceno de cabeça.", effect: 15, reaction: "Os acionistas parecem receptivos e atentos.", nextNode: 1 }, { text: "Entra apressado, olhando para suas anotações, sem fazer contato visual.", effect: -10, reaction: "Alguns acionistas trocam olhares, parecendo um pouco desconfortáveis.", nextNode: 1 }, { text: "Hesita na porta, respira fundo visivelmente e entra com ombros curvados.", effect: -15, reaction: "A hesitação de Jorge é palpável, gerando uma leve tensão.", nextNode: 1 } ]}, { id: 1, text: "Jorge se posiciona. Antes de iniciar sua fala, ele...", choices: [ { text: "Ajusta o microfone, pausa brevemente para varrer a sala com o olhar e abre um leve sorriso confiante.", effect: 10, reaction: "A calma e confiança de Jorge começam a tranquilizar.", nextNode: 2 }, { text: "Começa a falar imediatamente, voz trêmula, folheando papéis nervosamente.", effect: -10, reaction: "A pressa e o nervosismo são evidentes, dificultando a conexão.", nextNode: 2 }, { text: "Limpa a garganta ruidosamente e olha fixamente para um ponto acima dos acionistas.", effect: -5, reaction: "A audiência percebe um certo distanciamento.", nextNode: 2 } ]}, { id: 2, text: "No meio da apresentação, um acionista o interrompe com uma pergunta desafiadora. Jorge...", choices: [ { text: "Mantém a calma, ouve atentamente, faz contato visual e responde: 'Excelente pergunta. Isso se deve a um investimento estratégico que detalharei adiante.'", effect: 20, reaction: "Os acionistas apreciam a resposta direta e o controle da situação.", nextNode: 3 }, { text: "Fica visivelmente abalado, gagueja e diz: 'Hum... bem... podemos falar depois?'", effect: -20, reaction: "A insegurança de Jorge levanta dúvidas sobre sua preparação.", nextNode: 3 }, { text: "Responde defensivamente, elevando a voz: 'Se me permitir terminar, eu já ia chegar nesse ponto!'", effect: -15, reaction: "A defensividade cria um clima desconfortável.", nextNode: 3 } ]}, { id: 3, text: "Ao final da apresentação, Jorge agradece. Para encerrar, ele...", choices: [ { text: "Sorri, faz contato visual com vários acionistas e diz com convicção: 'Estou à disposição para perguntas e confiante no futuro.'", effect: 15, reaction: "A apresentação termina em alta, com os acionistas demonstrando aprovação.", nextNode: 4 }, { text: "Recolhe seus papéis rapidamente, murmura um 'obrigado' e evita olhar para a plateia.", effect: -10, reaction: "O final abrupto deixa uma impressão de insegurança.", nextNode: 4 }, { text: "Permanece rígido, olhando para o presidente e pergunta: 'Alguma pergunta?' de forma seca.", effect: -5, reaction: "A formalidade excessiva não convida ao diálogo.", nextNode: 4 } ]}, { id: 4, text: "A apresentação de Jorge terminou. Sua performance não verbal foi crucial.", choices: [] } ]; let currentNodeId = 0; function updateAssertividade(change) { if (!assertividadeBarEl) return; assertividadeScore += change; assertividadeScore = Math.max(0, Math.min(100, assertividadeScore)); assertividadeBarEl.style.width = assertividadeScore + '%'; assertividadeBarEl.textContent = assertividadeScore + '%'; if (assertividadeScore < 30) assertividadeBarEl.style.backgroundColor = 'var(--accent-color)'; else if (assertividadeScore < 70) assertividadeBarEl.style.backgroundColor = '#fca311'; else assertividadeBarEl.style.backgroundColor = '#2a9d8f'; } function getGameEndFeedback(score) { if (score >= 85) return "Excelente! Sua comunicação não verbal foi muito assertiva e inspirou confiança."; if (score >= 60) return "Bom trabalho! Você demonstrou boa assertividade, mas há espaço para refinar alguns sinais."; if (score >= 30) return "Sua comunicação teve momentos de assertividade, mas alguns sinais não verbais podem ter prejudicado sua mensagem. Continue praticando!"; return "Parece que sua comunicação não verbal não foi muito eficaz desta vez. Revise os conceitos e tente novamente para melhorar sua assertividade."; } function loadStoryNode(nodeId) { if (!storyTextEl || !storyChoicesEl || !audienceReactionEl || !gameEndFeedbackEl || !reiniciarJogoBtn) return; const node = storyNodes.find(n => n.id === nodeId); if (!node) return; currentNodeId = nodeId; storyTextEl.textContent = node.text; storyChoicesEl.innerHTML = ''; gameEndFeedbackEl.textContent = ''; if (node.choices.length === 0) { audienceReactionEl.textContent = `Sua pontuação final de assertividade foi ${assertividadeScore}%.`; gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore); reiniciarJogoBtn.style.display = 'block'; reiniciarJogoBtn.focus(); return; } reiniciarJogoBtn.style.display = 'none'; node.choices.forEach(choice => { const button = document.createElement('button'); button.textContent = choice.text; button.classList.add('modern-button'); button.addEventListener('click', () => { updateAssertividade(choice.effect); audienceReactionEl.textContent = choice.reaction; loadStoryNode(choice.nextNode); }); storyChoicesEl.appendChild(button); }); if(storyChoicesEl.firstChild) storyChoicesEl.firstChild.focus(); } if (reiniciarJogoBtn) { reiniciarJogoBtn.addEventListener('click', () => { assertividadeScore = 50; updateAssertividade(0); if(audienceReactionEl) audienceReactionEl.textContent = "Aguardando sua primeira ação..."; loadStoryNode(0); }); loadStoryNode(currentNodeId); updateAssertividade(0); }
 
 
-    // --- PARTE 3: DECODIFICADOR ---
-    const bodyPoints = document.querySelectorAll('.body-point');
-    const popupOverlay = document.getElementById('info-popup-overlay');
-    const popup = document.getElementById('body-info-popup');
-    const popupTitle = document.getElementById('popup-title');
-    const popupText = document.getElementById('popup-text');
-    const closePopupButton = document.getElementById('close-popup');
-    let lastFocusedElement = null;
+    // --- DECODIFICADOR COM TOOLTIP NO HOVER (como na última versão completa) ---
+    // ... (código do decodificador e tooltip) ...
+    const bodyPoints = document.querySelectorAll('.body-point'); const decoderTooltip = document.getElementById('decoder-tooltip'); const tooltipTitleEl = document.getElementById('tooltip-title'); const tooltipTextEl = document.getElementById('tooltip-text'); const bodyInfo = { head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância ou encorajamento." }, eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse. Piscar excessivamente pode denotar nervosismo." }, shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." }, torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse e engajamento. Inclinar-se para trás pode indicar ceticismo ou distanciamento. Uma postura ereta é sinal de autoconfiança." }, arm_left: { title: "Braço Esquerdo (Personagem)", text: "Gestos com o braço esquerdo podem complementar a fala. Braços abertos sugerem receptividade, enquanto cruzá-los pode indicar defesa ou fechamento." }, arm_right: { title: "Braço Direito (Personagem)", text: "Similar ao braço esquerdo, o posicionamento e gestos do braço direito contribuem para a mensagem geral de abertura ou reserva." }, hand_left: { title: "Mão Esquerda (Personagem)", text: "Gestos com as mãos são poderosos. A mão esquerda pode ser usada para enfatizar pontos. Palmas abertas indicam honestidade; esconder as mãos pode gerar desconfiança." }, hand_right: { title: "Mão Direita (Personagem)", text: "A mão direita frequentemente lidera gestos de cumprimento ou ênfase. Mãos inquietas podem denunciar nervosismo." }, legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." } }; if (decoderTooltip && tooltipTitleEl && tooltipTextEl) { bodyPoints.forEach(point => { point.addEventListener('mouseenter', (event) => { const area = point.dataset.area; if (bodyInfo[area]) { tooltipTitleEl.textContent = bodyInfo[area].title; tooltipTextEl.textContent = bodyInfo[area].text; const offsetX = 20; const offsetY = -10; let x = event.clientX + offsetX; let y = event.clientY + offsetY; const tooltipRect = decoderTooltip.getBoundingClientRect(); const canvasRect = document.querySelector('.infographic-canvas').getBoundingClientRect(); if (x + tooltipRect.width > canvasRect.right - 20) { x = event.clientX - tooltipRect.width - offsetX; } if (y + tooltipRect.height > canvasRect.bottom - 20) { y = event.clientY - tooltipRect.height - offsetY; } if (y < canvasRect.top + 20) { y = canvasRect.top + 20; } decoderTooltip.style.left = `${x}px`; decoderTooltip.style.top = `${y}px`; decoderTooltip.classList.add('visible'); } }); point.addEventListener('mouseleave', () => { decoderTooltip.classList.remove('visible'); }); }); }
 
-    const bodyInfo = { /* ... (mesmo bodyInfo da versão anterior, com mãos corrigidas) ... */
-        head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância ou encorajamento." },
-        eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse. Piscar excessivamente pode denotar nervosismo." },
-        shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." },
-        torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse e engajamento. Inclinar-se para trás pode indicar ceticismo ou distanciamento. Uma postura ereta é sinal de autoconfiança." },
-        arm_left: { title: "Braço Esquerdo (Personagem)", text: "Gestos com o braço esquerdo podem complementar a fala. Braços abertos sugerem receptividade, enquanto cruzá-los pode indicar defesa ou fechamento." },
-        arm_right: { title: "Braço Direito (Personagem)", text: "Similar ao braço esquerdo, o posicionamento e gestos do braço direito contribuem para a mensagem geral de abertura ou reserva." },
-        hand_left: { title: "Mão Esquerda (Personagem)", text: "Gestos com as mãos são poderosos. A mão esquerda pode ser usada para enfatizar pontos. Palmas abertas indicam honestidade; esconder as mãos pode gerar desconfiança." },
-        hand_right: { title: "Mão Direita (Personagem)", text: "A mão direita frequentemente lidera gestos de cumprimento ou ênfase. Mãos inquietas podem denunciar nervosismo." },
-        legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." }
-    };
-
-    function openPopup(area) { /* ... (mesma função) ... */
-        if (bodyInfo[area] && popupOverlay && popupTitle && popupText && closePopupButton) { // Verifica elementos
-            lastFocusedElement = document.activeElement;
-            popupTitle.textContent = bodyInfo[area].title;
-            popupText.textContent = bodyInfo[area].text;
-            popupOverlay.classList.add('visible');
-            closePopupButton.focus();
-        }
-    }
-    function closePopup() { /* ... (mesma função) ... */
-        if (popupOverlay) {
-            popupOverlay.classList.remove('visible');
-            if (lastFocusedElement) {
-                lastFocusedElement.focus();
-            }
-        }
-    }
-
-    if (bodyPoints.length > 0 && closePopupButton && popupOverlay) {
-        bodyPoints.forEach(point => {
-            point.addEventListener('click', () => {
-                const area = point.dataset.area;
-                openPopup(area);
-            });
-        });
-        closePopupButton.addEventListener('click', closePopup);
-        popupOverlay.addEventListener('click', (event) => {
-            if (event.target === popupOverlay) {
-                closePopup();
-            }
-        });
-        window.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && popupOverlay.classList.contains('visible')) {
-                closePopup();
-            }
-        });
-    }
 
     // --- ANIMAÇÃO DE ROLAGEM ---
     const animatedElements = document.querySelectorAll('[data-animate-on-scroll]');
-    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; // Reduzir threshold para checklist
 
     const scrollObserver = new IntersectionObserver((entries, observerInstance) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                observerInstance.unobserve(entry.target); // Animar apenas uma vez
+                // Não des-observar checklist items para re-animar se saírem e voltarem
+                if (!entry.target.matches('.checklist li')) {
+                    observerInstance.unobserve(entry.target);
+                }
+            } else {
+                 // Opcional: remover 'is-visible' se sair da tela, para re-animar o checklist
+                if (entry.target.matches('.checklist li')) {
+                    entry.target.classList.remove('is-visible');
+                }
             }
         });
     }, observerOptions);
 
     animatedElements.forEach(el => scrollObserver.observe(el));
+    // Aplicar observer aos itens do checklist individualmente se eles não tiverem data-animate-on-scroll
+    document.querySelectorAll('.checklist li:not([data-animate-on-scroll])').forEach(item => {
+        scrollObserver.observe(item);
+    });
 });
