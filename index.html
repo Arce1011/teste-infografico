@@ -6,77 +6,73 @@
     <title>Infográfico Interativo: Comunicação Não Verbal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- A navegação superior pode ser removida se quisermos uma experiência de página única total -->
-    <!-- <nav class="top-nav"> ... </nav> -->
-
     <div class="infographic-canvas">
         <header class="canvas-header">
             <h1>COMUNICAÇÃO NÃO VERBAL <span class="highlight">NAS ORGANIZAÇÕES</span></h1>
         </header>
 
         <aside class="canvas-sidebar">
-            <div class="fact-card você-sabia" data-animate-on-scroll>
+            <div class="fact-card você-sabia glass-effect" data-animate-on-scroll>
                 <h3>Você Sabia?</h3>
                 <div class="pie-chart-container">
-                    <!-- SVG do Gráfico de Pizza (Exemplo Simples) -->
                     <svg viewBox="0 0 100 100" class="pie-chart">
                         <circle cx="50" cy="50" r="45" fill="transparent" stroke="#e0e0e0" stroke-width="10"/>
-                        <!-- Fatias (exemplo: 70%) -->
                         <circle cx="50" cy="50" r="45" fill="transparent" stroke="var(--accent-color)" stroke-width="10"
                                 stroke-dasharray="204.2 283" stroke-dashoffset="0" class="pie-slice" />
-                                <!-- 283 é a circunferência (2*PI*45), 204.2 é 70% de 283 -->
                         <text x="50" y="55" text-anchor="middle" class="pie-label">70%+</text>
                     </svg>
                 </div>
                 <p>Mais de 70% da nossa comunicação é <strong>não verbal</strong>.</p>
             </div>
 
-            <div id="congruencia-quiz" class="interactive-module quiz-module" data-animate-on-scroll>
-                <h4><span class="icon">🔄</span>Congruência</h4>
+            <div id="congruencia-quiz" class="interactive-module quiz-module glass-effect" data-animate-on-scroll>
+                <h4><span class="icon">🔄</span>Análise de Congruência</h4>
                 <div class="quiz-container">
                     <div id="situacao-texto">Carregando... <span id="quiz-progress"></span></div>
                     <div class="opcoes-congruencia">
-                        <button data-resposta="congruente">Congruente</button>
-                        <button data-resposta="nao-congruente">Não Congruente</button>
+                        <button class="modern-button" data-resposta="congruente">Congruente</button>
+                        <button class="modern-button" data-resposta="nao-congruente">Não Congruente</button>
                     </div>
                     <div id="feedback-congruencia" class="feedback" aria-live="polite"></div>
                     <nav class="navegacao-quiz">
-                        <button id="anterior-situacao" disabled>❮</button>
-                        <button id="proxima-situacao">❯</button>
+                        <button class="nav-arrow-button" id="anterior-situacao" disabled title="Anterior">❮</button>
+                        <button class="nav-arrow-button" id="proxima-situacao" title="Próxima">❯</button>
                     </nav>
                 </div>
             </div>
-             <div class="fact-card small-fact" data-animate-on-scroll>
+             <div class="fact-card small-fact glass-effect" data-animate-on-scroll>
                 <img src="https://img.icons8.com/fluency/48/000000/questions.png" alt="Ícone Dúvida" class="fact-icon-small">
-                <p>Sinais não verbais são frequentemente mais confiáveis que palavras quando há contradição.</p>
+                <p>Sinais não verbais são frequentemente <strong>mais confiáveis</strong> que palavras quando há contradição.</p>
             </div>
         </aside>
 
         <main class="canvas-main-content">
-            <section id="desafio-jorge" class="interactive-module story-module" data-animate-on-scroll>
-                <h3><span class="icon">🎯</span>APRESENTAÇÃO: O Desafio de Jorge</h3>
+            <section id="desafio-jorge" class="interactive-module story-module glass-effect" data-animate-on-scroll>
+                <h3><span class="icon">🎯</span>O Desafio de Jorge</h3>
                 <div class="story-container">
                     <div id="story-text">Jorge está se preparando...</div>
-                    <div id="story-choices" class="choices-grid"></div>
+                    <div id="story-choices" class="choices-grid">
+                        <!-- Botões serão injetados, daremos a classe .modern-button via JS -->
+                    </div>
                     <div class="story-feedback">
                         <p id="audience-reaction">Aguardando sua ação...</p>
                     </div>
                     <div class="story-metrics">
-                        <div class="progress-bar-container"><div id="assertividade-bar">50%</div></div>
+                        <div class="progress-bar-container"><div id="assertividade-bar" class="progress-bar-fill">50%</div></div>
                         <p id="game-end-feedback"></p>
                     </div>
-                    <button id="reiniciar-jogo" style="display:none;">Reiniciar</button>
+                    <button id="reiniciar-jogo" class="modern-button danger" style="display:none;">Reiniciar</button>
                 </div>
             </section>
         </main>
 
         <aside class="canvas-right-sidebar">
-             <section id="decodificador" class="interactive-module decoder-module" data-animate-on-scroll>
-                <h4><span class="icon">🧍</span>Decodificador</h4>
+             <section id="decodificador" class="interactive-module decoder-module glass-effect" data-animate-on-scroll>
+                <h4><span class="icon">🧍</span>Decodificador Corporal</h4>
                 <div class="interactive-body-container">
                     <div class="interactive-body">
                          <svg viewBox="0 0 150 300" class="body-silhouette">
@@ -95,15 +91,14 @@
                     </div>
                 </div>
             </section>
-            <div class="fact-card small-fact bottom-fact" data-animate-on-scroll>
+            <div class="fact-card small-fact bottom-fact glass-effect" data-animate-on-scroll>
                 <img src="https://img.icons8.com/fluency/48/000000/graph-report.png" alt="Ícone Estatística" class="fact-icon-small">
-                <p>Empresas com alta inteligência emocional (que inclui leitura não verbal) têm melhor desempenho.</p>
+                <p>Empresas com alta <strong>inteligência emocional</strong> (que inclui leitura não verbal) têm melhor desempenho.</p>
             </div>
         </aside>
 
-
         <div id="info-popup-overlay" class="info-popup-overlay">
-            <div id="body-info-popup" class="info-popup">
+            <div id="body-info-popup" class="info-popup glass-effect"> <!-- Popup também com glass -->
                 <button id="close-popup" class="close-popup-button">×</button>
                 <h4 id="popup-title"></h4>
                 <p id="popup-text"></p>
@@ -114,7 +109,6 @@
             <p>Infográfico Interativo CNV | 2024</p>
         </footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

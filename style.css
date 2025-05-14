@@ -1,20 +1,23 @@
 :root {
-    --primary-color: #1d3557; /* Azul Marinho Escuro */
-    --secondary-color: #457b9d; /* Azul Aço */
-    --accent-color: #e63946;   /* Vermelho Coral Vibrante */
-    --highlight-bg: #f1faee;  /* Verde Água Muito Claro (para fundos de cards) */
-    --text-dark: #2b2d42;
-    --text-light: #edf2f4;
-    --border-light: #a8dadc;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --primary-color: #14213d; /* Azul Escuro Profundo */
+    --secondary-color: #fca311; /* Laranja Vibrante para acentos */
+    --accent-color: #e63946;   /* Vermelho Coral (mantido) */
+    --highlight-bg-base: rgba(255, 255, 255, 0.05); /* Base para glassmorphism */
+    --highlight-bg-hover: rgba(255, 255, 255, 0.1);
+    --text-dark: #000000; /* Preto para contraste com fundos claros/glass */
+    --text-on-dark-bg: #f0f8ff; /* Alice Blue para texto em fundos muito escuros */
+    --text-light-accent: #4a5568; /* Cinza para texto menos importante */
+    --border-glass: rgba(255, 255, 255, 0.18);
+    --shadow-color-light: rgba(0, 0, 0, 0.1);
+    --shadow-color-strong: rgba(0, 0, 0, 0.2);
 
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Lato', sans-serif;
-    --spacing-xs: 0.5rem;
-    --spacing-sm: 0.75rem;
+    --spacing-xs: 0.4rem;
+    --spacing-sm: 0.6rem;
     --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
+    --spacing-lg: 1.25rem;
+    --spacing-xl: 1.75rem;
 }
 
 html { scroll-behavior: smooth; box-sizing: border-box; }
@@ -22,67 +25,64 @@ html { scroll-behavior: smooth; box-sizing: border-box; }
 
 body {
     font-family: var(--font-body);
-    line-height: 1.6;
+    line-height: 1.65;
     margin: 0;
-    background-color: #e9ecef; /* Fundo geral um pouco mais escuro */
-    color: var(--text-dark);
-    font-size: 15px; /* Um pouco menor para layout condensado */
+    /* Fundo do BODY com gradiente para o glassmorphism ter algo para "borrar" */
+    background: linear-gradient(135deg, #606c88 0%, #3f4c6b 100%);
+    color: var(--text-on-dark-bg); /* Cor padrão do texto para o fundo escuro */
+    font-size: 15px;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinha o canvas no topo se a viewport for maior */
+    align-items: center; /* Centraliza o canvas verticalmente */
     min-height: 100vh;
-    padding: var(--spacing-md); /* Espaço ao redor do canvas */
+    padding: var(--spacing-md);
     overflow-x: hidden;
 }
 
 .infographic-canvas {
     width: 100%;
-    max-width: 1400px; /* Largura máxima do infográfico */
-    min-height: calc(100vh - var(--spacing-md) * 2); /* Tenta preencher a altura */
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px var(--shadow-color);
+    max-width: 1500px; /* Aumentado para preencher mais */
+    min-height: calc(100vh - var(--spacing-md) * 2 - 2px); /* -2px para a borda */
+    /* Fundo do Canvas - pode ser um gradiente ou cor sólida */
+    background-color: rgba(20, 33, 61, 0.8); /* Um azul escuro translúcido */
+    backdrop-filter: blur(20px); /* Blur mais forte no canvas principal */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    box-shadow: 0 15px 35px var(--shadow-color-strong);
     padding: var(--spacing-lg);
     display: grid;
-    grid-template-columns: 0.8fr 1.5fr 0.7fr; /* Sidebar | Main | Right Sidebar */
-    grid-template-rows: auto 1fr auto; /* Header | Content | Footer */
+    grid-template-columns: 0.9fr 1.6fr 0.9fr;
+    grid-template-rows: auto 1fr auto;
     grid-template-areas:
         "header header header"
         "sidebar main-content right-sidebar"
         "footer footer footer";
     gap: var(--spacing-lg);
-    overflow: hidden; /* Evita que elementos internos causem scroll no body */
+    overflow: hidden;
 }
 
-@media (max-width: 1024px) {
+/* Ajustes de Responsividade */
+@media (max-width: 1200px) { /* Ajustar breakpoint */
     .infographic-canvas {
-        grid-template-columns: 1fr 1.2fr; /* 2 colunas */
+        grid-template-columns: 1fr 1.3fr;
         grid-template-areas:
             "header header"
             "sidebar main-content"
-            "right-sidebar right-sidebar" /* Decoder e stats abaixo */
+            "right-sidebar right-sidebar"
             "footer footer";
-        gap: var(--spacing-md);
     }
 }
-@media (max-width: 768px) {
-    body { padding: 0; }
+@media (max-width: 860px) { /* Ajustar breakpoint */
+    body { align-items: flex-start; padding: 0; } /* Remove centralização vertical */
     .infographic-canvas {
-        grid-template-columns: 1fr; /* 1 coluna */
-        grid-template-rows: auto; /* Deixa o conteúdo definir a altura */
-        grid-template-areas:
-            "header"
-            "sidebar"
-            "main-content"
-            "right-sidebar"
-            "footer";
-        min-height: auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: "header" "sidebar" "main-content" "right-sidebar" "footer";
+        min-height: 100vh; /* Ocupar toda a altura em mobile */
         border-radius: 0;
         padding: var(--spacing-md);
-        overflow-y: auto; /* Permite scroll na página em telas pequenas */
-    }
-    .interactive-module, .fact-card {
-        margin-bottom: var(--spacing-lg);
+        overflow-y: auto;
     }
 }
 
@@ -91,169 +91,204 @@ body {
     grid-area: header;
     text-align: center;
     padding-bottom: var(--spacing-md);
-    border-bottom: 2px solid var(--border-light);
+    /* border-bottom: 1px solid var(--border-glass); */ /* Borda sutil */
 }
 .canvas-header h1 {
     font-family: var(--font-heading);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: var(--primary-color);
+    font-size: clamp(2rem, 4.5vw, 3.2rem); /* Maior */
+    color: var(--text-on-dark-bg);
     margin: 0;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 .canvas-header h1 .highlight {
-    color: var(--accent-color);
-    font-weight: 700;
+    color: var(--secondary-color);
 }
 
-.canvas-sidebar {
-    grid-area: sidebar;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-    padding-right: var(--spacing-sm); /* Pequeno espaço antes da próxima coluna */
-    overflow-y: auto; /* Scroll interno se necessário */
-}
-.canvas-main-content {
-    grid-area: main-content;
-    display: flex; /* Para o story-module preencher */
-    flex-direction: column;
-    overflow-y: auto;
-}
-.canvas-right-sidebar {
-    grid-area: right-sidebar;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-    padding-left: var(--spacing-sm);
-    overflow-y: auto;
-}
-
-.interactive-module, .fact-card {
-    background-color: var(--highlight-bg);
+/* Estilo Glassmorphism para os painéis */
+.glass-effect {
+    background: var(--highlight-bg-base);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 8px 20px var(--shadow-color-light);
+    border-radius: 10px;
     padding: var(--spacing-md);
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    border: 1px solid var(--border-light);
+    color: var(--text-on-dark-bg); /* Texto claro nos painéis glass */
 }
+.glass-effect:hover { /* Sutil no hover do painel */
+    background: var(--highlight-bg-hover);
+}
+
+.canvas-sidebar, .canvas-main-content, .canvas-right-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    overflow-y: auto; /* Scroll interno */
+    padding: 5px; /* Pequeno padding para não cortar sombras */
+}
+/* Scrollbar estilizado (opcional, funciona em Webkit/Blink) */
+.canvas-sidebar::-webkit-scrollbar,
+.canvas-main-content::-webkit-scrollbar,
+.canvas-right-sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+.canvas-sidebar::-webkit-scrollbar-thumb,
+.canvas-main-content::-webkit-scrollbar-thumb,
+.canvas-right-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+}
+.canvas-sidebar::-webkit-scrollbar-track,
+.canvas-main-content::-webkit-scrollbar-track,
+.canvas-right-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
 .interactive-module h3, .interactive-module h4, .fact-card h3 {
     font-family: var(--font-heading);
-    color: var(--primary-color);
+    color: var(--text-on-dark-bg); /* Ajustado para painéis glass */
     margin-top: 0;
     margin-bottom: var(--spacing-sm);
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Ajustado */
     font-weight: 600;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: var(--spacing-sm);
 }
 .interactive-module .icon, .fact-card .icon {
-    margin-right: var(--spacing-xs);
-    color: var(--accent-color);
-    font-size: 1.3em;
+    margin-right: var(--spacing-sm);
+    color: var(--secondary-color); /* Laranja para ícones */
+    font-size: 1.4em;
 }
 
 .fact-card { text-align: center; }
-.fact-card p { font-size: 0.9rem; margin-bottom: 0; }
-.fact-card strong { color: var(--accent-color); }
+.fact-card p { font-size: 0.9rem; margin-bottom: 0; line-height: 1.5; }
+.fact-card strong { color: var(--secondary-color); }
 
-.pie-chart-container {
-    width: 120px; /* Tamanho do gráfico */
-    height: 120px;
-    margin: var(--spacing-xs) auto var(--spacing-sm) auto;
-    position: relative;
-}
-.pie-chart { width: 100%; height: 100%; transform: rotate(-90deg); /* Começa a fatia do topo */ }
-.pie-chart .pie-label {
+.pie-chart-container { width: 110px; height: 110px; }
+.pie-chart .pie-label { font-size: 22px; fill: var(--text-on-dark-bg); }
+.pie-chart .pie-slice { stroke: var(--secondary-color); /* Laranja para a fatia */ }
+
+.fact-icon-small { width: 32px; height: 32px; }
+.small-fact p { font-size: 0.8rem; }
+
+
+/* Botões Modernos */
+.modern-button {
+    padding: var(--spacing-sm) var(--spacing-md);
     font-family: var(--font-heading);
-    font-size: 24px;
-    fill: var(--primary-color);
-    font-weight: 700;
-    transform: rotate(90deg); /* Corrige a rotação do texto */
-    transform-origin: 50% 50%;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-on-dark-bg);
+    background: rgba(255, 255, 255, 0.1); /* Glass */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
-.pie-chart .pie-slice {
-    animation: draw-pie 1s ease-out forwards;
+.modern-button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
 }
-@keyframes draw-pie {
-    from { stroke-dasharray: 0 283; }
-    to { stroke-dasharray: 204.2 283; } /* 70% (204.2) de 283 */
+.modern-button:active:not(:disabled) {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    transform: translateY(0px);
+}
+.modern-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.modern-button.danger { /* Para o botão reiniciar */
+    background: rgba(230, 57, 70, 0.7); /* Vermelho (accent-color) com glass */
+    border-color: rgba(230, 57, 70, 0.9);
+}
+.modern-button.danger:hover:not(:disabled) {
+    background: rgba(230, 57, 70, 0.85);
 }
 
-.fact-icon-small { width: 36px; height: 36px; float: left; margin-right: var(--spacing-sm); }
-.small-fact p { text-align: left; font-size: 0.85rem; line-height: 1.5; }
-.bottom-fact { margin-top: auto; /* Empurra para baixo no flex container */ }
+.nav-arrow-button { /* Botões de navegação do quiz */
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-on-dark-bg);
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+.nav-arrow-button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+.nav-arrow-button:disabled { opacity: 0.4; cursor: not-allowed; }
 
 
-/* Estilos dos Componentes Internos (Quiz, Jogo, Decoder) - Compactados */
-.quiz-container { padding: var(--spacing-sm); background: #fff; border-radius: 6px; }
-#situacao-texto { font-size: 0.9rem; min-height: auto; padding: var(--spacing-xs) var(--spacing-sm); margin-bottom: var(--spacing-sm); }
-#quiz-progress { font-size: 0.8rem; padding: 3px 6px; }
-.opcoes-congruencia button { font-size: 0.85rem; padding: var(--spacing-xs) var(--spacing-sm); max-width: 150px; }
-.feedback { font-size: 0.85rem; padding: var(--spacing-xs); min-height: auto; }
-.navegacao-quiz button { font-size: 0.85rem; padding: var(--spacing-xs) var(--spacing-sm); }
+/* Componentes Internos */
+.quiz-container, .story-container { padding: var(--spacing-sm); background: transparent; box-shadow: none; border:none; } /* Remove fundo e sombra duplicados */
+#situacao-texto {
+    background: rgba(0,0,0,0.1); border-left-color: var(--secondary-color);
+    color: var(--text-on-dark-bg); padding: var(--spacing-sm);
+}
+.feedback {
+    background: rgba(0,0,0,0.1); padding: var(--spacing-sm);
+    border: 1px solid var(--border-glass);
+}
+.feedback.correto { background-color: rgba(42, 157, 143, 0.3); color: #d1fae5; border-color: rgba(42, 157, 143, 0.5); }
+.feedback.correto::before { color: #d1fae5; }
+.feedback.incorreto { background-color: rgba(230, 57, 70, 0.3); color: #fee2e2; border-color: rgba(230, 57, 70, 0.5); }
+.feedback.incorreto::before { color: #fee2e2; }
+.navegacao-quiz { justify-content: space-around; }
 
-.story-module { flex-grow: 1; display: flex; flex-direction: column; } /* Para preencher espaço */
-.story-container { padding: var(--spacing-sm); background: #fff; border-radius: 6px; flex-grow: 1; display: flex; flex-direction: column; }
-#story-text { font-size: 1rem; padding: var(--spacing-sm); }
-.choices-grid button { font-size: 0.9rem; padding: var(--spacing-sm); min-height: auto; }
-.story-feedback { font-size: 0.9rem; padding: var(--spacing-sm); }
+
+#story-text { background: rgba(0,0,0,0.1); border-left-color: var(--secondary-color); color: var(--text-on-dark-bg); padding: var(--spacing-sm);}
+.choices-grid button { /* Já estilizado por .modern-button se a classe for adicionada via JS */ }
+.story-feedback { background: rgba(252, 163, 17, 0.2); color: var(--text-on-dark-bg); border: 1px solid rgba(252, 163, 17, 0.4); }
 .story-feedback p { margin-bottom: 0; }
-.story-metrics { margin-top: auto; /* Empurra para baixo */ }
-.story-metrics h4 { font-size: 0.95rem; margin-bottom: var(--spacing-xs); }
-.progress-bar-container { height: 22px; }
-#assertividade-bar { line-height: 22px; font-size: 0.8rem; } /* Referenciando por ID */
-#game-end-feedback { font-size: 0.9rem; }
-#reiniciar-jogo { font-size: 0.9rem; padding: var(--spacing-xs) var(--spacing-sm); }
+.progress-bar-container { background-color: rgba(0,0,0,0.2); height: 24px; }
+#assertividade-bar.progress-bar-fill { /* Renomeado para evitar conflito de nome com o Bootstrap se usado */
+    background-color: var(--secondary-color); /* Laranja como cor base da barra */
+    line-height: 24px; font-size: 0.85rem; color: var(--primary-color);
+}
+#game-end-feedback { color: var(--text-on-dark-bg); }
 
-.decoder-module .interactive-body-container { min-height: 280px; /* Mais compacto */ }
-.interactive-body { width: 150px; height: 300px; /* Menor */ transform: scale(0.9); transform-origin: top center; }
-.body-point { width: 24px; height: 24px; /* Pontos menores */ }
-.body-point span { font-size: 0.65em; padding: 4px 7px; }
+.decoder-module .interactive-body-container { min-height: 300px; }
+.interactive-body { width: 160px; height: 320px; transform: scale(0.95); }
+.body-point { /* Já tem um bom estilo glass */ }
 
-/* Popup (Estilos mantidos, mas podem ser ajustados para tamanho) */
-.info-popup-overlay { /* ... */ }
-.info-popup { max-width: 450px; /* Um pouco menor se necessário */ }
-/* ... (outros estilos do popup) ... */
+.info-popup.glass-effect { /* Para o popup */
+    color: var(--text-dark); /* Texto escuro dentro do popup claro */
+    border-top-color: var(--secondary-color);
+}
+.info-popup.glass-effect h4 { color: var(--primary-color); }
+
 
 .canvas-footer {
-    grid-area: footer;
-    text-align: center;
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--border-light);
-    font-size: 0.8rem;
-    color: var(--text-dark);
+    grid-area: footer; text-align: center; padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-glass);
+    font-size: 0.85rem; color: rgba(255,255,255,0.7);
 }
-
 
 /* Animações de Entrada */
 [data-animate-on-scroll] {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 [data-animate-on-scroll].is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
-/* Delay para elementos específicos */
-.você-sabia { transition-delay: 0.1s; }
-#congruencia-quiz { transition-delay: 0.2s; }
-.story-module { transition-delay: 0.1s; }
-.decoder-module { transition-delay: 0.2s; }
-.fact-card.small-fact {transition-delay: 0.3s;}
-
-
-/* Copiando estilos não modificados do body-point e popup para garantir completude */
-.body-point { position: absolute; color: var(--text-dark); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); animation: pulse-glass 2.8s infinite ease-in-out; }
-@keyframes pulse-glass {0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); } 50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 6px 18px rgba(29, 53, 87, 0.2); } 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); } }
-.body-point:hover, .body-point:focus-visible { background: rgba(255, 255, 255, 0.3); transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 6px 22px rgba(0, 0, 0, 0.2); animation-play-state: paused; }
-.body-point span { font-weight: 500; display: none; position: absolute; bottom: 140%; left: 50%; transform: translateX(-50%); background-color: var(--text-dark); color: white; border-radius: 5px; white-space: nowrap; opacity: 0; transition: opacity 0.2s ease, visibility 0.2s ease; visibility: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-.body-point:hover span, .body-point:focus-visible span { display: block; opacity: 1; visibility: visible; }
-.info-popup-overlay { display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.65); z-index: 1001; opacity: 0; transition: opacity 0.3s ease; align-items: center; justify-content: center; }
-.info-popup-overlay.visible { display: flex; opacity: 1; }
-.info-popup { background-color: white; padding: clamp(20px, 4vw, 30px); border-radius: 10px; box-shadow: 0 8px 30px var(--shadow-color); z-index: 1002; border-top: 5px solid var(--accent-color); width: 90%; transform: scale(0.95); opacity: 0; transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s; position: relative; }
-.info-popup-overlay.visible .info-popup { opacity: 1; transform: scale(1); }
-.info-popup h4 { margin-top: 0; color: var(--primary-color); font-family: var(--font-heading); font-size: clamp(1.2rem, 3vw, 1.5rem); margin-bottom: var(--spacing-sm); }
-.info-popup p { margin-bottom: var(--spacing-md); font-size: clamp(0.9rem, 2vw, 1rem); line-height: 1.7; }
-.close-popup-button { position: absolute; top: 8px; right: 12px; background: transparent; color: var(--text-dark); border: none; font-size: 2.2rem; line-height: 1; padding: 0; font-weight: 300; }
-.close-popup-button:hover, .close-popup-button:focus-visible { color: var(--accent-color); opacity: 1; transform: none; box-shadow: none; outline-offset: -2px; }
+/* ... (delays podem ser mantidos ou ajustados) ... */

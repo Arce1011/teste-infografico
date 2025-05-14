@@ -121,37 +121,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function loadStoryNode(nodeId) {
-        if (!storyTextEl || !storyChoicesEl || !audienceReactionEl || !gameEndFeedbackEl || !reiniciarJogoBtn) return;
+    if (!storyTextEl || !storyChoicesEl || !audienceReactionEl || !gameEndFeedbackEl || !reiniciarJogoBtn) return;
 
-        const node = storyNodes.find(n => n.id === nodeId);
-        if (!node) return;
+    const node = storyNodes.find(n => n.id === nodeId);
+    if (!node) return;
 
-        currentNodeId = nodeId;
-        storyTextEl.textContent = node.text;
-        storyChoicesEl.innerHTML = '';
-        gameEndFeedbackEl.textContent = '';
+    currentNodeId = nodeId;
+    storyTextEl.textContent = node.text;
+    storyChoicesEl.innerHTML = '';
+    gameEndFeedbackEl.textContent = '';
 
-        if (node.choices.length === 0) {
-            audienceReactionEl.textContent = `Sua pontuação final de assertividade foi ${assertividadeScore}%.`;
-            gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore);
-            reiniciarJogoBtn.style.display = 'block';
-            reiniciarJogoBtn.focus();
-            return;
-        }
-        reiniciarJogoBtn.style.display = 'none';
-
-        node.choices.forEach(choice => {
-            const button = document.createElement('button');
-            button.textContent = choice.text;
-            button.addEventListener('click', () => {
-                updateAssertividade(choice.effect);
-                audienceReactionEl.textContent = choice.reaction;
-                loadStoryNode(choice.nextNode);
-            });
-            storyChoicesEl.appendChild(button);
-        });
-        if(storyChoicesEl.firstChild) storyChoicesEl.firstChild.focus();
+    if (node.choices.length === 0) {
+        audienceReactionEl.textContent = `Sua pontuação final de assertividade foi ${assertividadeScore}%.`;
+        gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore);
+        reiniciarJogoBtn.style.display = 'block';
+        reiniciarJogoBtn.focus();
+        return;
     }
+    reiniciarJogoBtn.style.display = 'none';
+
+    node.choices.forEach(choice => {
+        const button = document.createElement('button');
+        button.textContent = choice.text;
+        button.classList.add('modern-button'); // <<< ADICIONAR ESTA LINHA
+        button.addEventListener('click', () => {
+            updateAssertividade(choice.effect);
+            audienceReactionEl.textContent = choice.reaction;
+            loadStoryNode(choice.nextNode);
+        });
+        storyChoicesEl.appendChild(button);
+    });
+    if(storyChoicesEl.firstChild) storyChoicesEl.firstChild.focus();
+}
+
     
     if (reiniciarJogoBtn) {
         reiniciarJogoBtn.addEventListener('click', () => {
