@@ -16,12 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizProgressEl = document.getElementById('quiz-progress');
 
     function atualizarQuizProgress() {
-        quizProgressEl.textContent = `Situação ${situacaoAtualIndex + 1} de ${situacoesCongruencia.length}`;
+        if (quizProgressEl) { // Verifica se o elemento existe
+            quizProgressEl.textContent = `Situação ${situacaoAtualIndex + 1} de ${situacoesCongruencia.length}`;
+        }
     }
 
     function carregarSituacao(index) {
+        if (!situacaoTextoEl) return; // Sai se os elementos do quiz não existirem
+
         const situacao = situacoesCongruencia[index];
-        situacaoTextoEl.textContent = situacao.texto;
+        situacaoTextoEl.firstChild.textContent = situacao.texto + ' '; // Atualiza apenas o texto, mantém o span
         feedbackCongruenciaEl.innerHTML = '';
         feedbackCongruenciaEl.className = 'feedback';
         opcoesCongruenciaBotoes.forEach(btn => btn.disabled = false);
@@ -30,35 +34,39 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarQuizProgress();
     }
 
-    opcoesCongruenciaBotoes.forEach(botao => {
-        botao.addEventListener('click', () => {
-            const respostaUsuario = botao.dataset.resposta;
-            const situacaoAtual = situacoesCongruencia[situacaoAtualIndex];
-            opcoesCongruenciaBotoes.forEach(btn => btn.disabled = true);
+    if (opcoesCongruenciaBotoes.length > 0) {
+        opcoesCongruenciaBotoes.forEach(botao => {
+            botao.addEventListener('click', () => {
+                const respostaUsuario = botao.dataset.resposta;
+                const situacaoAtual = situacoesCongruencia[situacaoAtualIndex];
+                opcoesCongruenciaBotoes.forEach(btn => btn.disabled = true);
 
-            if (respostaUsuario === situacaoAtual.respostaCorreta) {
-                feedbackCongruenciaEl.textContent = situacaoAtual.feedbackCongruente;
-                feedbackCongruenciaEl.classList.add('correto');
-            } else {
-                feedbackCongruenciaEl.textContent = situacaoAtual.feedbackNaoCongruente;
-                feedbackCongruenciaEl.classList.add('incorreto');
+                if (respostaUsuario === situacaoAtual.respostaCorreta) {
+                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackCongruente;
+                    feedbackCongruenciaEl.classList.add('correto');
+                } else {
+                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackNaoCongruente;
+                    feedbackCongruenciaEl.classList.add('incorreto');
+                }
+            });
+        });
+    }
+    if (btnProxima) {
+        btnProxima.addEventListener('click', () => {
+            if (situacaoAtualIndex < situacoesCongruencia.length - 1) {
+                situacaoAtualIndex++;
+                carregarSituacao(situacaoAtualIndex);
             }
         });
-    });
-
-    btnProxima.addEventListener('click', () => {
-        if (situacaoAtualIndex < situacoesCongruencia.length - 1) {
-            situacaoAtualIndex++;
-            carregarSituacao(situacaoAtualIndex);
-        }
-    });
-
-    btnAnterior.addEventListener('click', () => {
-        if (situacaoAtualIndex > 0) {
-            situacaoAtualIndex--;
-            carregarSituacao(situacaoAtualIndex);
-        }
-    });
+    }
+    if (btnAnterior) {
+        btnAnterior.addEventListener('click', () => {
+            if (situacaoAtualIndex > 0) {
+                situacaoAtualIndex--;
+                carregarSituacao(situacaoAtualIndex);
+            }
+        });
+    }
 
     // --- PARTE 2: JOGO DE DECISÕES ---
     const storyTextEl = document.getElementById('story-text');
@@ -95,13 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentNodeId = 0;
 
     function updateAssertividade(change) {
+        if (!assertividadeBarEl) return;
         assertividadeScore += change;
-        assertividadeScore = Math.max(0, Math.min(100, assertividadeScore)); // Clamps between 0 and 100
+        assertividadeScore = Math.max(0, Math.min(100, assertividadeScore));
         assertividadeBarEl.style.width = assertividadeScore + '%';
         assertividadeBarEl.textContent = assertividadeScore + '%';
         if (assertividadeScore < 30) assertividadeBarEl.style.backgroundColor = 'var(--danger-color)';
         else if (assertividadeScore < 70) assertividadeBarEl.style.backgroundColor = 'var(--warning-color)';
-        else assertividadeBarEl.style.backgroundColor = 'var(--success-color)';
+        else assertividadeBarEl.style.backgroundColor = 'var(--accent-color)'; // Usando accent no lugar de success
     }
 
     function getGameEndFeedback(score) {
@@ -112,22 +121,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadStoryNode(nodeId) {
+        if (!storyTextEl) return; // Sai se os elementos do jogo não existirem
+
         const node = storyNodes.find(n => n.id === nodeId);
         if (!node) return;
 
         currentNodeId = nodeId;
         storyTextEl.textContent = node.text;
         storyChoicesEl.innerHTML = '';
-        gameEndFeedbackEl.textContent = ''; // Limpa feedback anterior
+        if(gameEndFeedbackEl) gameEndFeedbackEl.textContent = '';
 
         if (node.choices.length === 0) {
             audienceReactionEl.textContent = `Sua pontuação final de assertividade foi ${assertividadeScore}%.`;
-            gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore);
+            if(gameEndFeedbackEl) gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore);
             reiniciarJogoBtn.style.display = 'block';
-            reiniciarJogoBtn.focus(); // Foco no botão de reiniciar
+            reiniciarJogoBtn.focus();
             return;
         }
-        reiniciarJogoBtn.style.display = 'none';
+        if(reiniciarJogoBtn) reiniciarJogoBtn.style.display = 'none';
 
         node.choices.forEach(choice => {
             const button = document.createElement('button');
@@ -139,78 +150,115 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             storyChoicesEl.appendChild(button);
         });
-        if(storyChoicesEl.firstChild) storyChoicesEl.firstChild.focus(); // Foco na primeira opção
+        if(storyChoicesEl.firstChild) storyChoicesEl.firstChild.focus();
     }
     
-    reiniciarJogoBtn.addEventListener('click', () => {
-        assertividadeScore = 50;
-        updateAssertividade(0);
-        audienceReactionEl.textContent = "Aguardando sua primeira ação...";
-        loadStoryNode(0);
-    });
+    if (reiniciarJogoBtn) {
+        reiniciarJogoBtn.addEventListener('click', () => {
+            assertividadeScore = 50;
+            updateAssertividade(0);
+            if(audienceReactionEl) audienceReactionEl.textContent = "Aguardando sua primeira ação...";
+            loadStoryNode(0);
+        });
+    }
 
-    // --- PARTE 3: INFOGRÁFICO CRIATIVO ---
+    // --- PARTE 3: INFOGRÁFICO CRIATIVO (DECODIFICADOR) ---
     const bodyPoints = document.querySelectorAll('.body-point');
     const popupOverlay = document.getElementById('info-popup-overlay');
     const popup = document.getElementById('body-info-popup');
     const popupTitle = document.getElementById('popup-title');
     const popupText = document.getElementById('popup-text');
     const closePopupButton = document.getElementById('close-popup');
-    let lastFocusedElement = null; // Para retornar o foco
+    let lastFocusedElement = null;
 
     const bodyInfo = {
-    head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância ou encorajamento." },
-    eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse. Piscar excessivamente pode denotar nervosismo." },
-    shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." },
-    torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse e engajamento. Inclinar-se para trás pode indicar ceticismo ou distanciamento. Uma postura ereta é sinal de autoconfiança." },
-    arm_left: { title: "Braço Esquerdo", text: "Gestos com o braço esquerdo podem complementar a fala. Braços abertos sugerem receptividade, enquanto cruzá-los pode indicar defesa ou fechamento." },
-    arm_right: { title: "Braço Direito", text: "Similar ao braço esquerdo, o posicionamento e gestos do braço direito contribuem para a mensagem geral de abertura ou reserva." },
-    hand_left: { title: "Mão Esquerda", text: "Gestos com as mãos são poderosos. A mão esquerda pode ser usada para enfatizar pontos. Palmas abertas indicam honestidade; esconder as mãos pode gerar desconfiança." },
-    hand_right: { title: "Mão Direita", text: "A mão direita frequentemente lidera gestos de cumprimento ou ênfase. Mãos inquietas podem denunciar nervosismo." },
-    // Mantendo genéricos caso precise no futuro ou para simplificar
-    arms: { title: "Braços", text: "Braços descruzados e ao lado do corpo ou gesticulando abertamente sugerem receptividade. Braços cruzados podem indicar defesa, fechamento ou discordância." },
-    hands: { title: "Mãos", text: "Gestos com as mãos podem enfatizar pontos e transmitir energia. Mãos nos bolsos podem parecer desinteresse. Esconder as mãos pode gerar desconfiança. Palmas abertas indicam honestidade." },
-    legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." }
-};
+        head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância ou encorajamento." },
+        eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse. Piscar excessivamente pode denotar nervosismo." },
+        shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." },
+        torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse e engajamento. Inclinar-se para trás pode indicar ceticismo ou distanciamento. Uma postura ereta é sinal de autoconfiança." },
+        arm_left: { title: "Braço Esquerdo (Personagem)", text: "Gestos com o braço esquerdo podem complementar a fala. Braços abertos sugerem receptividade, enquanto cruzá-los pode indicar defesa ou fechamento." },
+        arm_right: { title: "Braço Direito (Personagem)", text: "Similar ao braço esquerdo, o posicionamento e gestos do braço direito contribuem para a mensagem geral de abertura ou reserva." },
+        hand_left: { title: "Mão Esquerda (Personagem)", text: "Gestos com as mãos são poderosos. A mão esquerda pode ser usada para enfatizar pontos. Palmas abertas indicam honestidade; esconder as mãos pode gerar desconfiança." },
+        hand_right: { title: "Mão Direita (Personagem)", text: "A mão direita frequentemente lidera gestos de cumprimento ou ênfase. Mãos inquietas podem denunciar nervosismo." },
+        legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." }
+    };
 
     function openPopup(area) {
-        if (bodyInfo[area]) {
-            lastFocusedElement = document.activeElement; // Salva o elemento focado
+        if (bodyInfo[area] && popupOverlay && popupTitle && popupText && closePopupButton) { // Verifica elementos
+            lastFocusedElement = document.activeElement;
             popupTitle.textContent = bodyInfo[area].title;
             popupText.textContent = bodyInfo[area].text;
             popupOverlay.classList.add('visible');
-            closePopupButton.focus(); // Foca no botão de fechar dentro do popup
+            closePopupButton.focus();
         }
     }
 
     function closePopup() {
-        popupOverlay.classList.remove('visible');
-        if (lastFocusedElement) {
-            lastFocusedElement.focus(); // Retorna o foco ao elemento original
+        if (popupOverlay) {
+            popupOverlay.classList.remove('visible');
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
         }
     }
 
-    bodyPoints.forEach(point => {
-        point.addEventListener('click', () => {
-            const area = point.dataset.area;
-            openPopup(area);
+    if (bodyPoints.length > 0) {
+        bodyPoints.forEach(point => {
+            point.addEventListener('click', () => {
+                const area = point.dataset.area;
+                openPopup(area);
+            });
         });
-    });
-
-    closePopupButton.addEventListener('click', closePopup);
-    popupOverlay.addEventListener('click', (event) => {
-        if (event.target === popupOverlay) { // Só fecha se clicar no overlay, não no popup
-            closePopup();
-        }
-    });
+    }
+    if (closePopupButton) {
+        closePopupButton.addEventListener('click', closePopup);
+    }
+    if (popupOverlay) {
+        popupOverlay.addEventListener('click', (event) => {
+            if (event.target === popupOverlay) {
+                closePopup();
+            }
+        });
+    }
     window.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && popupOverlay.classList.contains('visible')) {
+        if (event.key === 'Escape' && popupOverlay && popupOverlay.classList.contains('visible')) {
             closePopup();
         }
     });
 
-    // Inicializar as partes
-    carregarSituacao(situacaoAtualIndex);
-    loadStoryNode(currentNodeId);
-    updateAssertividade(0);
+    // --- ANIMAÇÃO DE ROLAGEM ---
+    const animatedElements = document.querySelectorAll('[data-animate-on-scroll]');
+    const flowBlocksToAnimate = document.querySelectorAll('.flow-block'); // Animar todos os flow-blocks
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15 // Um pouco mais cedo para flow-blocks maiores
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observerInstance) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                if (!entry.target.hasAttribute('data-animate-on-scroll')) { // Para os flow-blocks, animar uma vez
+                    observerInstance.unobserve(entry.target);
+                } else if (entry.target.closest('.stats-grid .stat-item')) { // Elementos dentro do grid, podem reanimar se quiser
+                    // observerInstance.unobserve(entry.target); // Descomente para animar uma vez os stat-items
+                }
+            }
+        });
+    }, observerOptions);
+
+    animatedElements.forEach(el => scrollObserver.observe(el));
+    flowBlocksToAnimate.forEach(el => scrollObserver.observe(el)); // Observar também os flow-blocks
+
+
+    // Inicializar as partes que existem
+    if (document.getElementById('situacao-texto')) {
+        carregarSituacao(situacaoAtualIndex);
+    }
+    if (document.getElementById('story-text')) {
+        loadStoryNode(currentNodeId);
+        updateAssertividade(0);
+    }
 });
