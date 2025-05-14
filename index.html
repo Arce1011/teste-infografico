@@ -3,17 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste GitHub Pages</title>
+    <title>Termômetro de Impacto da Comunicação</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Meu Teste para GitHub Pages</h1>
-        <p>Este é um exemplo simples para testar a hospedagem.</p>
-        <button id="meuBotao">Clique em Mim!</button>
-        <div id="mensagemArea">
-            <!-- A mensagem do JavaScript aparecerá aqui -->
+        <h1>Termômetro de Impacto da Comunicação</h1>
+        <p class="intro">Veja como sua comunicação não verbal pode reforçar ou contradizer sua mensagem verbal.</p>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="verbal-phrase">1. Escolha uma Frase Verbal:</label>
+                <select id="verbal-phrase">
+                    <option value="entendi">Sim, entendi o projeto.</option>
+                    <option value="sugestoes">Estou aberto(a) a sugestões.</option>
+                    <option value="gostei-ideia">Gostei da sua ideia.</option>
+                    <option value="prazo">Conseguiremos cumprir o prazo.</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="non-verbal-package">2. Escolha o Pacote Não Verbal:</label>
+                <select id="non-verbal-package">
+                    <!-- Opções serão preenchidas pelo JavaScript -->
+                </select>
+            </div>
         </div>
+
+        <div class="dashboard">
+            <div class="thermometer-container">
+                <div class="thermometer-track">
+                    <div id="thermometer-fill" class="thermometer-fill"></div>
+                </div>
+                <div class="thermometer-labels">
+                    <span>Congruente</span>
+                    <span>Neutra</span>
+                    <span>Confusa</span>
+                </div>
+            </div>
+            <div id="result-display" class="result-display">
+                <h2 id="result-title">Selecione as opções</h2>
+                <p id="result-description">A combinação será analisada aqui.</p>
+            </div>
+        </div>
+         <p class="footer-note">Este é um exemplo simplificado para ilustrar o conceito.</p>
     </div>
 
     <script src="script.js"></script>
