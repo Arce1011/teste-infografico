@@ -33,6 +33,7 @@
                     </svg>
                 </div>
                 <p>Mais de 70% da nossa comunicação é <strong>não verbal</strong>. Ignorá-la é perder grande parte da mensagem!</p>
+                <p style="font-size:0.7rem; color: var(--text-light-accent); margin-top: var(--spacing-xs);"><em><small>(Baseado em estudos como os de Albert Mehrabian sobre comunicação de sentimentos e atitudes)</small></em></p>
             </div>
 
             <div id="congruencia-quiz" class="interactive-module quiz-module glass-effect" data-animate-on-scroll>
@@ -42,6 +43,8 @@
                 </div>
                 <div class="congruencia-explanation">
                     <p><strong>Congruência</strong> é o alinhamento entre sua mensagem verbal (o que você diz) e sua comunicação não verbal (como você diz). Incongruências geram ruídos, desconfiança e mal-entendidos.</p>
+                    <p class="quiz-instruction"><em>Instrução: Leia cada situação e avalie se a comunicação demonstrada é congruente ou não congruente com a mensagem verbal.</em></p>
+                    <p class="quiz-theoretical-note"><small>Dica: Incongruências atuam como "ruído" na comunicação, um conceito explorado por teóricos como Shannon & Weaver, dificultando a correta interpretação da mensagem.</small></p>
                 </div>
                 <div class="quiz-container">
                     <div id="situacao-texto">Carregando...</div>
@@ -51,8 +54,8 @@
                     </div>
                     <div id="feedback-congruencia" class="feedback" aria-live="polite"></div>
                     <nav class="navegacao-quiz">
-                        <button class="nav-arrow-button" id="anterior-situacao" disabled title="Anterior">❮</button>
-                        <button class="nav-arrow-button" id="proxima-situacao" title="Próxima">❯</button>
+                        <button class="nav-arrow-button" id="anterior-situacao" disabled title="Anterior" aria-label="Situação anterior do quiz">❮</button>
+                        <button class="nav-arrow-button" id="proxima-situacao" title="Próxima" aria-label="Próxima situação do quiz">❯</button>
                     </nav>
                 </div>
             </div>
@@ -66,7 +69,7 @@
                     <div id="story-text">Carregando cenário...</div>
                     <div id="story-choices" class="choices-grid"></div>
                     <div class="story-feedback">
-                        <p id="audience-reaction">Aguardando sua escolha...</p>
+                        <p id="audience-reaction" aria-live="polite">Aguardando sua escolha...</p>
                     </div>
                     <div class="story-metrics">
                         <div class="progress-bar-container"><div id="assertividade-bar" class="progress-bar-fill">50%</div></div>
@@ -80,7 +83,7 @@
                 <h3><i class="fas fa-clipboard-check icon" aria-hidden="true"></i>Checklist: Clareza Não Verbal</h3>
                 <div class="checklist-progress-container">
                     <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
-                    <span class="checklist-progress-text">0/6</span>
+                    <span class="checklist-progress-text">0/7</span>
                 </div>
                 <ul class="checklist">
                     <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Postura ereta e aberta</li>
@@ -89,8 +92,10 @@
                     <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Sorriso genuíno (contextual)</li>
                     <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Expressão facial congruente</li>
                     <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Gestos naturais e mãos visíveis</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Tom de voz firme e acolhedor</li>
                 </ul>
-                <p class="checklist-tip">Consciência e prática levam à maestria!</p>
+                <p class="checklist-tip">Consciência e prática levam à maestria! Antes da sua próxima reunião ou apresentação, use este checklist como guia.</p>
+                <p id="checklist-feedback" class="feedback" style="margin-top: var(--spacing-xs); text-align:center; display:none;"></p>
             </section>
 
              <section class="quotes-slider-block-container glass-effect" data-animate-on-scroll>
@@ -98,20 +103,20 @@
                 <div class="quotes-slider">
                     <div class="quote-slide active-quote">
                         <p class="quote-text">"O aspecto mais importante da comunicação é ouvir o que não foi dito."</p>
-                        <p class="quote-author">- Peter Drucker</p>
+                        <p class="quote-author">- Peter Drucker <small><em>(Consultor de gestão e autor)</em></small></p>
                     </div>
                     <div class="quote-slide">
-                        <p class="quote-text">"As palavras mais importantes são aquelas que permanecem não ditas."</p>
-                        <p class="quote-author">- Sêneca</p>
+                        <p class="quote-text">"Os desgostos da vida ensinam a arte do silêncio."</p>
+                        <p class="quote-author">- Sêneca <small><em>(Filósofo estoico romano)</em></small></p>
                     </div>
                     <div class="quote-slide">
                         <p class="quote-text">"Seu corpo comunica o tempo todo, mesmo quando você não diz uma palavra."</p>
-                        <p class="quote-author">- Amy Cuddy</p>
+                        <p class="quote-author">- Amy Cuddy <small><em>(Psicóloga social e pesquisadora)</em></small></p>
                     </div>
                 </div>
                 <div class="quote-nav">
-                    <button class="nav-arrow-button prev-quote" title="Citação Anterior">❮</button>
-                    <button class="nav-arrow-button next-quote" title="Próxima Citação">❯</button>
+                    <button class="nav-arrow-button prev-quote" title="Citação Anterior" aria-label="Citação anterior">❮</button>
+                    <button class="nav-arrow-button next-quote" title="Próxima Citação" aria-label="Próxima citação">❯</button>
                 </div>
             </section>
         </main>
@@ -136,17 +141,37 @@
                         <button class="body-point" data-area="legs" style="top: 73%; left: 50%;" aria-label="Informações sobre Pernas e Pés"></button>
                     </div>
                 </div>
+                <p class="decoder-note" style="font-size: 0.75rem; text-align: center; color: var(--text-light-accent); margin-top: var(--spacing-xs);">
+                    <em>Observação: A interpretação destes sinais pode variar com o contexto e a cultura. Use como um guia geral.</em>
+                </p>
             </section>
+
+            <section class="stats-block glass-effect" data-animate-on-scroll>
+                <h4><i class="fas fa-percentage icon" aria-hidden="true"></i>Impacto em Números</h4>
+                <div class="stats-grid">
+                    <div class="stat-item" data-animate-on-scroll>
+                        <div class="stat-value">55%</div><div class="stat-description">Linguagem Corporal</div>
+                    </div>
+                    <div class="stat-item" data-animate-on-scroll>
+                        <div class="stat-value">38%</div><div class="stat-description">Tom de Voz</div>
+                    </div>
+                    <div class="stat-item" data-animate-on-scroll>
+                        <div class="stat-value">7%</div><div class="stat-description">Palavras</div>
+                    </div>
+                </div>
+                <p><em><small>(Estes percentuais, popularizados por Albert Mehrabian, referem-se à comunicação de sentimentos e atitudes, destacando a importância dos canais não verbais e vocais na percepção da mensagem emocional.)</small></em></p>
+            </section>
+
             <div class="fact-card small-fact bottom-fact glass-effect" data-animate-on-scroll>
                  <i class="fas fa-brain icon fact-icon-small" aria-hidden="true"></i>
-                <p>Empresas com alta <strong>inteligência emocional</strong> (que inclui leitura não verbal) tendem a ter melhor desempenho e menor rotatividade.</p>
+                <p>Empresas com alta <strong>inteligência emocional</strong> (que inclui leitura não verbal) tendem a ter melhor desempenho e menor rotatividade. <small><em>(Conceito popularizado por Daniel Goleman)</em></small></p>
             </div>
         </aside>
 
-        <div class="canvas-bottom-row"> <!-- Container para a linha inferior -->
+        <div class="canvas-bottom-row"> 
             <section class="ruídos-comunicacao-block glass-effect" data-animate-on-scroll>
                 <h4><i class="fas fa-volume-mute icon" aria-hidden="true"></i>Entendendo os Ruídos</h4>
-                <p>Ruídos são interferências que distorcem a mensagem. Clique em cada tipo abaixo para ver exemplos e dicas de como evitá-los:</p>
+                <p>Ruídos são interferências que distorcem a mensagem. Conforme o modelo de comunicação de Shannon & Weaver, podem impedir que a mensagem chegue clara. Clique em cada tipo abaixo para ver exemplos e dicas de como evitá-los:</p>
                 <div class="ruidos-accordion">
                     <div class="ruido-item">
                         <button class="ruido-item-header" aria-expanded="false" aria-controls="ruido-content-1">
@@ -154,7 +179,7 @@
                             <span class="ruido-toggle-icon" aria-hidden="true">+</span>
                         </button>
                         <div class="ruido-item-content" id="ruido-content-1" hidden>
-                            <p><em>Definição:</em> Linguagem corporal contradizendo a fala.</p>
+                            <p><em>Definição:</em> Linguagem corporal (postura, gestos) contradizendo a fala. <em>(Distinto de "Sinais Mistos", que foca mais em tom de voz e expressões faciais em relação à fala.)</em></p>
                             <p><em>Exemplo:</em> Alguém diz "Estou muito confiante sobre este projeto!" enquanto mexe as mãos nervosamente e evita contato visual.</p>
                             <p><em>Como evitar:</em> Pratique a autoconsciência. Antes de uma interação importante, alinhe sua intenção com sua postura e expressão.</p>
                         </div>
@@ -177,27 +202,34 @@
                         </button>
                         <div class="ruido-item-content" id="ruido-content-3" hidden>
                             <p><em>Definição:</em> Gestos, posturas ou proximidade física que têm significados diferentes em culturas distintas.</p>
-                            <p><em>Exemplo:</em> O gesto de "OK" (polegar e indicador se tocando) é positivo em algumas culturas, mas ofensivo em outras.</p>
+                            <p><em>Exemplo:</em> O gesto de "OK" (polegar e indicador se tocando) é positivo em algumas culturas, mas ofensivo em outras. Outro exemplo: contato visual direto prolongado pode ser sinal de respeito em algumas culturas ocidentais, mas interpretado como rude ou desafiador em certas culturas orientais ou indígenas.</p>
                             <p><em>Como evitar:</em> Ao interagir com pessoas de diferentes origens culturais, seja observador, evite gestos muito enfáticos e, se possível, informe-se sobre etiqueta cultural básica.</p>
+                        </div>
+                    </div>
+                    <div class="ruido-item">
+                        <button class="ruido-item-header" aria-expanded="false" aria-controls="ruido-content-4">
+                            <strong>Ambiente Ruidoso (Físico)</strong>
+                            <span class="ruido-toggle-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="ruido-item-content" id="ruido-content-4" hidden>
+                            <p><em>Definição:</em> Interferências sonoras ou visuais no ambiente que dificultam a concentração e a clareza da mensagem.</p>
+                            <p><em>Exemplo:</em> Barulho de construção, conversas paralelas altas, má iluminação em uma videochamada, notificações constantes no celular durante uma conversa.</p>
+                            <p><em>Como evitar:</em> Escolha ambientes adequados para conversas importantes. Se não puder controlar o ruído, fale mais perto, peça para repetir informações ou use ferramentas para reduzir o barulho (fones com cancelamento).</p>
+                        </div>
+                    </div>
+                    <div class="ruido-item">
+                        <button class="ruido-item-header" aria-expanded="false" aria-controls="ruido-content-5">
+                            <strong>Preconceito ou Viés (Psicológico)</strong>
+                            <span class="ruido-toggle-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="ruido-item-content" id="ruido-content-5" hidden>
+                            <p><em>Definição:</em> Filtros pessoais, estereótipos ou suposições que o emissor ou receptor têm e que distorcem a interpretação da mensagem.</p>
+                            <p><em>Exemplo:</em> Um gerente que não leva a sério a sugestão de um funcionário mais novo por achar que "ele não tem experiência", independentemente da qualidade da ideia.</p>
+                            <p><em>Como evitar:</em> Pratique a escuta ativa e a empatia. Questione seus próprios pressupostos e esteja aberto a diferentes perspectivas. Foque na mensagem, não apenas no mensageiro.</p>
                         </div>
                     </div>
                 </div>
                 <p class="tip-ruido" style="margin-top: var(--spacing-md);"><strong>Dica Geral:</strong> Na dúvida, pergunte! Melhor esclarecer do que assumir e gerar um mal-entendido.</p>
-            </section>
-
-            <section class="stats-block glass-effect" data-animate-on-scroll>
-                <h4><i class="fas fa-percentage icon" aria-hidden="true"></i>Impacto em Números</h4>
-                <div class="stats-grid">
-                    <div class="stat-item" data-animate-on-scroll>
-                        <div class="stat-value">55%</div><div class="stat-description">Linguagem Corporal</div>
-                    </div>
-                    <div class="stat-item" data-animate-on-scroll>
-                        <div class="stat-value">38%</div><div class="stat-description">Tom de Voz</div>
-                    </div>
-                    <div class="stat-item" data-animate-on-scroll>
-                        <div class="stat-value">7%</div><div class="stat-description">Palavras</div>
-                    </div>
-                </div>
             </section>
 
              <section id="consequencias-ruido" class="interactive-module glass-effect" data-animate-on-scroll>
@@ -255,7 +287,7 @@
             </section>
         </div>
 
-        <div class="canvas-full-width-row"> <!-- Nova linha para a comunicação em ação -->
+        <div class="canvas-full-width-row">
              <section id="comunicacao-em-acao" class="interactive-module glass-effect" data-animate-on-scroll>
                 <h3><i class="fas fa-comments-dollar icon" aria-hidden="true"></i>Comunicação em Ação: O Custo dos Ruídos</h3>
                 <p class="module-description">
@@ -299,10 +331,12 @@
 
         <footer class="canvas-footer">
             <p>Infográfico Interativo CNV | 2024</p>
+            <p style="font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-top: 2px;">
+                Conteúdo inspirado em conceitos de comunicação de autores como Shannon & Weaver, Mehrabian, Penteado, Stefanelli, Goleman, entre outros.
+            </p>
         </footer>
     </div>
 
-    <!-- Tooltip movido para fora do canvas para evitar problemas de overflow -->
     <div id="decoder-tooltip" class="decoder-tooltip glass-effect">
         <h4 id="tooltip-title"></h4>
         <p id="tooltip-text"></p>

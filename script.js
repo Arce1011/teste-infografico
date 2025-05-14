@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const checklistItems = document.querySelectorAll('.checklist li');
     const checklistProgressBarFill = document.querySelector('.checklist-progress-fill');
     const checklistProgressText = document.querySelector('.checklist-progress-text');
+    const checklistFeedbackEl = document.getElementById('checklist-feedback'); 
+
     if (checklistItems.length > 0 && checklistProgressBarFill && checklistProgressText) {
         const totalChecklistItems = checklistItems.length;
         function updateChecklistProgress() {
@@ -23,6 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const progressPercentage = totalChecklistItems > 0 ? (checkedItems / totalChecklistItems) * 100 : 0;
             checklistProgressBarFill.style.width = `${progressPercentage}%`;
             checklistProgressText.textContent = `${checkedItems}/${totalChecklistItems}`;
+
+            if (checklistFeedbackEl) { 
+                if (checkedItems === totalChecklistItems && totalChecklistItems > 0) {
+                    checklistFeedbackEl.textContent = "Checklist completo! Você está mais preparado(a) para uma comunicação clara.";
+                    checklistFeedbackEl.style.display = 'block';
+                    checklistFeedbackEl.classList.add('correto'); 
+                } else {
+                    checklistFeedbackEl.style.display = 'none';
+                    checklistFeedbackEl.classList.remove('correto');
+                }
+            }
         }
         checklistItems.forEach(item => {
             item.addEventListener('click', () => {
@@ -34,7 +47,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- QUIZ DE CONGRUÊNCIA ---
-    const situacoesCongruencia = [ { id: 1, texto: "Maria diz 'Estou muito feliz com o resultado!' sorrindo amplamente, com postura aberta e olhos brilhando.", respostaCorreta: "congruente", feedbackCongruente: "Correto! A linguagem verbal e não verbal de Maria estão alinhadas, transmitindo felicidade genuína. Isso gera confiança e clareza.", feedbackNaoCongruente: "Na verdade, esta situação é um exemplo de congruência. A linguagem verbal e não verbal de Maria estão perfeitamente alinhadas, o que é ideal." }, { id: 2, texto: "Carlos afirma 'Claro, estou prestando total atenção', enquanto olha para o celular e balança a perna rapidamente.", respostaCorreta: "nao-congruente", feedbackCongruente: "Incorreto. Apesar da afirmação verbal, a atenção ao celular e a perna inquieta são sinais claros de distração ou nervosismo, criando um ruído na comunicação.", feedbackNaoCongruente: "Correto! A fala de Carlos contradiz sua linguagem corporal. Essa incongruência gera desconfiança e pode levar a mal-entendidos sobre seu real nível de atenção." }, { id: 3, texto: "Ana diz 'Este projeto é prioridade máxima para mim', mas seu tom de voz é monocórdico e ela evita contato visual ao discutir os prazos.", respostaCorreta: "nao-congruente", feedbackCongruente: "Analise novamente. O tom de voz apático e a falta de contato visual de Ana contradizem sua afirmação de prioridade, sugerindo desinteresse ou insegurança.", feedbackNaoCongruente: "Correto! A incongruência entre as palavras de Ana e seus sinais não verbais (tom de voz, olhar) cria um ruído significativo, questionando seu comprometimento real com o projeto." }, { id: 4, texto: "Durante uma apresentação, o palestrante sorri constantemente, mesmo ao falar de dados preocupantes sobre o desempenho da empresa.", respostaCorreta: "nao-congruente", feedbackCongruente: "Pense bem. Um sorriso constante e inadequado ao contexto (dados preocupantes) é uma forma de incongruência. Pode transmitir nervosismo, falsidade ou falta de seriedade.", feedbackNaoCongruente: "Correto! O sorriso do palestrante é incongruente com a gravidade da informação. Isso pode confundir a audiência ou fazer com que não levem os dados a sério, gerando ruído." } ];
+    // Modificada a estrutura dos feedbacks para feedbackAcerto e feedbackErro
+    const situacoesCongruencia = [
+        {
+            id: 1,
+            texto: "Maria diz 'Estou muito feliz com o resultado!' sorrindo amplamente, com postura aberta e olhos brilhando.",
+            respostaCorreta: "congruente",
+            feedbackAcerto: "Correto! A linguagem verbal e não verbal de Maria estão alinhadas, transmitindo felicidade genuína. Isso gera confiança e clareza.",
+            feedbackErro: "Na verdade, esta situação é um exemplo de congruência. A linguagem verbal e não verbal de Maria estão perfeitamente alinhadas, o que é ideal."
+        },
+        {
+            id: 2,
+            texto: "Carlos afirma 'Claro, estou prestando total atenção', enquanto olha para o celular e balança a perna rapidamente.",
+            respostaCorreta: "nao-congruente",
+            feedbackAcerto: "Correto! A fala de Carlos contradiz sua linguagem corporal. Essa incongruência gera desconfiança e pode levar a mal-entendidos sobre seu real nível de atenção.",
+            feedbackErro: "Incorreto. Apesar da afirmação verbal, a atenção ao celular e a perna inquieta são sinais claros de distração ou nervosismo, criando um ruído na comunicação."
+        },
+        {
+            id: 3,
+            texto: "Ana diz 'Este projeto é prioridade máxima para mim', mas seu tom de voz é monocórdico e ela evita contato visual ao discutir os prazos.",
+            respostaCorreta: "nao-congruente",
+            feedbackAcerto: "Correto! A incongruência entre as palavras de Ana e seus sinais não verbais (tom de voz, olhar) cria um ruído significativo, questionando seu comprometimento real com o projeto.",
+            feedbackErro: "Analise novamente. O tom de voz apático e a falta de contato visual de Ana contradizem sua afirmação de prioridade, sugerindo desinteresse ou insegurança."
+        },
+        {
+            id: 4,
+            texto: "Durante uma apresentação, o palestrante sorri constantemente, mesmo ao falar de dados preocupantes sobre o desempenho da empresa.",
+            respostaCorreta: "nao-congruente",
+            feedbackAcerto: "Correto! O sorriso do palestrante é incongruente com a gravidade da informação. Isso pode confundir a audiência ou fazer com que não levem os dados a sério, gerando ruído.",
+            feedbackErro: "Pense bem. Um sorriso constante e inadequado ao contexto (dados preocupantes) é uma forma de incongruência. Pode transmitir nervosismo, falsidade ou falta de seriedade."
+        }
+    ];
     let situacaoAtualIndex = 0;
     const situacaoTextoEl = document.getElementById('situacao-texto');
     const feedbackCongruenciaEl = document.getElementById('feedback-congruencia');
@@ -46,25 +89,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function atualizarQuizProgressIndicator() { if (quizProgressEl) { quizProgressEl.textContent = `${situacaoAtualIndex + 1}/${situacoesCongruencia.length}`; } }
     function carregarSituacao(index) { if (!situacaoTextoEl || !feedbackCongruenciaEl || !opcoesCongruenciaBotoes.length || !btnAnterior || !btnProxima) return; const situacao = situacoesCongruencia[index]; situacaoTextoEl.firstChild.textContent = situacao.texto; feedbackCongruenciaEl.innerHTML = ''; feedbackCongruenciaEl.className = 'feedback'; opcoesCongruenciaBotoes.forEach(btn => btn.disabled = false); btnAnterior.disabled = index === 0; btnProxima.disabled = index === situacoesCongruencia.length - 1; atualizarQuizProgressIndicator(); }
+    
     if (opcoesCongruenciaBotoes.length > 0 && btnProxima && btnAnterior && situacaoTextoEl && feedbackCongruenciaEl) {
         opcoesCongruenciaBotoes.forEach(botao => {
             botao.addEventListener('click', () => {
                 const respostaUsuario = botao.dataset.resposta;
                 const situacaoAtual = situacoesCongruencia[situacaoAtualIndex];
                 opcoesCongruenciaBotoes.forEach(btn => btn.disabled = true);
+
+                // Lógica de feedback corrigida usando feedbackAcerto e feedbackErro
                 if (respostaUsuario === situacaoAtual.respostaCorreta) {
-                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackCongruente;
+                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackAcerto;
                     feedbackCongruenciaEl.classList.add('correto', 'correct-answer-glow');
                     setTimeout(() => { feedbackCongruenciaEl.classList.remove('correct-answer-glow'); }, GLOW_EFFECT_DURATION);
                 } else {
-                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackNaoCongruente;
+                    feedbackCongruenciaEl.textContent = situacaoAtual.feedbackErro;
                     feedbackCongruenciaEl.classList.add('incorreto');
                 }
             });
         });
         btnProxima.addEventListener('click', () => { if (situacaoAtualIndex < situacoesCongruencia.length - 1) { situacaoAtualIndex++; carregarSituacao(situacaoAtualIndex); } });
         btnAnterior.addEventListener('click', () => { if (situacaoAtualIndex > 0) { situacaoAtualIndex--; carregarSituacao(situacaoAtualIndex); } });
-        if (situacaoTextoEl.firstChild) { // Garante que o nó de texto existe
+        if (situacaoTextoEl.firstChild) { 
             carregarSituacao(situacaoAtualIndex);
         }
     }
@@ -78,10 +124,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameEndFeedbackEl = document.getElementById('game-end-feedback');
     const INITIAL_ASSERTIVENESS_SCORE = 50;
     let assertividadeScore = INITIAL_ASSERTIVENESS_SCORE;
-    const storyNodes = [ { id: 0, text: "Reunião de equipe. Ana apresenta uma ideia, mas sua voz está baixa e ela evita contato visual, mexendo em uma caneta.", choices: [ { text: "Interromper e pedir para ela falar mais alto e olhar para o grupo.", effect: -10, reaction: "Ana parece constrangida. O grupo fica tenso.", nextNode: 1, correct: false }, { text: "Aguardar ela terminar, depois perguntar gentilmente se pode repetir os pontos chave, olhando para ela com encorajamento.", effect: 15, reaction: "Ana se sente mais à vontade e repete com mais clareza. O grupo engaja.", nextNode: 1, correct: true }, { text: "Ignorar a dificuldade de Ana e começar a discutir a ideia com base no pouco que entendeu.", effect: -15, reaction: "Ana se sente desvalorizada. A discussão fica confusa e com ruídos.", nextNode: 1, correct: false } ] }, { id: 1, text: "Carlos discorda de uma proposta de Bruno. Ele cruza os braços, franze a testa e diz com tom ríspido: 'Isso não vai funcionar de jeito nenhum.'", choices: [ { text: "Responder no mesmo tom: 'Claro que vai! Você que não entendeu!'", effect: -20, reaction: "O conflito escala. A reunião se torna improdutiva.", nextNode: 2, correct: false }, { text: "Manter a calma, validar o sentimento: 'Percebo que você tem fortes objeções, Carlos. Pode nos explicar seus principais pontos de preocupação?'", effect: 20, reaction: "Carlos se acalma um pouco e explica. Abre-se espaço para entendimento.", nextNode: 2, correct: true }, { text: "Ficar em silêncio e deixar Bruno se defender sozinho.", effect: -5, reaction: "A tensão permanece. Bruno se sente isolado.", nextNode: 2, correct: false } ] }, { id: 2, text: "Durante uma videochamada importante, você percebe que seu colega, Marcos, está claramente respondendo e-mails, olhando para outra tela.", choices: [ { text: "Chamar a atenção dele publicamente: 'Marcos, você poderia prestar atenção, por favor?'", effect: -10, reaction: "Marcos fica defensivo. O clima da reunião piora.", nextNode: 3, correct: false }, { text: "Enviar uma mensagem privada rápida: 'Marcos, sua contribuição é importante aqui. Tudo bem aí?'", effect: 10, reaction: "Marcos pede desculpas e volta o foco. A reunião prossegue melhor.", nextNode: 3, correct: true }, { text: "Não dizer nada e assumir que ele não está interessado.", effect: -5, reaction: "Você perde a contribuição de Marcos e pode gerar um ressentimento silencioso.", nextNode: 3, correct: false } ] }, { id: 3, text: "A habilidade de ler e gerenciar a comunicação não verbal é essencial para um ambiente de trabalho harmonioso e produtivo.", choices: [] } ];
+    const storyNodes = [
+        { id: 0, text: "Reunião de equipe. Ana, sua colega, apresenta uma ideia, mas sua voz está baixa e ela evita contato visual, mexendo em uma caneta.", choices: [ { text: "Interromper e pedir para ela falar mais alto e olhar para o grupo.", effect: -10, reaction: "Ana parece constrangida. O grupo fica tenso.", nextNode: 1, correct: false }, { text: "Aguardar ela terminar, depois perguntar gentilmente se pode repetir os pontos chave, olhando para ela com encorajamento.", effect: 15, reaction: "Ana se sente mais à vontade e repete com mais clareza. O grupo engaja.", nextNode: 1, correct: true }, { text: "Ignorar a dificuldade de Ana e começar a discutir a ideia com base no pouco que entendeu.", effect: -15, reaction: "Ana se sente desvalorizada. A discussão fica confusa e com ruídos.", nextNode: 1, correct: false } ] },
+        { id: 1, text: "Ainda na mesma reunião, após a apresentação de Ana, Carlos discorda veementemente de uma proposta de Bruno. Ele cruza os braços, franze a testa e diz com tom ríspido: 'Isso não vai funcionar de jeito nenhum.'", choices: [ { text: "Responder no mesmo tom: 'Claro que vai! Você que não entendeu!'", effect: -20, reaction: "O conflito escala. A reunião se torna improdutiva.", nextNode: 2, correct: false }, { text: "Manter a calma, validar o sentimento: 'Percebo que você tem fortes objeções, Carlos. Pode nos explicar seus principais pontos de preocupação?'", effect: 20, reaction: "Carlos se acalma um pouco e explica. Abre-se espaço para entendimento.", nextNode: 2, correct: true }, { text: "Ficar em silêncio e deixar Bruno se defender sozinho.", effect: -5, reaction: "A tensão permanece. Bruno se sente isolado.", nextNode: 2, correct: false } ] },
+        { id: 2, text: "Durante uma videochamada importante no dia seguinte com a mesma equipe, você percebe que seu colega, Marcos, está claramente respondendo e-mails, olhando para outra tela.", choices: [ { text: "Chamar a atenção dele publicamente: 'Marcos, você poderia prestar atenção, por favor?'", effect: -10, reaction: "Marcos fica defensivo. O clima da reunião piora.", nextNode: 3, correct: false }, { text: "Enviar uma mensagem privada rápida: 'Marcos, sua contribuição é importante aqui. Tudo bem aí?'", effect: 10, reaction: "Marcos pede desculpas e volta o foco. A reunião prossegue melhor.", nextNode: 3, correct: true }, { text: "Não dizer nada e assumir que ele não está interessado.", effect: -5, reaction: "Você perde a contribuição de Marcos e pode gerar um ressentimento silencioso.", nextNode: 3, correct: false } ] },
+        { id: 3, text: "A habilidade de ler e gerenciar a comunicação não verbal é essencial para um ambiente de trabalho harmonioso e produtivo. Conflitos como os vivenciados ocorrem por ruídos na comunicação. Lembre-se: feedback construtivo e empatia são chave para reduzir falhas.", choices: [] }
+    ];
     let currentNodeId = 0;
     function updateAssertividade(change) { if (!assertividadeBarEl) return; assertividadeScore += change; assertividadeScore = Math.max(0, Math.min(100, assertividadeScore)); assertividadeBarEl.style.width = assertividadeScore + '%'; assertividadeBarEl.textContent = assertividadeScore + '%'; if (assertividadeScore < 30) assertividadeBarEl.style.backgroundColor = 'var(--accent-color)'; else if (assertividadeScore < 70) assertividadeBarEl.style.backgroundColor = 'var(--secondary-color)'; else assertividadeBarEl.style.backgroundColor = 'rgb(46, 204, 113)'; }
-    function getGameEndFeedback(score) { if (score >= 85) return "Excelente! Sua comunicação foi clara e assertiva, minimizando ruídos."; if (score >= 60) return "Bom trabalho! Você demonstrou boa percepção não verbal, continue atento aos detalhes."; if (score >= 30) return "Algumas escolhas foram boas, mas outras podem ter gerado ruído. A prática leva à melhoria!"; return "Sua comunicação precisa de mais atenção aos sinais não verbais para evitar desentendimentos. Tente novamente!"; }
+    function getGameEndFeedback(score) {
+        let baseFeedback = "";
+        if (score >= 85) baseFeedback = "Excelente! Sua comunicação foi clara e assertiva, minimizando ruídos.";
+        else if (score >= 60) baseFeedback = "Bom trabalho! Você demonstrou boa percepção não verbal, continue atento aos detalhes.";
+        else if (score >= 30) baseFeedback = "Algumas escolhas foram boas, mas outras podem ter gerado ruído. A prática leva à melhoria!";
+        else baseFeedback = "Sua comunicação precisa de mais atenção aos sinais não verbais para evitar desentendimentos. Tente novamente!";
+        return baseFeedback + " Lembre-se: a comunicação eficaz, como sugerido por teóricos, envolve reduzir ruídos e usar feedback e empatia.";
+    }
     function loadStoryNode(nodeId) { if (!storyTextEl || !storyChoicesEl || !audienceReactionEl || !gameEndFeedbackEl || !reiniciarJogoBtn) return; const node = storyNodes.find(n => n.id === nodeId); if (!node) return; currentNodeId = nodeId; storyTextEl.textContent = node.text; storyChoicesEl.innerHTML = ''; if (gameEndFeedbackEl) gameEndFeedbackEl.textContent = ''; if (node.choices.length === 0) { if(audienceReactionEl) audienceReactionEl.textContent = `Sua pontuação final de clareza foi ${assertividadeScore}%.`; if(gameEndFeedbackEl) gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore); reiniciarJogoBtn.classList.remove('hidden'); reiniciarJogoBtn.focus(); return; } reiniciarJogoBtn.classList.add('hidden'); node.choices.forEach(choice => { const button = document.createElement('button'); button.textContent = choice.text; button.classList.add('modern-button'); button.addEventListener('click', () => { updateAssertividade(choice.effect); if(audienceReactionEl) audienceReactionEl.textContent = choice.reaction; if (choice.correct) { button.classList.add('correct-choice-glow'); setTimeout(() => { button.classList.remove('correct-choice-glow'); }, GLOW_EFFECT_DURATION); } loadStoryNode(choice.nextNode); }); storyChoicesEl.appendChild(button); }); if(storyChoicesEl.firstChild) storyChoicesEl.firstChild.focus(); }
     if (reiniciarJogoBtn && storyTextEl) { reiniciarJogoBtn.addEventListener('click', () => { assertividadeScore = INITIAL_ASSERTIVENESS_SCORE; updateAssertividade(0); if(audienceReactionEl) audienceReactionEl.textContent = "Aguardando sua primeira ação..."; loadStoryNode(0); }); loadStoryNode(currentNodeId); updateAssertividade(0); }
 
@@ -90,7 +148,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const decoderTooltip = document.getElementById('decoder-tooltip');
     const tooltipTitleEl = document.getElementById('tooltip-title');
     const tooltipTextEl = document.getElementById('tooltip-text');
-    const bodyInfo = { head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância ou encorajamento." }, eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse. Piscar excessivamente pode denotar nervosismo." }, shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." }, torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse e engajamento. Inclinar-se para trás pode indicar ceticismo ou distanciamento. Uma postura ereta é sinal de autoconfiança." }, arm_left: { title: "Braço Esquerdo", text: "Gestos com o braço esquerdo podem complementar a fala. Braços abertos sugerem receptividade, enquanto cruzá-los pode indicar defesa ou fechamento." }, arm_right: { title: "Braço Direito", text: "Similar ao braço esquerdo, o posicionamento e gestos do braço direito contribuem para a mensagem geral de abertura ou reserva." }, hand_left: { title: "Mão Esquerda", text: "Gestos com as mãos são poderosos. A mão esquerda pode ser usada para enfatizar pontos. Palmas abertas indicam honestidade; esconder as mãos pode gerar desconfiança." }, hand_right: { title: "Mão Direita", text: "A mão direita frequentemente lidera gestos de cumprimento ou ênfase. Mãos inquietas podem denunciar nervosismo." }, legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." } };
+    const bodyInfo = {
+        head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância. Observe também a boca e lábios: morder os lábios ou tensão na mandíbula podem indicar nervosismo." },
+        eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse (pode ser um sinal de 'Incongruência'). Piscar excessivamente pode denotar nervosismo." },
+        shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." },
+        torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse e engajamento. Inclinar-se para trás pode indicar ceticismo ou distanciamento. Uma postura ereta é sinal de autoconfiança." },
+        arm_left: { title: "Braço Esquerdo", text: "Gestos com o braço esquerdo podem complementar a fala. Braços abertos sugerem receptividade, enquanto cruzá-los pode indicar defesa ou fechamento (um sinal de 'Incongruência' ou barreira)." },
+        arm_right: { title: "Braço Direito", text: "Similar ao braço esquerdo, o posicionamento e gestos do braço direito contribuem para a mensagem geral de abertura ou reserva." },
+        hand_left: { title: "Mão Esquerda", text: "Gestos com as mãos são poderosos. A mão esquerda pode ser usada para enfatizar pontos. Palmas abertas indicam honestidade; esconder as mãos pode gerar desconfiança." },
+        hand_right: { title: "Mão Direita", text: "A mão direita frequentemente lidera gestos de cumprimento ou ênfase. Mãos inquietas podem denunciar nervosismo." },
+        legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." }
+    };
 
     if (decoderTooltip && tooltipTitleEl && tooltipTextEl && bodyPoints.length > 0) {
         bodyPoints.forEach(point => {
@@ -111,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (x < 15) { x = 15; }
                     decoderTooltip.style.left = `${x}px`;
                     decoderTooltip.style.top = `${y}px`;
-                    void decoderTooltip.offsetWidth; // Força reflow
+                    void decoderTooltip.offsetWidth; 
                     decoderTooltip.style.transform = 'translateY(0) scale(1)';
                 }
             });
@@ -140,21 +208,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isExpanded = header.getAttribute('aria-expanded') === 'true';
                 header.setAttribute('aria-expanded', String(!isExpanded));
 
-                if (!isExpanded) { // Vai expandir
+                if (!isExpanded) { 
                     content.removeAttribute('hidden');
-                    requestAnimationFrame(() => { // Garante que 'hidden' foi removido antes de calcular scrollHeight
+                    requestAnimationFrame(() => { 
                         content.style.maxHeight = content.scrollHeight + 'px';
                         content.style.opacity = '1';
-                        content.style.paddingTop = 'var(--spacing-xs)'; // Restaurar padding
+                        content.style.paddingTop = 'var(--spacing-xs)'; 
                         content.style.paddingBottom = 'var(--spacing-md)';
                     });
-                } else { // Vai colapsar
+                } else { 
                     content.style.maxHeight = '0px';
                     content.style.opacity = '0';
                     content.style.paddingTop = '0';
                     content.style.paddingBottom = '0';
                     content.addEventListener('transitionend', function handler() {
-                        if (header.getAttribute('aria-expanded') === 'false') { // Re-check state
+                        if (header.getAttribute('aria-expanded') === 'false') { 
                            content.setAttribute('hidden', 'true');
                         }
                         content.removeEventListener('transitionend', handler);
@@ -223,15 +291,12 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                // Não desobservar itens do checklist para que possam re-animar se saírem e voltarem à vista
                 if (!entry.target.matches('.checklist li')) {
-                     // E também não desobservar os cards de consequência para permitir re-animação se necessário (opcional)
                     if (!entry.target.closest('#consequencias-ruido .consequencia-card')) {
                         observerInstance.unobserve(entry.target);
                     }
                 }
             } else {
-                // Remover 'is-visible' para re-animar ao rolar de volta (opcional, mas bom para checklist)
                 if (entry.target.matches('.checklist li') || entry.target.closest('#consequencias-ruido .consequencia-card')) {
                     entry.target.classList.remove('is-visible');
                 }
@@ -239,7 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
     animatedElements.forEach(el => scrollObserver.observe(el));
-    // Certificar que os itens de checklist sem o atributo data-animate-on-scroll também sejam observados
     document.querySelectorAll('.checklist li:not([data-animate-on-scroll])').forEach(item => {
         scrollObserver.observe(item);
     });
