@@ -3,42 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analisador de Congruência na Comunicação</title>
+    <title>Mestre da Comunicação Não Verbal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Analisador de Congruência na Comunicação</h1>
-            <p class="subtitle">Teste sua habilidade em identificar a coerência entre o que é dito e como é dito.</p>
+            <h1>Mestre da Comunicação Não Verbal</h1>
+            <p class="subtitle">Escolha o comportamento não verbal mais eficaz para cada situação e veja o impacto!</p>
         </header>
 
-        <div class="scenario-section">
-            <h2>Cenário de Comunicação:</h2>
-            <div id="scenario-display" class="scenario-box">
-                <p><strong>Frase Verbal:</strong> <span id="verbal-statement">Carregando...</span></p>
-                <p><strong>Comportamento Não Verbal:</strong> <span id="non-verbal-behavior">Carregando...</span></p>
+        <div class="challenge-section">
+            <h2>Desafio de Comunicação:</h2>
+            <div class="verbal-context-box">
+                <p><strong>Situação Verbal:</strong> Você precisa dizer o seguinte...</p>
+                <blockquote id="verbal-phrase-display">Carregando frase...</blockquote>
             </div>
-        </div>
 
-        <div class="user-analysis-section">
-            <h3>Qual sua Análise?</h3>
-            <p>Como você classifica a congruência e credibilidade desta combinação?</p>
-            <div id="user-options" class="options-group">
-                {/* Opções de resposta serão inseridas pelo JS ou podem ser fixas */}
-                <button data-answer="congruent">Congruente (Alta Credibilidade)</button>
-                <button data-answer="ambiguous">Ambígua (Credibilidade Duvidosa)</button>
-                <button data-answer="contradictory">Contraditória (Baixa Credibilidade)</button>
+            <div class="non-verbal-choice-section">
+                <h3>Qual Comportamento Não Verbal Você Escolheria?</h3>
+                <p>Selecione a opção que melhor complementa a frase verbal para máxima clareza e impacto positivo.</p>
+                <div id="non-verbal-options" class="options-group-column">
+                    {/* Opções de comportamento não verbal serão inseridas pelo JS */}
+                </div>
+                <button id="submit-choice" class="submit-button" disabled>Verificar Minha Escolha</button>
             </div>
-            <button id="submit-analysis" class="submit-button">Analisar e Ver Resultado</button>
         </div>
 
         <div class="dashboard">
             <div class="thermometer-section">
                 <div class="thermometer-all-labels">
-                    <span>Congruente</span>
-                    <span>Ambígua</span>
-                    <span>Contraditória</span>
+                    <span>Congruente<br/>(Impacto Alto)</span>
+                    <span>Ambígua<br/>(Impacto Médio)</span>
+                    <span>Contraditória<br/>(Impacto Baixo/Negativo)</span>
                 </div>
                 <div class="thermometer-container">
                     <div class="thermometer-track">
@@ -47,15 +44,15 @@
                 </div>
             </div>
             <div id="result-display" class="result-display result-neutral-default">
-                <h2 id="result-title">Aguardando sua Análise...</h2>
-                <p id="result-description">Analise o cenário acima e envie sua resposta.</p>
+                <h2 id="result-title">Aguardando sua Escolha...</h2>
+                <p id="result-description">Selecione um comportamento não verbal para a situação apresentada.</p>
             </div>
         </div>
-        <button id="next-scenario" class="next-button" style="display:none;">Próximo Cenário</button>
+        <button id="next-challenge" class="next-button" style="display:none;">Próximo Desafio</button>
     </div>
 
     <footer class="app-footer">
-        <p>© 2023 Ferramenta Interativa de Comunicação. Aprenda e pratique!</p>
+        <p>© 2023 Treinamento Interativo de Comunicação.</p>
     </footer>
 
     <script src="script.js"></script>

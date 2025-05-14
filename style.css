@@ -2,7 +2,7 @@
 
 /* ... (estilos anteriores) ... */
 
-.scenario-section {
+.challenge-section {
     margin-bottom: 30px;
     padding: 20px;
     background-color: #f9f9f9;
@@ -10,53 +10,67 @@
     border: 1px solid #e7e7e7;
 }
 
-.scenario-section h2 {
+.challenge-section h2 {
     margin-top: 0;
     color: #333;
     font-size: 1.4em;
     margin-bottom: 15px;
+    text-align: center;
 }
 
-.scenario-box {
-    background-color: #fff;
-    padding: 15px;
+.verbal-context-box {
+    background-color: #e7f3fe; /* Azul claro para destacar a frase verbal */
+    padding: 15px 20px;
     border-radius: 6px;
-    border: 1px solid #ddd;
-    text-align: left;
+    border: 1px solid #b3d7f5;
+    text-align: center;
+    margin-bottom: 25px;
 }
-.scenario-box p {
-    margin: 8px 0;
-    line-height: 1.6;
+.verbal-context-box p {
+    margin: 0 0 8px 0;
+    font-size: 1.05em;
+    color: #333;
 }
-.scenario-box strong {
-    color: #2c3e50;
+.verbal-context-box blockquote {
+    font-size: 1.25em;
+    font-style: italic;
+    color: #005a9e; /* Azul mais escuro */
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
 }
 
-.user-analysis-section {
+.non-verbal-choice-section {
     margin-bottom: 30px;
     text-align: center;
 }
 
-.user-analysis-section h3 {
+.non-verbal-choice-section h3 {
     color: #333;
     margin-bottom: 8px;
 }
-.user-analysis-section p {
+.non-verbal-choice-section p {
     color: #555;
     margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.options-group {
+.options-group-column { /* Para botões de opção em coluna */
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    flex-direction: column;
+    align-items: stretch; /* Faz os botões ocuparem a largura disponível */
+    gap: 10px;
     margin-bottom: 25px;
-    flex-wrap: wrap; /* Para responsividade */
+    max-width: 500px; /* Limita a largura dos botões */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.options-group button {
-    padding: 12px 20px;
-    font-size: 1em;
+.options-group-column button {
+    padding: 12px 15px;
+    font-size: 0.95em; /* Um pouco menor para caber mais texto */
     border: 2px solid #bdc3c7;
     background-color: #fff;
     color: #34495e;
@@ -64,71 +78,30 @@
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
     font-weight: 500;
+    text-align: left; /* Alinha texto à esquerda nos botões */
+    width: 100%; /* Ocupa toda a largura do container */
 }
 
-.options-group button:hover {
+.options-group-column button:hover {
     background-color: #f0f0f0;
     border-color: #95a5a6;
 }
 
-.options-group button.selected { /* Estilo para botão selecionado pelo usuário */
+.options-group-column button.selected {
     background-color: #3498db;
     color: white;
     border-color: #2980b9;
-    transform: scale(1.05);
+    /* transform: scale(1.02); */ /* Pode ser sutil demais ou causar jitter */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
 .submit-button, .next-button {
-    padding: 14px 28px;
-    font-size: 1.1em;
-    background-color: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: bold;
+    /* Estilos podem ser mantidos ou ajustados conforme necessário */
 }
-.submit-button:hover, .next-button:hover {
-    background-color: #229954;
-}
-.submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
+/* ... (restante do CSS, incluindo dashboard, termômetro, result-display, etc.) ... */
 
-.next-button {
-    background-color: #3498db;
-    margin-top: 20px; /* Espaço acima do botão "Próximo" */
-}
-.next-button:hover {
-    background-color: #2980b9;
-}
-
-
-/* Ajustes no dashboard e termômetro (podem já existir ou precisar de ajuste) */
-.dashboard {
-    /* ... (estilos anteriores) ... */
-    margin-top: 10px; /* Menor margem, pois o botão de submit está acima */
-}
-
+/* Rótulos do termômetro, se precisar de ajuste fino */
 .thermometer-all-labels span {
     /* ... (estilos anteriores) ... */
-    font-size: 0.85em; /* Pode precisar ajustar */
+    font-size: 0.8em; /* Ajustado para o novo texto */
 }
-
-#result-display p { /* Garantir que o texto da análise seja claro */
-    font-size: 1.05em;
-}
-
-/* Feedback de acerto/erro */
-.feedback-correct {
-    color: #27ae60;
-    font-weight: bold;
-}
-.feedback-incorrect {
-    color: #c0392b;
-    font-weight: bold;
-}
-
-/* ... (restante do CSS) ... */
