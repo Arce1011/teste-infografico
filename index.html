@@ -8,54 +8,59 @@
 </head>
 <body>
     <div class="container">
-        <h1>Termômetro de Impacto da Comunicação</h1>
-        <p class="intro">Veja como sua comunicação não verbal pode reforçar ou contradizer sua mensagem verbal.</p>
+        <header>
+            <h1>Termômetro de Impacto da Comunicação</h1>
+            <p class="subtitle">Descubra como sua linguagem corporal e tom de voz podem transformar sua mensagem.</p>
+        </header>
+
+        <p class="intro">No ambiente de trabalho, a forma como você se comunica não verbalmente é tão crucial quanto as palavras que você usa. Selecione uma frase e um "pacote não verbal" para ver o impacto!</p>
 
         <div class="controls">
             <div class="control-group">
-                <label for="verbal-phrase">1. Escolha uma Frase Verbal:</label>
+                <label for="verbal-phrase">1. Escolha uma Frase Verbal Comum:</label>
                 <select id="verbal-phrase">
-                    <option value="entendi" data-intent="positive">Sim, entendi o projeto.</option>
-                    <option value="sugestoes" data-intent="open">Estou aberto(a) a sugestões.</option>
-                    <option value="gostei-ideia" data-intent="positive">Gostei da sua ideia.</option>
-                    <option value="prazo" data-intent="assertive">Conseguiremos cumprir o prazo.</option>
-                    <option value="nao-sei" data-intent="hesitant">Não tenho certeza sobre isso.</option>
+                    <option value="entendi" data-intent="positive-assertive">Sim, entendi o projeto e estou pronto(a).</option>
+                    <option value="sugestoes" data-intent="open-collaborative">Estou muito aberto(a) a novas sugestões e ideias.</option>
+                    <option value="gostei-ideia" data-intent="positive-appreciative">Gostei muito da sua ideia, parece promissora!</option>
+                    <option value="prazo" data-intent="assertive-confident">Acredito que conseguiremos cumprir o prazo estabelecido.</option>
+                    <option value="nao-sei" data-intent="hesitant-uncertain">Sinceramente, não tenho certeza sobre como proceder com isso.</option>
+                    <option value="feedback" data-intent="receptive-neutral">Agradeço o feedback, vou considerar seus pontos.</option>
+                    <option value="desafio" data-intent="determined-positive">Este é um desafio, mas estou confiante na nossa capacidade.</option>
                 </select>
             </div>
 
             <div class="control-group">
-                <label for="non-verbal-package">2. Escolha o Pacote Não Verbal:</label>
+                <label for="non-verbal-package">2. Como você se Comporta Não Verbalmente?</label>
                 <select id="non-verbal-package">
-                    <option value="">-- Selecione um Pacote Não Verbal --</option>
-                    {/* Outras opções serão preenchidas pelo JavaScript */}
+                    <option value="">-- Selecione um Comportamento Não Verbal --</option>
+                    {/* Opções preenchidas pelo JS */}
                 </select>
             </div>
         </div>
 
         <div class="dashboard">
-            <div class="thermometer-wrapper">
-                <div class="thermometer-labels-top">
-                    <span>Congruente</span>
+            <div class="thermometer-section">
+                <div class="thermometer-all-labels">
+                    <span>Congruente<br/>(Alta Credibilidade)</span>
+                    <span>Neutra<br/>(Ambígua)</span>
+                    <span>Confusa<br/>(Baixa Credibilidade)</span>
                 </div>
                 <div class="thermometer-container">
                     <div class="thermometer-track">
                         <div id="thermometer-fill" class="thermometer-fill"></div>
                     </div>
                 </div>
-                <div class="thermometer-labels-middle">
-                    <span>Neutra</span>
-                </div>
-                <div class="thermometer-labels-bottom">
-                    <span>Confusa</span>
-                </div>
             </div>
-            <div id="result-display" class="result-display">
-                <h2 id="result-title">Selecione as opções</h2>
-                <p id="result-description">A combinação será analisada aqui.</p>
+            <div id="result-display" class="result-display result-neutral-default">
+                <h2 id="result-title">Aguardando sua Análise...</h2>
+                <p id="result-description">Combine uma frase verbal com um comportamento não verbal para ver o "termômetro" da sua comunicação em ação.</p>
             </div>
         </div>
-         <p class="footer-note">Este é um exemplo simplificado para ilustrar o conceito.</p>
     </div>
+
+    <footer class="app-footer">
+        <p>© 2023 Demonstração Interativa. Este é um exemplo simplificado para ilustrar o conceito.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
