@@ -6,20 +6,26 @@
     <title>Infográfico: Comunicação Não Verbal nas Organizações</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Lato:wght@300;400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <nav class="top-nav">
+        <a href="#congruencia" class="nav-link">1. Congruência</a>
+        <a href="#jogo-decisoes" class="nav-link">2. Desafio</a>
+        <a href="#infografico-criativo" class="nav-link">3. Decodificador</a>
+    </nav>
+
     <header>
         <h1>Comunicação Não Verbal nas Organizações</h1>
-        <p>Explore como a linguagem corporal impacta o ambiente de trabalho.</p>
+        <p>Explore como a linguagem corporal impacta o ambiente de trabalho de forma interativa.</p>
     </header>
 
     <main class="infographic-container">
         <!-- PARTE 1: CONGRUÊNCIA -->
-        <section id="congruencia" class="infographic-section">
+        <section id="congruencia" class="infographic-section" data-section-number="1" style="--section-color-var: var(--color-congruencia);">
             <div class="section-header">
-                <h2>1. Análise de Congruência</h2>
+                <h2><span class="h2-icon" aria-hidden="true">🎯</span>1. Análise de Congruência</h2>
                 <span id="quiz-progress" class="quiz-progress-indicator"></span>
             </div>
             <div class="quiz-container">
@@ -37,8 +43,10 @@
         </section>
 
         <!-- PARTE 2: JOGO DE DECISÕES -->
-        <section id="jogo-decisoes" class="infographic-section">
-            <h2>2. O Desafio de Jorge: A Apresentação</h2>
+        <section id="jogo-decisoes" class="infographic-section" data-section-number="2" style="--section-color-var: var(--color-jogo);">
+            <div class="section-header">
+                <h2><span class="h2-icon" aria-hidden="true">🎮</span>2. O Desafio de Jorge</h2>
+            </div>
             <div class="story-container">
                 <div id="story-text">Jorge está se preparando. Ao entrar na sala de reunião para apresentar aos acionistas, ele...</div>
                 <div id="story-choices" class="choices-grid">
@@ -60,17 +68,19 @@
         </section>
 
         <!-- PARTE 3: INFOGRÁFICO INTERATIVO CRIATIVO -->
-        <section id="infografico-criativo" class="infographic-section">
-            <h2>3. Decodificador Não Verbal</h2>
+        <section id="infografico-criativo" class="infographic-section" data-section-number="3" style="--section-color-var: var(--color-decodificador);">
+            <div class="section-header">
+                 <h2><span class="h2-icon" aria-hidden="true">🧍</span>3. Decodificador Não Verbal</h2>
+            </div>
             <p class="section-intro-text">Clique nos pontos da silhueta para entender os sinais de cada área do corpo na comunicação:</p>
 
             <div class="interactive-body-container">
                 <div class="interactive-body">
                     <svg viewBox="0 0 150 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="body-silhouette">
                         <defs>
-                            <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#bdc3c7;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+                            <linearGradient id="bodyGradientUpdated" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#c8d0d8;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#475c6e;stop-opacity:1" />
                             </linearGradient>
                         </defs>
                         <ellipse class="body-shape head-shape" cx="75" cy="35" rx="25" ry="28"/>
@@ -81,14 +91,15 @@
                         <path class="body-shape leg-shape" d="M45,160 L35,280 L55,280 L60,160 Z"/>
                         <path class="body-shape leg-shape" d="M105,160 L115,280 L95,280 L90,160 Z"/>
                     </svg>
-
-                    <button class="body-point" data-area="head" style="top: 10%; left: 47%;" aria-label="Informações sobre Cabeça e Rosto"><span>Cabeça</span></button>
-                    <button class="body-point" data-area="eyes" style="top: 14%; left: 47%;" aria-label="Informações sobre Olhos"><span>Olhos</span></button>
-                    <button class="body-point" data-area="shoulders" style="top: 25%; left: 47%;" aria-label="Informações sobre Ombros"><span>Ombros</span></button>
-                    <button class="body-point" data-area="arms" style="top: 38%; left: 20%;" aria-label="Informações sobre Braços"><span>Braços</span></button>
-                    <button class="body-point" data-area="hands" style="top: 52%; left: 12%;" aria-label="Informações sobre Mãos"><span>Mãos</span></button>
-                    <button class="body-point" data-area="torso" style="top: 40%; left: 47%;" aria-label="Informações sobre Torso"><span>Torso</span></button>
-                    <button class="body-point" data-area="legs" style="top: 70%; left: 47%;" aria-label="Informações sobre Pernas e Pés"><span>Pernas</span></button>
+                    <button class="body-point" data-area="head" style="top: 11.5%; left: 50%;" aria-label="Informações sobre Cabeça e Rosto"><span>Cabeça</span></button>
+                    <button class="body-point" data-area="eyes" style="top: 15%; left: 50%;" aria-label="Informações sobre Olhos"><span>Olhos</span></button>
+                    <button class="body-point" data-area="shoulders" style="top: 24%; left: 50%;" aria-label="Informações sobre Ombros"><span>Ombros</span></button>
+                    <button class="body-point" data-area="torso" style="top: 39%; left: 50%;" aria-label="Informações sobre Torso"><span>Torso</span></button>
+                    <button class="body-point" data-area="arm_left" style="top: 35%; left: 27%;" aria-label="Informações sobre Braço Esquerdo"><span>Braço E.</span></button>
+                    <button class="body-point" data-area="hand_left" style="top: 46%; left: 20%;" aria-label="Informações sobre Mão Esquerda"><span>Mão E.</span></button>
+                    <button class="body-point" data-area="arm_right" style="top: 35%; left: 73%;" aria-label="Informações sobre Braço Direito"><span>Braço D.</span></button>
+                    <button class="body-point" data-area="hand_right" style="top: 46%; left: 80%;" aria-label="Informações sobre Mão Direita"><span>Mão D.</span></button>
+                    <button class="body-point" data-area="legs" style="top: 73%; left: 50%;" aria-label="Informações sobre Pernas e Pés"><span>Pernas</span></button>
                 </div>
             </div>
 

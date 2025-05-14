@@ -159,14 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastFocusedElement = null; // Para retornar o foco
 
     const bodyInfo = {
-        head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação. Acenos de cabeça podem significar concordância." },
-        eyes: { title: "Olhos", text: "Contato visual firme transmite confiança. Desviar o olhar pode indicar insegurança. Piscar excessivamente pode denotar nervosismo." },
-        shoulders: { title: "Ombros", text: "Eretos e relaxados indicam confiança. Curvados ou tensos podem sinalizar submissão ou estresse." },
-        arms: { title: "Braços", text: "Descruzados e gesticulando abertamente sugerem receptividade. Cruzados podem indicar defesa ou fechamento." },
-        hands: { title: "Mãos", text: "Gestos podem enfatizar pontos. Mãos nos bolsos podem parecer desinteresse. Esconder as mãos gera desconfiança." },
-        torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse. Inclinar-se para trás pode indicar ceticismo. Postura ereta é sinal de autoconfiança." },
-        legs: { title: "Pernas e Pés", text: "Descruzadas e pés apontados para o interlocutor indicam abertura. Pernas cruzadas podem sinalizar desconforto." }
-    };
+    head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância ou encorajamento." },
+    eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse. Piscar excessivamente pode denotar nervosismo." },
+    shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." },
+    torso: { title: "Torso", text: "Inclinar-se para frente demonstra interesse e engajamento. Inclinar-se para trás pode indicar ceticismo ou distanciamento. Uma postura ereta é sinal de autoconfiança." },
+    arm_left: { title: "Braço Esquerdo", text: "Gestos com o braço esquerdo podem complementar a fala. Braços abertos sugerem receptividade, enquanto cruzá-los pode indicar defesa ou fechamento." },
+    arm_right: { title: "Braço Direito", text: "Similar ao braço esquerdo, o posicionamento e gestos do braço direito contribuem para a mensagem geral de abertura ou reserva." },
+    hand_left: { title: "Mão Esquerda", text: "Gestos com as mãos são poderosos. A mão esquerda pode ser usada para enfatizar pontos. Palmas abertas indicam honestidade; esconder as mãos pode gerar desconfiança." },
+    hand_right: { title: "Mão Direita", text: "A mão direita frequentemente lidera gestos de cumprimento ou ênfase. Mãos inquietas podem denunciar nervosismo." },
+    // Mantendo genéricos caso precise no futuro ou para simplificar
+    arms: { title: "Braços", text: "Braços descruzados e ao lado do corpo ou gesticulando abertamente sugerem receptividade. Braços cruzados podem indicar defesa, fechamento ou discordância." },
+    hands: { title: "Mãos", text: "Gestos com as mãos podem enfatizar pontos e transmitir energia. Mãos nos bolsos podem parecer desinteresse. Esconder as mãos pode gerar desconfiança. Palmas abertas indicam honestidade." },
+    legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." }
+};
 
     function openPopup(area) {
         if (bodyInfo[area]) {
