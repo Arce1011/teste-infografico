@@ -1,29 +1,49 @@
-/* ... (Variáveis e reset como na última versão) ... */
+/* :root e Reset Básico */
 :root {
-    --primary-color: #1D2D44; /* Azul Petróleo ainda mais escuro */
-    --secondary-color: #F0A202; /* Amarelo Ouro / Laranja Queimado */
-    --accent-color: #D95D39;   /* Laranja Avermelhado / Terracota */
-    --highlight-bg-base: rgba(240, 248, 255, 0.07); /* AliceBlue bem translúcido */
-    --highlight-bg-hover: rgba(240, 248, 255, 0.11);
-    --text-on-dark-bg: #e9f1f7; /* Mais claro */
-    --text-light-accent: #adb5bd; /* Cinza claro para texto secundário */
+    --primary-color: #1D2D44;
+    --secondary-color: #F0A202;
+    --accent-color: #D95D39;
+    --highlight-bg-base: rgba(240, 248, 255, 0.07);
+    --highlight-bg-hover: rgba(240, 248, 255, 0.12);
+    --text-on-dark-bg: #e9f1f7;
+    --text-light-accent: #adb5bd;
     --border-glass: rgba(240, 248, 255, 0.18);
-    --shadow-color-light: rgba(0, 0, 0, 0.2);
-    --shadow-color-strong: rgba(0, 0, 0, 0.35);
+    --shadow-color-light: rgba(0, 0, 0, 0.15);
+    --shadow-color-strong: rgba(0, 0, 0, 0.25);
 
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Lato', sans-serif;
-    --spacing-xs: 0.35rem; /* Ajustes nos espaçamentos */
+    --font-awesome: "Font Awesome 6 Free"; /* Para o checklist */
+
+    --spacing-xs: 0.35rem;
     --spacing-sm: 0.55rem;
     --spacing-md: 0.9rem;
     --spacing-lg: 1.1rem;
     --spacing-xl: 1.5rem;
 }
 
-/* ... (Estilos de foco, html, body como antes) ... */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background: linear-gradient(145deg, #131a26 0%, #233142 100%); /* Gradiente mais escuro e suave */
-    /* ... */
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background: linear-gradient(145deg, #131a26 0%, #233142 100%);
+    color: var(--text-on-dark-bg);
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Mudar para flex-start para evitar corte no topo */
+    min-height: 100vh;
+    padding: var(--spacing-md);
+    overflow-x: hidden;
 }
 
 /* Barra de Progresso da Página */
@@ -32,45 +52,59 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 5px; /* Altura da barra */
-    background-color: transparent; /* Fundo sutil ou transparente */
-    z-index: 2000; /* Acima de tudo */
+    height: 5px;
+    z-index: 2000;
 }
 #page-progress-bar {
     height: 100%;
-    width: 0%; /* Começa em 0 */
+    width: 0%;
     background: linear-gradient(90deg, var(--secondary-color) 0%, var(--accent-color) 100%);
     border-radius: 0 2px 2px 0;
-    transition: width 0.1s linear; /* Transição suave */
+    transition: width 0.1s linear;
 }
 
-
+/* Canvas Principal */
 .infographic-canvas {
-    /* ... (como antes, mas ajustando o grid-template-rows para a nova linha) ... */
+    width: 100%;
+    max-width: 1450px; /* Aumentado um pouco */
+    min-height: calc(100vh - var(--spacing-md) * 2 - 2px); /* Tenta preencher a altura */
+    background-color: rgba(29, 45, 68, 0.8); /* Cor base do canvas */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    box-shadow: 0 15px 35px var(--shadow-color-strong);
+    padding: var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr; /* Proporções ajustadas */
     grid-template-rows: auto 1fr auto auto; /* Header | Content | Bottom Row | Footer */
     grid-template-areas:
-        "header header header"
-        "sidebar main-content right-sidebar"
-        "bottom-row bottom-row bottom-row" /* Nova área para stats/quote */
-        "footer footer footer";
-    max-height: calc(100vh - var(--spacing-md) * 2 - 2px); /* Para tentar caber na tela */
-    overflow: hidden; /* Impedir scroll do canvas principal, scroll interno nos painéis */
+        "header         header          header"
+        "sidebar        main-content    right-sidebar"
+        "bottom-row     bottom-row      bottom-row"
+        "footer         footer          footer";
+    gap: var(--spacing-lg);
+    overflow: hidden; /* IMPORTANTE: Para forçar o conteúdo a ficar dentro */
 }
 
+
+/* Ajustes de Responsividade do Grid Principal */
 @media (max-width: 1200px) {
     .infographic-canvas {
-        /* ... */
+        grid-template-columns: 2.5fr 3fr; /* Sidebar e Main juntos, Right Sidebar abaixo */
         grid-template-areas:
-            "header header"
-            "sidebar main-content"
-            "right-sidebar right-sidebar"
-            "bottom-row bottom-row"
-            "footer footer";
+            "header         header"
+            "sidebar        main-content"
+            "right-sidebar  right-sidebar"
+            "bottom-row     bottom-row"
+            "footer         footer";
     }
 }
-@media (max-width: 860px) {
+@media (max-width: 880px) { /* Aumentei o breakpoint para empilhar mais cedo */
+    body { align-items: flex-start; padding: var(--spacing-sm); } /* Menos padding no body em mobile */
     .infographic-canvas {
-        /* ... */
+        grid-template-columns: 1fr;
+        grid-template-rows: auto; /* Deixa o conteúdo definir a altura */
         grid-template-areas:
             "header"
             "sidebar"
@@ -78,190 +112,211 @@ body {
             "right-sidebar"
             "bottom-row"
             "footer";
-        max-height: none; /* Permitir que cresça em mobile */
-        overflow-y: auto;
+        min-height: auto; /* Altura natural em mobile */
+        max-height: none;
+        border-radius: 10px; /* Manter um pouco de radius */
+        padding: var(--spacing-md);
+        overflow-y: auto; /* Scroll da página inteira */
+    }
+    .canvas-sidebar, .canvas-main-content, .canvas-right-sidebar, .canvas-bottom-row {
+        min-height: 200px; /* altura mínima para cada seção em mobile, evitar colapso */
     }
 }
 
 
-.canvas-header h1 { /* ... (como antes, text-shadow: none; já aplicado) ... */ }
+/* Áreas do Grid */
+.canvas-header { grid-area: header; text-align: center; padding-bottom: var(--spacing-md); }
+.canvas-sidebar { grid-area: sidebar; }
+.canvas-main-content { grid-area: main-content; }
+.canvas-right-sidebar { grid-area: right-sidebar; }
+.canvas-bottom-row { grid-area: bottom-row; } /* Estilizado abaixo */
+.canvas-footer { grid-area: footer; text-align: center; padding-top: var(--spacing-md); border-top: 1px solid var(--border-glass); font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-top: var(--spacing-sm); }
 
-.glass-effect { /* ... (como antes, mas talvez ajustar o blur ou opacidade) ... */
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    background: rgba(240, 248, 255, 0.06); /* Mais translúcido */
-}
-
+/* Scroll interno para as colunas de conteúdo */
 .canvas-sidebar, .canvas-main-content, .canvas-right-sidebar {
-    /* ... (como antes, garantir overflow-y: auto;) ... */
-    /* Para Firefox */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    overflow-y: auto;
+    padding: 5px; /* Evitar que scrollbar cole no conteúdo */
+    position: relative; /* Para ancoragem de tooltips/popups */
+    /* Estilo da scrollbar */
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.2) transparent;
 }
+.canvas-sidebar::-webkit-scrollbar, .canvas-main-content::-webkit-scrollbar, .canvas-right-sidebar::-webkit-scrollbar { width: 6px; }
+.canvas-sidebar::-webkit-scrollbar-thumb, .canvas-main-content::-webkit-scrollbar-thumb, .canvas-right-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 3px; }
+.canvas-sidebar::-webkit-scrollbar-track, .canvas-main-content::-webkit-scrollbar-track, .canvas-right-sidebar::-webkit-scrollbar-track { background: transparent; }
+
+
+/* Estilo Base dos Módulos e Cards */
+.glass-effect {
+    background: var(--highlight-bg-base);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--border-glass);
+    box-shadow: 0 10px 25px var(--shadow-color-light);
+    border-radius: 10px; /* Reduzido um pouco */
+    padding: var(--spacing-md);
+    color: var(--text-on-dark-bg);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-effect:hover { background: var(--highlight-bg-hover); box-shadow: 0 12px 30px var(--shadow-color-light); }
 
 .interactive-module h3, .interactive-module h4, .fact-card h3 {
-    /* ... (como antes, mas talvez um ícone Font Awesome) ... */
-    font-size: 1.1rem;
-}
-.icon { /* Classe genérica para ícones Font Awesome */
-    margin-right: var(--spacing-sm);
-    color: var(--secondary-color);
-    font-size: 1.2em; /* Ajustar tamanho do ícone */
-    width: 1.5em; /* Para alinhar texto se o ícone for largo */
-    text-align: center;
-}
-
-.fact-card.você-sabia p { margin-top: var(--spacing-xs); }
-.pie-chart-container { width: 100px; height: 100px; margin-bottom: var(--spacing-sm); }
-.pie-chart .pie-label { font-size: 20px; }
-
-.fact-icon-small.icon { /* Ajuste para ícones de fatos pequenos */
-    font-size: 1.5rem; /* Tamanho do ícone FA */
-    width: auto;
-    margin-top: 0;
-    margin-bottom: var(--spacing-xs);
-    display: block; /* Para centralizar se o texto estiver abaixo */
-    text-align: center;
-}
-.fact-card.small-fact { display: flex; flex-direction: column; align-items: center; text-align: center;}
-.fact-card.small-fact .fact-icon-small { float: none; margin-right: 0; }
-
-
-/* Checklist */
-.checklist-module { padding-bottom: var(--spacing-sm); /* Menos padding inferior */ }
-.checklist {
-    list-style: none;
-    padding-left: 0;
-    margin: var(--spacing-sm) 0;
-}
-.checklist li {
-    display: flex;
-    align-items: center;
-    margin-bottom: var(--spacing-xs);
-    font-size: 0.9rem;
-    color: var(--text-light-accent);
-    cursor: pointer; /* Para interatividade futura */
-    transition: color 0.2s ease;
-    opacity: 0; /* Para animação */
-    transform: translateX(-10px);
-}
-.checklist li.is-visible { /* Classe para animação de entrada */
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
-}
-/* Delay para cada item do checklist */
-.checklist li:nth-child(1).is-visible { transition-delay: 0.1s; }
-.checklist li:nth-child(2).is-visible { transition-delay: 0.2s; }
-.checklist li:nth-child(3).is-visible { transition-delay: 0.3s; }
-.checklist li:nth-child(4).is-visible { transition-delay: 0.4s; }
-.checklist li:nth-child(5).is-visible { transition-delay: 0.5s; }
-.checklist li:nth-child(6).is-visible { transition-delay: 0.6s; }
-
-.checklist .check-icon {
-    font-size: 1.1em;
-    margin-right: var(--spacing-sm);
-    color: var(--secondary-color);
-    transition: color 0.2s ease;
-}
-.checklist li.checked .check-icon {
-    color: #2ecc71; /* Verde para checked */
-}
-.checklist li.checked .check-icon::before {
-    content: "\f058"; /* Ícone de círculo checado do Font Awesome (fa-check-circle) */
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-}
-.checklist li:hover { color: var(--text-on-dark-bg); }
-.checklist-tip { font-size: 0.8rem; text-align: center; color: var(--text-light-accent); margin-top: var(--spacing-sm); }
-
-
-/* Barra de Progresso do Jogo */
-.progress-bar-fill { /* Já existente, mas confirmar estilos */
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    /* ... */
-}
-
-/* Decodificador e Tooltip */
-.decoder-module .interactive-body-container { min-height: 280px; /* Ajustado */ }
-.interactive-body { transform: scale(0.9); /* Reduzido um pouco */ }
-/* ... (estilos do .body-point e .decoder-tooltip como na última versão) ... */
-.decoder-tooltip {
-    max-width: 280px; /* Pode precisar de mais largura */
-}
-
-/* Nova Linha Inferior (Stats e Quote) */
-.canvas-bottom-row {
-    grid-area: bottom-row;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsivo */
-    gap: var(--spacing-lg);
-    align-items: start; /* Alinha os cards no topo se tiverem alturas diferentes */
-}
-.stats-block h4, .quote-block h4 { /* Título para o bloco de stats */
     font-family: var(--font-heading);
     color: var(--text-on-dark-bg);
     margin-top: 0;
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+    font-size: 1.05rem; /* Reduzido para caber melhor */
     font-weight: 600;
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--border-glass);
     padding-bottom: var(--spacing-sm);
 }
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Stats menores */
-    gap: var(--spacing-sm);
-    text-align: center;
-}
-.stat-item {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: rgba(255,255,255,0.05);
-    border-radius: 6px;
-}
-.stat-value {
-    font-family: var(--font-heading);
-    font-size: 1.8rem; /* Stats menores */
-    font-weight: 700;
+.icon { /* Ícones Font Awesome */
+    margin-right: var(--spacing-sm);
     color: var(--secondary-color);
-    margin-bottom: 0;
-}
-.stat-description {
-    font-size: 0.75rem;
-    color: var(--text-light-accent);
-    line-height: 1.3;
+    font-size: 1.2em;
+    width: 1.5em;
+    text-align: center;
 }
 
-.quote-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding-top: var(--spacing-lg); /* Mais espaço para a aspa */
-}
-.quote-icon-big {
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-    opacity: 0.5;
-    margin-bottom: var(--spacing-xs);
-}
-.quote-text {
+/* Título Principal */
+.canvas-header h1 {
     font-family: var(--font-heading);
-    font-size: 1.1rem;
-    font-style: italic;
+    font-size: clamp(1.8rem, 4.5vw, 3rem); /* Ajustado */
     color: var(--text-on-dark-bg);
-    margin-bottom: var(--spacing-xs);
-    line-height: 1.5;
+    margin: 0;
+    font-weight: 700;
+    text-shadow: none; /* Removido */
 }
-.quote-author {
-    font-size: 0.85rem;
-    color: var(--text-light-accent);
-}
+.canvas-header h1 .highlight { color: var(--secondary-color); }
 
-.canvas-footer { /* ... (como antes) ... */ }
+
+/* Fatos e Você Sabia */
+.fact-card { text-align: center; }
+.fact-card p { font-size: 0.85rem; margin-bottom: 0; line-height: 1.5; color: var(--text-light-accent); }
+.fact-card strong { color: var(--secondary-color); font-weight: 600; }
+.pie-chart-container { width: 90px; height: 90px; margin: var(--spacing-xs) auto var(--spacing-sm) auto; }
+.pie-chart .pie-label { font-size: 18px; fill: var(--text-on-dark-bg); }
+.pie-chart .pie-slice { stroke: var(--secondary-color); animation: draw-pie 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+@keyframes draw-pie { from { stroke-dasharray: 0 283; } to { stroke-dasharray: 204.2 283; } }
+.fact-icon-small.icon { font-size: 1.4rem; width: auto; margin-top: 0; margin-bottom: var(--spacing-xs); display: block; text-align: center; }
+.fact-card.small-fact { display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--spacing-sm); }
+.fact-card.small-fact .fact-icon-small { float: none; margin-right: 0; }
+.bottom-fact { margin-top: auto; }
+
+/* Botões Modernos */
+.modern-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-on-dark-bg);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18); /* Borda um pouco mais visível */
+    border-radius: 8px; /* Menos arredondado */
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Sombra mais sutil */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+.modern-button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.18); box-shadow: 0 5px 12px rgba(0,0,0,0.2); transform: translateY(-1px); }
+.modern-button:active:not(:disabled) { background: rgba(255, 255, 255, 0.07); box-shadow: inset 0 2px 3px rgba(0,0,0,0.15); transform: translateY(0px); }
+.modern-button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: none; }
+.modern-button.danger { background: rgba(217, 93, 57, 0.5); border-color: rgba(217, 93, 57, 0.7); } /* Usando var(--accent-color) */
+.modern-button.danger:hover:not(:disabled) { background: rgba(217, 93, 57, 0.65); }
+
+.nav-arrow-button {
+    background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-on-dark-bg);
+    width: 35px; height: 35px; border-radius: 50%; font-size: 1.1rem; padding: 0;
+    display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.2s ease; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+}
+.nav-arrow-button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.15); transform: scale(1.05); }
+.nav-arrow-button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+
+/* Componentes Internos (Quiz, Story, Decoder) */
+.quiz-container, .story-container { padding: 0; background: transparent; box-shadow: none; border:none; }
+#situacao-texto { background: rgba(0,0,0,0.12); border-left: 3px solid var(--secondary-color); color: var(--text-on-dark-bg); padding: var(--spacing-sm); border-radius: 6px; font-size: 0.9rem; margin-bottom: var(--spacing-sm); }
+.feedback { background: rgba(0,0,0,0.18); padding: var(--spacing-sm); border: 1px solid var(--border-glass); border-radius: 6px; margin-top: var(--spacing-sm); font-size: 0.85rem; }
+.feedback.correto { background-color: rgba(var(--secondary-color), 0.2); color: #f0f8ff; border-color: rgba(var(--secondary-color), 0.4); } /* Usando secondary color para sucesso */
+.feedback.correto::before { color: #f0f8ff; }
+.feedback.incorreto { background-color: rgba(var(--accent-color), 0.25); color: #fce7e7; border-color: rgba(var(--accent-color),0.4); } /* Usando accent color para erro */
+.feedback.incorreto::before { color: #fce7e7; }
+.navegacao-quiz { justify-content: space-between; padding: 0 var(--spacing-xs); margin-top: var(--spacing-sm); }
+
+
+#story-text { background: rgba(0,0,0,0.12); border-left: 3px solid var(--secondary-color); color: var(--text-on-dark-bg); padding: var(--spacing-sm); border-radius: 6px; font-size: 0.95rem; }
+.choices-grid { margin-top: var(--spacing-sm); }
+.story-feedback { background: rgba(var(--secondary-color), 0.25); color: var(--text-on-dark-bg); border: 1px solid rgba(var(--secondary-color), 0.4); border-radius: 6px; padding: var(--spacing-sm); font-size: 0.9rem; }
+.story-feedback p { margin-bottom: 0; }
+.progress-bar-container { background-color: rgba(0,0,0,0.25); height: 24px; border-radius: 12px; margin-top: var(--spacing-sm); }
+.progress-bar-fill { border-radius: 12px; font-size: 0.8rem; text-shadow: 0 1px 1px rgba(0,0,0,0.3); }
+#game-end-feedback { color: var(--text-on-dark-bg); font-size: 0.9rem; margin-top: var(--spacing-sm); }
+
+
+/* Checklist */
+.checklist-module { padding-bottom: var(--spacing-sm); }
+.checklist { list-style: none; padding-left: 0; margin: var(--spacing-sm) 0; }
+.checklist li { display: flex; align-items: center; margin-bottom: var(--spacing-xs); font-size: 0.85rem; color: var(--text-light-accent); cursor: pointer; transition: color 0.2s ease; opacity: 0; transform: translateX(-10px); }
+.checklist li.is-visible { opacity: 1; transform: translateX(0); transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
+.checklist li:nth-child(1).is-visible { transition-delay: 0.1s; }
+.checklist li:nth-child(2).is-visible { transition-delay: 0.18s; }
+.checklist li:nth-child(3).is-visible { transition-delay: 0.26s; }
+.checklist li:nth-child(4).is-visible { transition-delay: 0.34s; }
+.checklist li:nth-child(5).is-visible { transition-delay: 0.42s; }
+.checklist li:nth-child(6).is-visible { transition-delay: 0.5s; }
+.checklist .check-icon { font-size: 1em; margin-right: var(--spacing-sm); color: var(--secondary-color); transition: color 0.2s ease; }
+.checklist li.checked .check-icon { color: var(--accent-color); /* Usar accent color para check */ }
+.checklist li.checked .check-icon::before { content: "\f058"; font-family: var(--font-awesome); font-weight: 900; }
+.checklist li:hover { color: var(--text-on-dark-bg); }
+.checklist-tip { font-size: 0.8rem; text-align: center; color: var(--text-light-accent); margin-top: var(--spacing-sm); }
+
+/* Decodificador e Tooltip */
+.decoder-module .interactive-body-container { min-height: 270px; margin-top: var(--spacing-sm); display: flex; justify-content: center; align-items: center; position: relative; }
+.interactive-body { position: relative; width: 150px; height: 300px; transform: scale(0.9); transform-origin: center center; }
+.body-silhouette { width: 100%; height: 100%; fill: url(#bodyGradientUpdated); stroke: rgba(255,255,255,0.2); stroke-width: 0.5; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25)); }
+.body-point { position: absolute; width: 22px; height: 22px; /* Menores ainda */ background: rgba(var(--secondary-color), 0.5); border: 1px solid rgba(var(--secondary-color), 0.7); color: var(--text-on-dark-bg); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transform: translate(-50%, -50%); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); animation: pulse-glass 2.8s infinite ease-in-out; transition: all 0.2s ease; }
+.body-point:hover, .body-point:focus-visible { background: rgba(var(--secondary-color), 0.7); transform: translate(-50%, -50%) scale(1.25); }
+/* Keyframes pulse-glass como antes */
+@keyframes pulse-glass {0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); } 50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 6px 18px rgba(29, 45, 68, 0.2); } 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); } }
+
+
+.decoder-tooltip {
+    position: fixed; width: 240px; /* Mais estreito */
+    padding: var(--spacing-sm); border-radius: 8px; z-index: 1001; /* Acima dos body-points */
+    opacity: 0; visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0s linear 0.2s;
+    pointer-events: none;
+    color: var(--text-on-dark-bg);
+    /* Classe .glass-effect aplicada no HTML */
+}
+.decoder-tooltip.visible { opacity: 1; visibility: visible; transform: translateY(0) scale(1); transition-delay: 0s, 0s, 0s; }
+.decoder-tooltip h4 { color: var(--secondary-color); font-size: 0.95rem; margin-top: 0; margin-bottom: var(--spacing-xs); border-bottom: 1px solid var(--border-glass); padding-bottom: var(--spacing-xs); }
+.decoder-tooltip p { font-size: 0.8rem; line-height: 1.5; margin-bottom: 0; color: var(--text-light-accent); }
+
+
+/* Linha Inferior (Stats e Quote) */
+.canvas-bottom-row { grid-area: bottom-row; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--spacing-lg); align-items: stretch; /* Para cards terem mesma altura se possível */ }
+.stats-block, .quote-block { display: flex; flex-direction: column; /* Para alinhar conteúdo interno */ }
+.stats-block h4, .quote-block h4 { font-size: 1.05rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: var(--spacing-sm); text-align: center; }
+.stat-item { padding: var(--spacing-xs) var(--spacing-sm); background: rgba(255,255,255,0.04); border-radius: 6px; }
+.stat-value { font-size: 1.6rem; font-weight: 600; color: var(--secondary-color); margin-bottom: 0; }
+.stat-description { font-size: 0.7rem; color: var(--text-light-accent); line-height: 1.3; }
+.quote-block { align-items: center; text-align: center; padding-top: var(--spacing-md); justify-content: center; }
+.quote-icon-big { font-size: 2rem; color: var(--secondary-color); opacity: 0.6; margin-bottom: var(--spacing-xs); }
+.quote-text { font-family: var(--font-heading); font-size: 1rem; font-style: italic; color: var(--text-on-dark-bg); margin-bottom: var(--spacing-xs); line-height: 1.4; }
+.quote-author { font-size: 0.8rem; color: var(--text-light-accent); }
+
 
 /* Animações de Entrada */
-/* ... (Manter as animações de [data-animate-on-scroll] e os delays específicos) ... */
+[data-animate-on-scroll] { opacity: 0; transform: translateY(20px) scale(0.98); transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+[data-animate-on-scroll].is-visible { opacity: 1; transform: translateY(0) scale(1); }
+/* ... (delays como antes) ... */
