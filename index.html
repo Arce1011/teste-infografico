@@ -3,56 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mestre da Comunicação Não Verbal</title>
+    <title>Infográfico: Comunicação Não Verbal nas Organizações</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Mestre da Comunicação Não Verbal</h1>
-            <p class="subtitle">Escolha o comportamento não verbal mais eficaz para cada situação e veja o impacto!</p>
-        </header>
+    <header>
+        <h1>Comunicação Não Verbal nas Organizações</h1>
+        <p>Explore como a linguagem corporal impacta o ambiente de trabalho.</p>
+    </header>
 
-        <div class="challenge-section">
-            <h2>Desafio de Comunicação:</h2>
-            <div class="verbal-context-box">
-                <p><strong>Situação Verbal:</strong> Você precisa dizer o seguinte...</p>
-                <blockquote id="verbal-phrase-display">Carregando frase...</blockquote>
-            </div>
-
-            <div class="non-verbal-choice-section">
-                <h3>Qual Comportamento Não Verbal Você Escolheria?</h3>
-                <p>Selecione a opção que melhor complementa a frase verbal para máxima clareza e impacto positivo.</p>
-                <div id="non-verbal-options" class="options-group-column">
-                    {/* Opções de comportamento não verbal serão inseridas pelo JS */}
+    <main class="infographic-container">
+        <!-- PARTE 1: CONGRUÊNCIA -->
+        <section id="congruencia" class="infographic-section">
+            <h2>1. Análise de Congruência</h2>
+            <div class="quiz-container">
+                <div id="situacao-texto">Carregando situação...</div>
+                <div class="opcoes-congruencia">
+                    <button data-resposta="congruente">Congruente</button>
+                    <button data-resposta="nao-congruente">Não Congruente</button>
                 </div>
-                <button id="submit-choice" class="submit-button" disabled>Verificar Minha Escolha</button>
-            </div>
-        </div>
-
-        <div class="dashboard">
-            <div class="thermometer-section">
-                <div class="thermometer-all-labels">
-                    <span>Congruente<br/>(Impacto Alto)</span>
-                    <span>Ambígua<br/>(Impacto Médio)</span>
-                    <span>Contraditória<br/>(Impacto Baixo/Negativo)</span>
+                <div id="feedback-congruencia" class="feedback"></div>
+                <div class="navegacao-quiz">
+                    <button id="anterior-situacao" disabled>< Anterior</button>
+                    <button id="proxima-situacao">Próxima ></button>
                 </div>
-                <div class="thermometer-container">
-                    <div class="thermometer-track">
-                        <div id="thermometer-fill" class="thermometer-fill"></div>
+            </div>
+        </section>
+
+        <!-- PARTE 2: JOGO DE DECISÕES -->
+        <section id="jogo-decisoes" class="infographic-section">
+            <h2>2. O Desafio de Jorge: A Apresentação</h2>
+            <div class="story-container">
+                <div id="story-text">Jorge está se preparando. Ao entrar na sala de reunião para apresentar aos acionistas, ele...</div>
+                <div id="story-choices" class="choices-grid">
+                    <!-- As escolhas serão injetadas aqui pelo JS -->
+                </div>
+                <div class="story-feedback">
+                    <h4>Reação dos Acionistas:</h4>
+                    <p id="audience-reaction">Aguardando sua primeira ação...</p>
+                </div>
+                <div class="story-metrics">
+                    <h4>Assertividade da Comunicação:</h4>
+                    <div class="progress-bar-container">
+                        <div id="assertividade-bar" class="progress-bar" style="width: 50%;">50%</div>
                     </div>
                 </div>
+                 <button id="reiniciar-jogo" style="display:none;">Reiniciar Jogo</button>
             </div>
-            <div id="result-display" class="result-display result-neutral-default">
-                <h2 id="result-title">Aguardando sua Escolha...</h2>
-                <p id="result-description">Selecione um comportamento não verbal para a situação apresentada.</p>
-            </div>
-        </div>
-        <button id="next-challenge" class="next-button" style="display:none;">Próximo Desafio</button>
-    </div>
+        </section>
 
-    <footer class="app-footer">
-        <p>© 2023 Treinamento Interativo de Comunicação.</p>
+        <!-- PARTE 3: INFOGRÁFICO INTERATIVO CRIATIVO -->
+        <section id="infografico-criativo" class="infographic-section">
+            <h2>3. Decodificador Não Verbal</h2>
+            <p>Clique nas áreas do corpo para entender seus sinais na comunicação:</p>
+            <div class="interactive-body">
+                <div class="body-part" data-area="head" style="top: 5%; left: 45%; width:10%; height:15%;">Cabeça</div>
+                <div class="body-part" data-area="eyes" style="top: 9%; left: 47%; width:6%; height:4%; font-size:0.7em; line-height:1;">Olhos</div>
+                <div class="body-part" data-area="shoulders" style="top: 20%; left: 30%; width:40%; height:10%;">Ombros</div>
+                <div class="body-part" data-area="arms" style="top: 30%; left: 15%; width:20%; height:30%;">Braços</div>
+                <div class="body-part" data-area="hands" style="top: 55%; left: 10%; width:15%; height:10%;">Mãos</div>
+                <div class="body-part" data-area="torso" style="top: 30%; left: 40%; width:20%; height:25%;">Torso</div>
+                <div class="body-part" data-area="legs" style="top: 55%; left: 35%; width:30%; height:35%;">Pernas/Pés</div>
+                <div id="body-info-popup" class="info-popup">
+                    <h4 id="popup-title"></h4>
+                    <p id="popup-text"></p>
+                    <button id="close-popup">Fechar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Infográfico Interativo - Todos os direitos reservados (Exemplo)</p>
     </footer>
 
     <script src="script.js"></script>

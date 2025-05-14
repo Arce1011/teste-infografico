@@ -1,271 +1,273 @@
-/* No seu style.css */
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f8; /* Cor de fundo suave */
-    color: #333;
-    display: flex; /* Ajuda a centralizar o container */
-    flex-direction: column; /* Para que o footer fique abaixo */
-    align-items: center; /* Centraliza o container horizontalmente */
-    min-height: 100vh;
+    line-height: 1.6;
     margin: 0;
-    padding: 20px 10px; /* Padding no body para dar respiro */
-    box-sizing: border-box;
-}
-
-.container {
-    background-color: #ffffff;
-    padding: 25px 30px; /* Ajustar padding */
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
-    width: 100%;
-    max-width: 900px; /* Aumentar um pouco para acomodar o dashboard ao lado em telas maiores */
-    text-align: left; /* Alinhar texto do container à esquerda por padrão */
-    margin-bottom: 30px;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 header {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e9ecef;
-    text-align: center; /* Centralizar conteúdo do header */
-}
-
-h1 {
-    color: #2c3e50;
-    margin-bottom: 5px;
-    font-size: 2em;
-}
-
-.subtitle {
-    font-size: 1.15em;
-    color: #555;
-    margin-bottom: 0; /* Remover margem inferior se o header já tem padding */
-    line-height: 1.4;
-}
-
-.challenge-section {
-    margin-bottom: 25px;
-    padding: 15px; /* Reduzir padding interno se necessário */
-    background-color: #ffffff; /* Pode ser branco ou um cinza muito leve */
-    border-radius: 8px;
-    /* border: 1px solid #e0e0e0; */ /* Remover borda se o container já tem sombra */
-}
-
-.challenge-section h2 {
-    margin-top: 0;
-    color: #333;
-    font-size: 1.3em;
-    margin-bottom: 15px;
+    background-color: #005f73;
+    color: #fff;
+    padding: 1.5rem 0;
     text-align: center;
+    border-bottom: 5px solid #003f5c;
 }
 
-.verbal-context-box {
-    background-color: #e9f5ff; /* Azul bem claro */
-    padding: 15px;
-    border-radius: 6px;
-    /* border: 1px solid #cce4f7; */ /* Borda sutil se desejar */
-    text-align: center;
-    margin-bottom: 20px;
-}
-.verbal-context-box p {
-    margin: 0 0 5px 0;
-    font-size: 1em;
-    color: #495057;
-}
-.verbal-context-box blockquote {
-    font-size: 1.2em;
-    font-style: italic;
-    color: #004a8c;
+header h1 {
     margin: 0;
-    padding: 0;
-    font-weight: 500;
+    font-size: 2.5rem;
 }
 
-.non-verbal-choice-section {
-    margin-bottom: 25px;
+header p {
+    font-size: 1.1rem;
+}
+
+.infographic-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 0 20px;
+    gap: 20px; /* Espaço entre as seções */
+}
+
+.infographic-section {
+    background-color: #fff;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    flex-basis: 100%; /* Ocupa toda a largura por padrão */
+}
+
+/* Layout para telas maiores - 3 colunas */
+@media (min-width: 1024px) {
+    #congruencia {
+        flex-basis: 28%; /* Aproximadamente 1/3 */
+    }
+    #jogo-decisoes {
+        flex-basis: 40%; /* Um pouco maior para o jogo */
+    }
+    #infografico-criativo {
+        flex-basis: 28%; /* Aproximadamente 1/3 */
+    }
+}
+
+
+.infographic-section h2 {
+    color: #0077b6;
+    border-bottom: 2px solid #ade8f4;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* --- Estilos Parte 1: Congruência --- */
+.quiz-container {
     text-align: center;
 }
-
-.non-verbal-choice-section h3 {
-    color: #333;
-    margin-bottom: 5px;
-    font-size: 1.15em;
-}
-.non-verbal-choice-section p {
-    color: #555;
-    margin-bottom: 15px;
-    font-size: 0.95em;
-}
-
-.options-group-column {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px; /* Reduzir gap */
+#situacao-texto {
+    min-height: 80px;
     margin-bottom: 20px;
-    max-width: 100%; /* Permitir que ocupe a largura do pai */
-    /* max-width: 550px; */ /* Se quiser limitar explicitamente */
-    /* margin-left: auto; */ /* Para centralizar se tiver max-width menor */
-    /* margin-right: auto; */
+    padding: 10px;
+    background-color: #e9f5f9;
+    border-left: 4px solid #00a9e0;
+    font-style: italic;
 }
-
-.options-group-column button {
-    padding: 10px 12px; /* Ajustar padding */
-    font-size: 0.9em;
-    border: 1px solid #ced4da; /* Borda mais clara */
-    background-color: #fff;
-    color: #495057;
+.opcoes-congruencia button {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin: 5px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
-    text-align: left;
-    width: 100%;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
 }
-
-.options-group-column button:hover {
-    background-color: #e9ecef;
-    border-color: #adb5bd;
+.opcoes-congruencia button:hover {
+    background-color: #005f73;
 }
-
-.options-group-column button.selected {
-    background-color: #007bff; /* Azul padrão bootstrap */
+.feedback {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 50px;
+}
+.feedback.correto {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.feedback.incorreto {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.navegacao-quiz button {
+    background-color: #6c757d;
     color: white;
-    border-color: #0069d9;
-    box-shadow: 0 0 0 0.2rem rgba(38,143,255,.5); /* Sombra de foco */
+    border: none;
+    padding: 10px 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
-
-.submit-button, .next-button {
-    padding: 10px 20px; /* Ajustar padding */
-    font-size: 1em;
-    /* ... manter outras propriedades ... */
-}
-.submit-button:disabled {
-    background-color: #adb5bd; /* Cor para desabilitado */
-    border-color: #adb5bd;
+.navegacao-quiz button:disabled {
+    background-color: #c0c0c0;
     cursor: not-allowed;
 }
 
-
-.dashboard {
-    display: flex;
-    flex-direction: column; /* Padrão para telas menores */
-    align-items: center;
-    gap: 20px;
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-}
-
-.thermometer-section {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Reduzir gap */
-    width: auto;
-    /* min-width: 180px; */ /* Ajustar se necessário */
-}
-
-.thermometer-all-labels {
+/* --- Estilos Parte 2: Jogo de Decisões --- */
+.story-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 160px; /* Reduzir altura se o termômetro for menor */
-    text-align: right;
+    gap: 15px;
 }
-.thermometer-all-labels span {
-    font-size: 0.75em; /* Menor para caber */
-    font-weight: 500; /* Peso normal */
-    color: #495057;
-    line-height: 1.1;
-}
-.thermometer-all-labels span:first-child { font-weight: bold; color: #28a745; } /* Congruente */
-.thermometer-all-labels span:nth-child(2) { font-weight: bold; color: #ffc107; } /* Ambígua */
-.thermometer-all-labels span:last-child { font-weight: bold; color: #dc3545; }  /* Contraditória */
-
-
-.thermometer-container {
-    width: 30px; /* Mais fino */
-    height: 160px; /* Reduzir altura */
-    position: relative;
-}
-
-.thermometer-track {
-    /* ... manter ... */
-    border-radius: 15px; /* Ajustar */
-}
-.thermometer-fill {
-    /* ... manter ... */
-    border-radius: 13px 13px 0 0; /* Ajustar */
-}
-
-.fill-congruent { background-color: #28a745; }
-.fill-ambiguous { background-color: #ffc107; }
-.fill-contradictory { background-color: #dc3545; }
-.fill-neutral-default { background-color: #ced4da; }
-
-
-.result-display {
+#story-text {
     padding: 15px;
-    border-radius: 8px;
-    /* min-width: 250px; */ /* Remover min-width para flexibilidade */
-    text-align: left; /* Alinhar à esquerda para melhor leitura */
-    border-width: 1px; /* Borda mais fina */
-    flex-grow: 1; /* Permitir que cresça */
-    width: 100%; /* Ocupar largura disponível no modo coluna */
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    font-size: 1.1em;
+    line-height: 1.7;
 }
-.result-display:not(.result-neutral-default) {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+.choices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsivo */
+    gap: 10px;
 }
-
-#result-title {
+.choices-grid button {
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: left;
+    font-size: 0.95rem;
+    min-height: 60px; /* Para alinhar botões com texto diferente */
+}
+.choices-grid button:hover {
+    background-color: #264653;
+}
+.story-feedback {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ffeeba;
+}
+.story-feedback h4 {
     margin-top: 0;
-    margin-bottom: 8px;
-    font-size: 1.25em;
+    margin-bottom: 5px;
 }
-#result-description {
-    margin-bottom: 0;
-    font-size: 0.95em;
-    line-height: 1.5;
-}
-
-.result-congruent {
-    background-color: #d4edda; border-color: #c3e6cb; color: #155724;
-}
-.result-ambiguous {
-    background-color: #fff3cd; border-color: #ffeeba; color: #856404;
-}
-.result-contradictory {
-    background-color: #f8d7da; border-color: #f5c6cb; color: #721c24;
-}
-.result-neutral-default {
-    background-color: #e9ecef; border-color: #ced4da; color: #495057;
-}
-
-.app-footer {
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #dee2e6;
-    font-size: 0.85em;
-    color: #6c757d;
-    text-align: center;
+.progress-bar-container {
     width: 100%;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+.progress-bar {
+    height: 25px;
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 5px 0 0 5px; /* Arredonda apenas à esquerda se não for 100% */
+    transition: width 0.5s ease-in-out;
+}
+#reiniciar-jogo {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+#reiniciar-jogo:hover {
+    background-color: #c82333;
 }
 
-/* Responsividade para o dashboard */
-@media (min-width: 768px) { /* Telas médias e grandes */
-    .dashboard {
-        flex-direction: row; /* Dashboard ao lado */
-        align-items: flex-start;
-        gap: 25px;
-    }
-    .thermometer-section {
-        /* Ajustes para quando está ao lado */
-        /* margin-right: 15px; */ /* Se precisar de mais espaço */
-        flex-shrink: 0; /* Impede que o termômetro encolha demais */
-    }
-    .result-display {
-        width: auto; /* Deixa o flex-grow cuidar */
-    }
+
+/* --- Estilos Parte 3: Infográfico Criativo --- */
+.interactive-body {
+    position: relative;
+    width: 200px; /* Ajuste conforme necessário */
+    height: 300px; /* Ajuste conforme necessário */
+    margin: 20px auto;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 180"><ellipse cx="50" cy="15" rx="12" ry="12" fill="%23ddd"/><rect x="40" y="27" width="20" height="40" fill="%23ddd"/><polygon points="40,67 30,110 40,110 40,67" fill="%23ddd" /><polygon points="60,67 70,110 60,110 60,67" fill="%23ddd" /><rect x="42" y="105" width="16" height="40" fill="%23ddd" /><!-- Pernas simplificadas --><rect x="42" y="145" width="7" height="10" fill="%23bbb" /><rect x="51" y="145" width="7" height="10" fill="%23bbb" /></svg>'); /* Placeholder SVG body */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #ccc; /* Para visualização */
+}
+
+.body-part {
+    position: absolute;
+    background-color: rgba(0, 119, 182, 0.6);
+    color: white;
+    padding: 5px;
+    border-radius: 50%; /* Deixa mais organico */
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #005f73;
+}
+.body-part:hover {
+    background-color: rgba(0, 59, 92, 0.8);
+    transform: scale(1.1);
+}
+
+.info-popup {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Para sobrepor outros elementos */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 450px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    z-index: 1000;
+    border-top: 5px solid #0077b6;
+}
+.info-popup h4 {
+    margin-top: 0;
+    color: #0077b6;
+}
+.info-popup p {
+    margin-bottom: 20px;
+}
+#close-popup {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+}
+#close-popup:hover {
+    background-color: #5a6268;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 30px;
 }
