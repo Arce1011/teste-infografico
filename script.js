@@ -1,154 +1,164 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const verbalSelect = document.getElementById('verbal-phrase');
-    const nonVerbalSelect = document.getElementById('non-verbal-package');
+    // Elementos do DOM
+    const verbalStatementEl = document.getElementById('verbal-statement');
+    const nonVerbalBehaviorEl = document.getElementById('non-verbal-behavior');
+    const userOptionsContainer = document.getElementById('user-options');
+    const submitAnalysisButton = document.getElementById('submit-analysis');
+    const nextScenarioButton = document.getElementById('next-scenario');
+
     const thermometerFill = document.getElementById('thermometer-fill');
-    const resultTitle = document.getElementById('result-title');
-    const resultDescription = document.getElementById('result-description');
+    const resultTitleEl = document.getElementById('result-title');
+    const resultDescriptionEl = document.getElementById('result-description');
     const resultDisplay = document.getElementById('result-display');
 
-    // data-intent nas opções verbais:
-    // positive-assertive, open-collaborative, positive-appreciative,
-    // assertive-confident, hesitant-uncertain, receptive-neutral, determined-positive
+    let currentScenario;
+    let scenarios = [];
+    let currentScenarioIndex = 0;
+    let userAnswer = null;
 
-    const nonVerbalPackages = [
+    // BANCO DE CENÁRIOS
+    // Cada cenário tem:
+    // - verbal: A frase dita
+    // - nonVerbal: O comportamento não verbal
+    // - correctAnswer: 'congruent', 'ambiguous', 'contradictory' (A análise correta)
+    // - explanation: Por que essa é a análise correta
+    // - thermometerValue: O valor para o termômetro (0-100)
+    scenarios = [
         {
-            id: 'nv-confident-open',
-            text: 'Tom firme e claro, contato visual direto e amigável, postura ereta e aberta, gestos congruentes, sorriso genuíno.',
-            baseValue: 95,
-            impactType: 'strongly-reinforces-positive' // Reforça fortemente positividade e confiança
+            verbal: "Estou muito feliz com os resultados deste trimestre!",
+            nonVerbal: "Diz isso com um sorriso largo, tom de voz entusiasmado, olhando diretamente para a equipe e gesticulando abertamente.",
+            correctAnswer: 'congruent',
+            explanation: "Perfeito! A linguagem corporal e o tom de voz entusiasmados reforçam a mensagem verbal de felicidade, transmitindo alta credibilidade e sinceridade.",
+            thermometerValue: 95
         },
         {
-            id: 'nv-attentive-receptive',
-            text: 'Tom de voz calmo e neutro, escuta ativa (acenar com a cabeça), contato visual regular, postura relaxada e receptiva.',
-            baseValue: 70,
-            impactType: 'reinforces-neutral-open' // Reforça neutralidade, abertura, receptividade
+            verbal: "Sim, sua sugestão é interessante, vamos considerar.",
+            nonVerbal: "Fala em tom monótono, sem contato visual, olhando para o computador e mexendo distraidamente em uma caneta.",
+            correctAnswer: 'contradictory',
+            explanation: "Atenção! Apesar das palavras de consideração, o não verbal (tom monótono, falta de contato visual, distração) contradiz fortemente a mensagem. Isso sugere desinteresse ou que a sugestão não será levada a sério.",
+            thermometerValue: 20
         },
         {
-            id: 'nv-hesitant-distracted',
-            text: 'Tom de voz baixo ou hesitante, olhar desviado ou para baixo, ombros curvados, tiques nervosos (mexer as mãos).',
-            baseValue: 30,
-            impactType: 'signals-uncertainty-low-confidence' // Sinaliza incerteza, baixa confiança
+            verbal: "Não se preocupe, o projeto está totalmente sob controle.",
+            nonVerbal: "Diz com a voz um pouco trêmula, engolindo em seco e evitando olhar diretamente para o chefe.",
+            correctAnswer: 'contradictory',
+            explanation: "Sinais de alerta! As palavras tentam transmitir segurança, mas o não verbal (voz trêmula, engolir em seco, evitação de olhar) indica nervosismo e falta de confiança, minando a credibilidade da afirmação.",
+            thermometerValue: 30
         },
         {
-            id: 'nv-closed-tense-defensive',
-            text: 'Braços cruzados firmemente, maxilar tenso, tom de voz cortante ou defensivo, olhar fixo e desafiador ou evitação de contato.',
-            baseValue: 15,
-            impactType: 'signals-disagreement-resistance' // Sinaliza discordância, resistência, fechamento
+            verbal: "Estou aberto a discutir novas abordagens para este problema.",
+            nonVerbal: "Mantém os braços cruzados, maxilar tenso e olha para o interlocutor com uma expressão cética.",
+            correctAnswer: 'contradictory',
+            explanation: "Cuidado! A frase verbal sugere abertura, mas a postura defensiva (braços cruzados, maxilar tenso) e a expressão cética comunicam o oposto. A mensagem se torna confusa e pouco crível.",
+            thermometerValue: 15
         },
         {
-            id: 'nv-sarcastic-dismissive-bored',
-            text: 'Tom de voz sarcástico ou monótono, revirar de olhos, bocejos disfarçados, sorriso debochado, postura desleixada.',
-            baseValue: 5,
-            impactType: 'strongly-contradicts-undermines' // Contradiz fortemente, mina a mensagem, desrespeitoso
+            verbal: "Entendo sua preocupação e quero ajudar a resolver.",
+            nonVerbal: "Fala em tom calmo, mantém contato visual empático, inclina-se levemente para frente e usa gestos que demonstram atenção.",
+            correctAnswer: 'congruent',
+            explanation: "Excelente! A comunicação não verbal (tom calmo, contato visual, postura atenta) está em total harmonia com a mensagem verbal de empatia e disposição para ajudar. Isso constrói confiança.",
+            thermometerValue: 90
         },
         {
-            id: 'nv-anxious-avoidant',
-            text: 'Voz trêmula, dificuldade em manter contato visual, rubor, inquietação excessiva, postura encolhida.',
-            baseValue: 20,
-            impactType: 'signals-anxiety-discomfort' // Sinaliza ansiedade, desconforto, falta de preparo
+            verbal: "Este feedback é muito importante para mim.",
+            nonVerbal: "Responde rapidamente, quase interrompendo, com um leve revirar de olhos e um sorriso forçado.",
+            correctAnswer: 'contradictory',
+            explanation: "Alerta de sarcasmo! O revirar de olhos e o sorriso forçado contradizem a afirmação de que o feedback é importante. Isso pode ser percebido como desdém ou falsidade.",
+            thermometerValue: 10
+        },
+        {
+            verbal: "Preciso de um pouco mais de tempo para finalizar esta tarefa.",
+            nonVerbal: "Diz olhando para baixo, com tom de voz baixo e ombros ligeiramente curvados.",
+            correctAnswer: 'congruent', // Congruente na hesitação/pedido
+            explanation: "Coerente. A linguagem corporal (olhar para baixo, tom baixo, ombros curvados) é congruente com um pedido que pode envolver alguma dificuldade ou receio. A mensagem é clara, embora possa não transmitir proatividade.",
+            thermometerValue: 50 // Não é super positivo, mas é congruente
+        },
+        {
+            verbal: "Claro, pode contar comigo para essa apresentação!",
+            nonVerbal: "Afirma com entusiasmo, mas depois coça a nuca e desvia o olhar rapidamente.",
+            correctAnswer: 'ambiguous',
+            explanation: "Sinais mistos! O entusiasmo inicial é positivo, mas coçar a nuca e desviar o olhar podem indicar alguma reserva, dúvida ou desconforto não expresso verbalmente. Gera uma leve ambiguidade.",
+            thermometerValue: 65
         }
+        // Adicione mais cenários aqui!
     ];
 
-    nonVerbalPackages.forEach(pkg => {
-        const option = document.createElement('option');
-        option.value = pkg.id;
-        option.textContent = pkg.text;
-        nonVerbalSelect.appendChild(option);
-    });
+    function shuffleArray(array) { // Para embaralhar cenários
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
-    function updateDashboard() {
-        const selectedVerbalOption = verbalSelect.options[verbalSelect.selectedIndex];
-        const verbalIntent = selectedVerbalOption.dataset.intent;
-        const verbalText = selectedVerbalOption.text;
-        const selectedNonVerbalId = nonVerbalSelect.value;
 
-        if (!selectedNonVerbalId) {
+    function loadScenario(index) {
+        if (index >= scenarios.length) {
+            // Fim dos cenários
+            verbalStatementEl.textContent = "Todos os cenários foram apresentados!";
+            nonVerbalBehaviorEl.textContent = "Parabéns por praticar!";
+            userOptionsContainer.style.display = 'none';
+            submitAnalysisButton.style.display = 'none';
+            resultDisplay.className = 'result-display result-neutral-default';
+            resultTitleEl.textContent = "Fim da Análise";
+            resultDescriptionEl.textContent = "Você completou todos os cenários. Esperamos que tenha sido uma experiência de aprendizado valiosa!";
             thermometerFill.style.height = '0%';
             thermometerFill.className = 'thermometer-fill fill-neutral-default';
-            resultDisplay.className = 'result-display result-neutral-default';
-            resultTitle.textContent = 'Aguardando sua Análise...';
-            resultDescription.textContent = 'Combine uma frase verbal com um comportamento não verbal para ver o "termômetro" da sua comunicação em ação.';
+            nextScenarioButton.style.display = 'none';
             return;
         }
 
-        const nvPackage = nonVerbalPackages.find(pkg => pkg.id === selectedNonVerbalId);
-        let congruenceLevel = 'ambiguous'; // Default
-        let thermometerHeight = nvPackage.baseValue;
-        let title = "";
-        let analysis = "";
+        currentScenario = scenarios[index];
+        verbalStatementEl.textContent = currentScenario.verbal;
+        nonVerbalBehaviorEl.textContent = currentScenario.nonVerbal;
 
-        // Lógica de Congruência Mais Detalhada
-        if (verbalIntent.includes('positive') || verbalIntent.includes('assertive') || verbalIntent.includes('determined')) {
-            if (nvPackage.impactType === 'strongly-reinforces-positive') {
-                congruenceLevel = 'congruent';
-                title = "Comunicação Poderosa e Coerente!";
-                analysis = "Sua mensagem verbal positiva/assertiva é perfeitamente amplificada pelo seu não verbal. Isso transmite máxima confiança, clareza e credibilidade. Excelente!";
-                thermometerHeight = Math.min(100, nvPackage.baseValue + 5);
-            } else if (nvPackage.impactType === 'reinforces-neutral-open') {
-                congruenceLevel = 'congruent'; // Ainda congruente, mas menos intenso
-                title = "Comunicação Clara e Receptiva";
-                analysis = "Seu não verbal apoia sua mensagem de forma calma e aberta. A mensagem é bem recebida, embora possa não ter o mesmo 'punch' de um não verbal mais explicitamente confiante.";
-                thermometerHeight = nvPackage.baseValue;
-            } else if (nvPackage.impactType.includes('uncertainty') || nvPackage.impactType.includes('anxiety')) {
-                congruenceLevel = 'contradictory';
-                title = "Sinais Mistos: Confiança Minada";
-                analysis = "Apesar das palavras positivas/assertivas, seu não verbal transmite incerteza ou ansiedade. Isso gera dúvida sobre sua real convicção e pode diminuir o impacto da sua mensagem.";
-                thermometerHeight = nvPackage.baseValue - 10;
-            } else if (nvPackage.impactType.includes('disagreement') || nvPackage.impactType.includes('undermines')) {
-                congruenceLevel = 'contradictory';
-                title = "Forte Contradição: Mensagem Anulada!";
-                analysis = "Seu não verbal hostil, defensivo ou desdenhoso destrói completamente a credibilidade da sua mensagem verbal positiva/assertiva. Isso pode ser percebido como falsidade ou sarcasmo.";
-                thermometerHeight = Math.max(0, nvPackage.baseValue - 20);
-            }
-        } else if (verbalIntent.includes('open') || verbalIntent.includes('receptive')) {
-            if (nvPackage.impactType === 'strongly-reinforces-positive' || nvPackage.impactType === 'reinforces-neutral-open') {
-                congruenceLevel = 'congruent';
-                title = "Abertura Genuína e Convidativa";
-                analysis = "Seu não verbal demonstra claramente sua receptividade e abertura para colaboração ou feedback. Isso cria um ambiente positivo e construtivo.";
-            } else if (nvPackage.impactType.includes('uncertainty') || nvPackage.impactType.includes('anxiety')) {
-                congruenceLevel = 'ambiguous';
-                title = "Abertura Tímida ou Insegura?";
-                analysis = "Você diz estar aberto(a), mas seu não verbal sugere desconforto ou hesitação. As pessoas podem questionar o quão genuína é sua abertura ou se sentir receosas em contribuir.";
-            } else if (nvPackage.impactType.includes('disagreement') || nvPackage.impactType.includes('undermines')) {
-                congruenceLevel = 'contradictory';
-                title = "Falsa Abertura: Barreira Não Verbal";
-                analysis = "Suas palavras convidam à interação, mas seu não verbal cria uma barreira (defensivo, desinteressado). Isso é confuso e desencorajador para os outros.";
-            }
-        } else if (verbalIntent.includes('hesitant') || verbalIntent.includes('uncertain')) {
-            if (nvPackage.impactType.includes('uncertainty') || nvPackage.impactType.includes('anxiety')) {
-                congruenceLevel = 'congruent';
-                title = "Incerteza Expressa com Coerência";
-                analysis = "Tanto suas palavras quanto seu não verbal comunicam sua hesitação ou incerteza. Embora não inspire confiança em uma solução, a mensagem é clara sobre seu estado atual.";
-                thermometerHeight = Math.max(10, nvPackage.baseValue); // Não é negativo ser congruente na incerteza
-            } else if (nvPackage.impactType === 'strongly-reinforces-positive') {
-                congruenceLevel = 'ambiguous';
-                title = "Confusão: Palavras Hesitantes, Postura Confiante";
-                analysis = "Você diz não ter certeza, mas seu não verbal é forte e confiante. Isso é intrigante. Você está minimizando sua confiança, sendo falsamente modesto, ou há algo mais não dito?";
-            } else if (nvPackage.impactType === 'reinforces-neutral-open') {
-                congruenceLevel = 'ambiguous';
-                title = "Hesitação com Nuances";
-                analysis = "Sua incerteza verbal é acompanhada por um não verbal calmo/receptivo. Pode indicar que você está ponderando ou aberto a ajuda, mas a falta de convicção é notável.";
-            } else if (nvPackage.impactType.includes('disagreement') || nvPackage.impactType.includes('undermines')) {
-                congruenceLevel = 'contradictory';
-                title = "Negatividade Além da Incerteza";
-                analysis = "Além da hesitação verbal, seu não verbal parece defensivo ou hostil. Isso sugere que a incerteza pode estar mascarando descontentamento ou resistência, tornando a comunicação difícil.";
-            }
-        } else { // Fallback genérico
-            congruenceLevel = 'ambiguous';
-            title = "Combinação Peculiar";
-            analysis = "A interação entre esta frase verbal e este comportamento não verbal cria um resultado particular que merece reflexão sobre a clareza e o impacto desejado.";
-        }
-
-
-        thermometerFill.style.height = `${Math.max(0, Math.min(100, thermometerHeight))}%`;
-        thermometerFill.className = `thermometer-fill fill-${congruenceLevel}`;
-
-        resultDisplay.className = `result-display result-${congruenceLevel}`;
-        resultTitle.textContent = title;
-        resultDescription.textContent = `Frase Escolhida: "${verbalText}"\nComportamento Não Verbal: "${nvPackage.text.substring(0, 80)}..."\n\nAnálise do Impacto: ${analysis}`;
+        // Resetar estado
+        userAnswer = null;
+        document.querySelectorAll('.options-group button').forEach(btn => btn.classList.remove('selected'));
+        submitAnalysisButton.disabled = true;
+        resultDisplay.className = 'result-display result-neutral-default';
+        resultTitleEl.textContent = 'Aguardando sua Análise...';
+        resultDescriptionEl.textContent = 'Analise o cenário acima e envie sua resposta.';
+        thermometerFill.style.height = '0%';
+        thermometerFill.className = 'thermometer-fill fill-neutral-default';
+        userOptionsContainer.style.display = 'flex';
+        submitAnalysisButton.style.display = 'inline-block';
+        nextScenarioButton.style.display = 'none';
     }
 
-    verbalSelect.addEventListener('change', updateDashboard);
-    nonVerbalSelect.addEventListener('change', updateDashboard);
-    updateDashboard();
+    userOptionsContainer.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            document.querySelectorAll('.options-group button').forEach(btn => btn.classList.remove('selected'));
+            e.target.classList.add('selected');
+            userAnswer = e.target.dataset.answer;
+            submitAnalysisButton.disabled = false;
+        }
+    });
+
+    submitAnalysisButton.addEventListener('click', () => {
+        if (!userAnswer) return;
+
+        const isCorrect = userAnswer === currentScenario.correctAnswer;
+        let feedbackText = isCorrect ? "<span class='feedback-correct'>Correto!</span>" : "<span class='feedback-incorrect'>Incorreto.</span>";
+
+        resultTitleEl.innerHTML = `${feedbackText} A análise correta é: ${currentScenario.correctAnswer.charAt(0).toUpperCase() + currentScenario.correctAnswer.slice(1)}`;
+        resultDescriptionEl.textContent = currentScenario.explanation;
+
+        // Define a classe de resultado com base na resposta correta, não na do usuário
+        resultDisplay.className = `result-display result-${currentScenario.correctAnswer}`;
+        thermometerFill.style.height = `${currentScenario.thermometerValue}%`;
+        thermometerFill.className = `thermometer-fill fill-${currentScenario.correctAnswer}`;
+
+        submitAnalysisButton.style.display = 'none';
+        userOptionsContainer.style.display = 'none'; // Esconde opções após análise
+        nextScenarioButton.style.display = 'inline-block';
+    });
+
+    nextScenarioButton.addEventListener('click', () => {
+        currentScenarioIndex++;
+        loadScenario(currentScenarioIndex);
+    });
+
+    // Inicialização
+    shuffleArray(scenarios); // Embaralha os cenários para variedade
+    loadScenario(currentScenarioIndex);
 });

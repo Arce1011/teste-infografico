@@ -3,47 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Termômetro de Impacto da Comunicação</title>
+    <title>Analisador de Congruência na Comunicação</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Termômetro de Impacto da Comunicação</h1>
-            <p class="subtitle">Descubra como sua linguagem corporal e tom de voz podem transformar sua mensagem.</p>
+            <h1>Analisador de Congruência na Comunicação</h1>
+            <p class="subtitle">Teste sua habilidade em identificar a coerência entre o que é dito e como é dito.</p>
         </header>
 
-        <p class="intro">No ambiente de trabalho, a forma como você se comunica não verbalmente é tão crucial quanto as palavras que você usa. Selecione uma frase e um "pacote não verbal" para ver o impacto!</p>
-
-        <div class="controls">
-            <div class="control-group">
-                <label for="verbal-phrase">1. Escolha uma Frase Verbal Comum:</label>
-                <select id="verbal-phrase">
-                    <option value="entendi" data-intent="positive-assertive">Sim, entendi o projeto e estou pronto(a).</option>
-                    <option value="sugestoes" data-intent="open-collaborative">Estou muito aberto(a) a novas sugestões e ideias.</option>
-                    <option value="gostei-ideia" data-intent="positive-appreciative">Gostei muito da sua ideia, parece promissora!</option>
-                    <option value="prazo" data-intent="assertive-confident">Acredito que conseguiremos cumprir o prazo estabelecido.</option>
-                    <option value="nao-sei" data-intent="hesitant-uncertain">Sinceramente, não tenho certeza sobre como proceder com isso.</option>
-                    <option value="feedback" data-intent="receptive-neutral">Agradeço o feedback, vou considerar seus pontos.</option>
-                    <option value="desafio" data-intent="determined-positive">Este é um desafio, mas estou confiante na nossa capacidade.</option>
-                </select>
+        <div class="scenario-section">
+            <h2>Cenário de Comunicação:</h2>
+            <div id="scenario-display" class="scenario-box">
+                <p><strong>Frase Verbal:</strong> <span id="verbal-statement">Carregando...</span></p>
+                <p><strong>Comportamento Não Verbal:</strong> <span id="non-verbal-behavior">Carregando...</span></p>
             </div>
+        </div>
 
-            <div class="control-group">
-                <label for="non-verbal-package">2. Como você se Comporta Não Verbalmente?</label>
-                <select id="non-verbal-package">
-                    <option value="">-- Selecione um Comportamento Não Verbal --</option>
-                    {/* Opções preenchidas pelo JS */}
-                </select>
+        <div class="user-analysis-section">
+            <h3>Qual sua Análise?</h3>
+            <p>Como você classifica a congruência e credibilidade desta combinação?</p>
+            <div id="user-options" class="options-group">
+                {/* Opções de resposta serão inseridas pelo JS ou podem ser fixas */}
+                <button data-answer="congruent">Congruente (Alta Credibilidade)</button>
+                <button data-answer="ambiguous">Ambígua (Credibilidade Duvidosa)</button>
+                <button data-answer="contradictory">Contraditória (Baixa Credibilidade)</button>
             </div>
+            <button id="submit-analysis" class="submit-button">Analisar e Ver Resultado</button>
         </div>
 
         <div class="dashboard">
             <div class="thermometer-section">
                 <div class="thermometer-all-labels">
-                    <span>Congruente<br/>(Alta Credibilidade)</span>
-                    <span>Neutra<br/>(Ambígua)</span>
-                    <span>Confusa<br/>(Baixa Credibilidade)</span>
+                    <span>Congruente</span>
+                    <span>Ambígua</span>
+                    <span>Contraditória</span>
                 </div>
                 <div class="thermometer-container">
                     <div class="thermometer-track">
@@ -53,13 +48,14 @@
             </div>
             <div id="result-display" class="result-display result-neutral-default">
                 <h2 id="result-title">Aguardando sua Análise...</h2>
-                <p id="result-description">Combine uma frase verbal com um comportamento não verbal para ver o "termômetro" da sua comunicação em ação.</p>
+                <p id="result-description">Analise o cenário acima e envie sua resposta.</p>
             </div>
         </div>
+        <button id="next-scenario" class="next-button" style="display:none;">Próximo Cenário</button>
     </div>
 
     <footer class="app-footer">
-        <p>© 2023 Demonstração Interativa. Este é um exemplo simplificado para ilustrar o conceito.</p>
+        <p>© 2023 Ferramenta Interativa de Comunicação. Aprenda e pratique!</p>
     </footer>
 
     <script src="script.js"></script>
