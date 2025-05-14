@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; /* Alterado para min-height para evitar cortes em telas pequenas */
+    margin: 0;
+    background-color: #f4f4f4;
+    text-align: center; /* Centraliza o texto dentro do container */
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#mensagemArea {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 1.1em;
+    color: green;
+    min-height: 1.5em; /* Para evitar que o layout pule quando a mensagem aparece */
+}
