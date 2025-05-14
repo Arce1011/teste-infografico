@@ -23,7 +23,7 @@
 
         <aside class="canvas-sidebar">
             <div class="fact-card você-sabia glass-effect" data-animate-on-scroll>
-                <h3><i class="fas fa-lightbulb icon"></i>Você Sabia?</h3>
+                <h3><i class="fas fa-lightbulb icon" aria-hidden="true"></i>Você Sabia?</h3>
                 <div class="pie-chart-container">
                     <svg viewBox="0 0 100 100" class="pie-chart">
                         <circle cx="50" cy="50" r="45" fill="transparent" stroke="#555e68" stroke-width="10"/>
@@ -37,7 +37,7 @@
 
             <div id="congruencia-quiz" class="interactive-module quiz-module glass-effect" data-animate-on-scroll>
                 <div class="module-header">
-                    <h4><i class="fas fa-sync-alt icon"></i>Análise de Congruência</h4>
+                    <h4><i class="fas fa-sync-alt icon" aria-hidden="true"></i>Análise de Congruência</h4>
                     <span id="quiz-progress" class="module-progress-indicator">1/4</span>
                 </div>
                 <div class="congruencia-explanation">
@@ -60,7 +60,7 @@
 
         <main class="canvas-main-content">
             <section id="desafio-jorge" class="interactive-module story-module glass-effect" data-animate-on-scroll>
-                <h3><i class="fas fa-comments icon"></i>Evitando Ruídos: O Desafio Interpessoal</h3>
+                <h3><i class="fas fa-comments icon" aria-hidden="true"></i>Evitando Ruídos: O Desafio Interpessoal</h3>
                 <p class="story-intro">Em reuniões e interações, a falta de atenção à comunicação não verbal gera conflitos. Ajude a equipe a navegar por estas situações:</p>
                 <div class="story-container">
                     <div id="story-text">Carregando cenário...</div>
@@ -72,102 +72,242 @@
                         <div class="progress-bar-container"><div id="assertividade-bar" class="progress-bar-fill">50%</div></div>
                         <p id="game-end-feedback"></p>
                     </div>
-                    <button id="reiniciar-jogo" class="modern-button danger" style="display:none;">Tentar Novamente</button>
+                    <button id="reiniciar-jogo" class="modern-button danger hidden">Tentar Novamente</button>
                 </div>
             </section>
 
             <section id="checklist-pre-reuniao" class="interactive-module checklist-module glass-effect" data-animate-on-scroll>
-                <h3><i class="fas fa-clipboard-check icon"></i>Checklist: Clareza Não Verbal</h3>
+                <h3><i class="fas fa-clipboard-check icon" aria-hidden="true"></i>Checklist: Clareza Não Verbal</h3>
                 <div class="checklist-progress-container">
-                    <div class="checklist-progress-bar">
-                        <div class="checklist-progress-fill"></div>
-                    </div>
+                    <div class="checklist-progress-bar"><div class="checklist-progress-fill"></div></div>
                     <span class="checklist-progress-text">0/6</span>
                 </div>
                 <ul class="checklist">
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Postura ereta e aberta</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Respiração calma e profunda</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Contato visual equilibrado</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Sorriso genuíno (contextual)</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Expressão facial congruente</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Gestos naturais e mãos visíveis</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Postura ereta e aberta</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Respiração calma e profunda</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Contato visual equilibrado</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Sorriso genuíno (contextual)</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Expressão facial congruente</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon" aria-hidden="true"></i> Gestos naturais e mãos visíveis</li>
                 </ul>
                 <p class="checklist-tip">Consciência e prática levam à maestria!</p>
+            </section>
+
+             <section class="quotes-slider-block-container glass-effect" data-animate-on-scroll>
+                <h4><i class="fas fa-comment-dots icon" aria-hidden="true"></i>Inspirações</h4>
+                <div class="quotes-slider">
+                    <div class="quote-slide active-quote">
+                        <p class="quote-text">"O aspecto mais importante da comunicação é ouvir o que não foi dito."</p>
+                        <p class="quote-author">- Peter Drucker</p>
+                    </div>
+                    <div class="quote-slide">
+                        <p class="quote-text">"As palavras mais importantes são aquelas que permanecem não ditas."</p>
+                        <p class="quote-author">- Sêneca</p>
+                    </div>
+                    <div class="quote-slide">
+                        <p class="quote-text">"Seu corpo comunica o tempo todo, mesmo quando você não diz uma palavra."</p>
+                        <p class="quote-author">- Amy Cuddy</p>
+                    </div>
+                </div>
+                <div class="quote-nav">
+                    <button class="nav-arrow-button prev-quote" title="Citação Anterior">❮</button>
+                    <button class="nav-arrow-button next-quote" title="Próxima Citação">❯</button>
+                </div>
             </section>
         </main>
 
         <aside class="canvas-right-sidebar">
              <section id="decodificador" class="interactive-module decoder-module glass-effect" data-animate-on-scroll>
-                <h4><i class="fas fa-user-secret icon"></i>Decodificador Corporal</h4>
+                <h4><i class="fas fa-user-secret icon" aria-hidden="true"></i>Decodificador Corporal</h4>
                 <div class="interactive-body-container">
                     <div class="interactive-body">
-                        <svg viewBox="0 0 150 300" class="body-silhouette">
+                         <svg viewBox="0 0 150 300" class="body-silhouette" aria-hidden="true">
                              <defs><linearGradient id="bodyGradientUpdated" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c8d0d8;stop-opacity:1" /><stop offset="100%" style="stop-color:#475c6e;stop-opacity:1" /></linearGradient></defs>
                             <ellipse class="body-shape head-shape" cx="75" cy="35" rx="25" ry="28"/><rect class="body-shape neck-shape" x="65" y="60" width="20" height="15"/><path class="body-shape torso-shape" d="M50,75 Q75,70 100,75 L110,160 Q75,170 40,160 Z"/><path class="body-shape arm-shape" d="M50,80 Q35,100 30,130 L35,135 Q45,105 55,85 Z"/><path class="body-shape arm-shape" d="M100,80 Q115,100 120,130 L115,135 Q105,105 95,85 Z"/><path class="body-shape leg-shape" d="M45,160 L35,280 L55,280 L60,160 Z"/><path class="body-shape leg-shape" d="M105,160 L115,280 L95,280 L90,160 Z"/>
                         </svg>
-                        <button class="body-point" data-area="head" style="top: 11.5%; left: 50%;"></button>
-                        <button class="body-point" data-area="eyes" style="top: 15%; left: 50%;"></button>
-                        <button class="body-point" data-area="shoulders" style="top: 24%; left: 50%;"></button>
-                        <button class="body-point" data-area="torso" style="top: 39%; left: 50%;"></button>
-                        <button class="body-point" data-area="arm_right" style="top: 35%; left: 27%;"></button>
-                        <button class="body-point" data-area="hand_right" style="top: 46%; left: 20%;"></button>
-                        <button class="body-point" data-area="arm_left" style="top: 35%; left: 73%;"></button>
-                        <button class="body-point" data-area="hand_left" style="top: 46%; left: 80%;"></button>
-                        <button class="body-point" data-area="legs" style="top: 73%; left: 50%;"></button>
+                        <button class="body-point" data-area="head" style="top: 11.5%; left: 50%;" aria-label="Informações sobre Cabeça e Rosto"></button>
+                        <button class="body-point" data-area="eyes" style="top: 15%; left: 50%;" aria-label="Informações sobre Olhos"></button>
+                        <button class="body-point" data-area="shoulders" style="top: 24%; left: 50%;" aria-label="Informações sobre Ombros"></button>
+                        <button class="body-point" data-area="torso" style="top: 39%; left: 50%;" aria-label="Informações sobre Torso"></button>
+                        <button class="body-point" data-area="arm_right" style="top: 35%; left: 27%;" aria-label="Informações sobre Braço Direito"></button>
+                        <button class="body-point" data-area="hand_right" style="top: 46%; left: 20%;" aria-label="Informações sobre Mão Direita"></button>
+                        <button class="body-point" data-area="arm_left" style="top: 35%; left: 73%;" aria-label="Informações sobre Braço Esquerdo"></button>
+                        <button class="body-point" data-area="hand_left" style="top: 46%; left: 80%;" aria-label="Informações sobre Mão Esquerda"></button>
+                        <button class="body-point" data-area="legs" style="top: 73%; left: 50%;" aria-label="Informações sobre Pernas e Pés"></button>
                     </div>
                 </div>
             </section>
             <div class="fact-card small-fact bottom-fact glass-effect" data-animate-on-scroll>
-                 <i class="fas fa-brain icon fact-icon-small"></i> <!-- Ícone alterado -->
+                 <i class="fas fa-brain icon fact-icon-small" aria-hidden="true"></i>
                 <p>Empresas com alta <strong>inteligência emocional</strong> (que inclui leitura não verbal) tendem a ter melhor desempenho e menor rotatividade.</p>
             </div>
         </aside>
 
-        <section class="canvas-bottom-row ruídos-comunicacao-block glass-effect" data-animate-on-scroll>
-            <h4><i class="fas fa-volume-mute icon"></i>Entendendo os Ruídos na Comunicação</h4>
-            <p>Ruídos são quaisquer interferências que distorcem a mensagem. Na comunicação não verbal, podem ser:</p>
-            <ul>
-                <li><strong>Incongruência:</strong> Linguagem corporal contradizendo a fala.</li>
-                <li><strong>Sinais Mistos:</strong> Expressões faciais que não condizem com o tom de voz.</li>
-                <li><strong>Má Interpretação Cultural:</strong> Gestos com significados diferentes.</li>
-                <li><strong>Distrações Ambientais:</strong> Foco visual ou auditivo em outros elementos.</li>
-            </ul>
-            <p class="tip-ruido"><strong>Dica:</strong> Pratique a escuta ativa e observe o conjunto dos sinais para minimizar ruídos.</p>
-        </section>
-
-        <section class="canvas-bottom-row quotes-slider-block glass-effect" data-animate-on-scroll>
-            <h4><i class="fas fa-comment-dots icon"></i>Inspirações sobre Comunicação</h4>
-            <div class="quotes-slider">
-                <div class="quote-slide active-quote">
-                    <p class="quote-text">"O aspecto mais importante da comunicação é ouvir o que não foi dito."</p>
-                    <p class="quote-author">- Peter Drucker</p>
+        <div class="canvas-bottom-row"> <!-- Container para a linha inferior -->
+            <section class="ruídos-comunicacao-block glass-effect" data-animate-on-scroll>
+                <h4><i class="fas fa-volume-mute icon" aria-hidden="true"></i>Entendendo os Ruídos</h4>
+                <p>Ruídos são interferências que distorcem a mensagem. Clique em cada tipo abaixo para ver exemplos e dicas de como evitá-los:</p>
+                <div class="ruidos-accordion">
+                    <div class="ruido-item">
+                        <button class="ruido-item-header" aria-expanded="false" aria-controls="ruido-content-1">
+                            <strong>Incongruência</strong>
+                            <span class="ruido-toggle-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="ruido-item-content" id="ruido-content-1" hidden>
+                            <p><em>Definição:</em> Linguagem corporal contradizendo a fala.</p>
+                            <p><em>Exemplo:</em> Alguém diz "Estou muito confiante sobre este projeto!" enquanto mexe as mãos nervosamente e evita contato visual.</p>
+                            <p><em>Como evitar:</em> Pratique a autoconsciência. Antes de uma interação importante, alinhe sua intenção com sua postura e expressão.</p>
+                        </div>
+                    </div>
+                    <div class="ruido-item">
+                        <button class="ruido-item-header" aria-expanded="false" aria-controls="ruido-content-2">
+                            <strong>Sinais Mistos</strong>
+                            <span class="ruido-toggle-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="ruido-item-content" id="ruido-content-2" hidden>
+                            <p><em>Definição:</em> Expressões faciais ou tom de voz que não condizem com o conteúdo da mensagem verbal.</p>
+                            <p><em>Exemplo:</em> Dar um feedback positivo com um tom de voz sarcástico ou uma expressão facial de desdém.</p>
+                            <p><em>Como evitar:</em> Certifique-se de que seu tom e suas expressões faciais reforcem, e não contradigam, suas palavras. Peça feedback se não tiver certeza.</p>
+                        </div>
+                    </div>
+                    <div class="ruido-item">
+                        <button class="ruido-item-header" aria-expanded="false" aria-controls="ruido-content-3">
+                            <strong>Má Interpretação Cultural</strong>
+                            <span class="ruido-toggle-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="ruido-item-content" id="ruido-content-3" hidden>
+                            <p><em>Definição:</em> Gestos, posturas ou proximidade física que têm significados diferentes em culturas distintas.</p>
+                            <p><em>Exemplo:</em> O gesto de "OK" (polegar e indicador se tocando) é positivo em algumas culturas, mas ofensivo em outras.</p>
+                            <p><em>Como evitar:</em> Ao interagir com pessoas de diferentes origens culturais, seja observador, evite gestos muito enfáticos e, se possível, informe-se sobre etiqueta cultural básica.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="quote-slide">
-                    <p class="quote-text">"As palavras mais importantes são aquelas que permanecem não ditas."</p>
-                    <p class="quote-author">- Sêneca</p>
-                </div>
-                <div class="quote-slide">
-                    <p class="quote-text">"Seu corpo comunica o tempo todo, mesmo quando você não diz uma palavra."</p>
-                    <p class="quote-author">- Amy Cuddy</p>
-                </div>
-                <!-- Adicione mais citações aqui -->
-            </div>
-            <div class="quote-nav">
-                <button class="nav-arrow-button prev-quote" title="Citação Anterior">❮</button>
-                <button class="nav-arrow-button next-quote" title="Próxima Citação">❯</button>
-            </div>
-        </section>
+                <p class="tip-ruido" style="margin-top: var(--spacing-md);"><strong>Dica Geral:</strong> Na dúvida, pergunte! Melhor esclarecer do que assumir e gerar um mal-entendido.</p>
+            </section>
 
+            <section class="stats-block glass-effect" data-animate-on-scroll>
+                <h4><i class="fas fa-percentage icon" aria-hidden="true"></i>Impacto em Números</h4>
+                <div class="stats-grid">
+                    <div class="stat-item" data-animate-on-scroll>
+                        <div class="stat-value">55%</div><div class="stat-description">Linguagem Corporal</div>
+                    </div>
+                    <div class="stat-item" data-animate-on-scroll>
+                        <div class="stat-value">38%</div><div class="stat-description">Tom de Voz</div>
+                    </div>
+                    <div class="stat-item" data-animate-on-scroll>
+                        <div class="stat-value">7%</div><div class="stat-description">Palavras</div>
+                    </div>
+                </div>
+            </section>
 
-        <div id="decoder-tooltip" class="decoder-tooltip glass-effect">
-            <h4 id="tooltip-title"></h4>
-            <p id="tooltip-text"></p>
+             <section id="consequencias-ruido" class="interactive-module glass-effect" data-animate-on-scroll>
+                <h3><i class="fas fa-exclamation-triangle icon" aria-hidden="true"></i>Consequências dos Ruídos</h3>
+                <p class="module-description">
+                    A presença constante de ruídos na comunicação organizacional pode levar a problemas sérios e cumulativos.
+                </p>
+                <div class="consequencias-grid">
+                    <div class="consequencia-card glass-effect-inner" data-animate-on-scroll>
+                        <div class="consequencia-header">
+                            <i class="fas fa-comments icon-card" aria-hidden="true"></i>
+                            <h4>Desentendimentos Frequentes</h4>
+                        </div>
+                        <p>Mensagens mal interpretadas levam a erros, retrabalho e conflitos interpessoais. A clareza é perdida.</p>
+                    </div>
+                    <div class="consequencia-card glass-effect-inner" data-animate-on-scroll>
+                        <div class="consequencia-header">
+                            <i class="fas fa-cloud-rain icon-card" aria-hidden="true"></i>
+                            <h4>Clima Organizacional Deteriorado</h4>
+                        </div>
+                        <p>A falta de confiança e a comunicação ineficaz geram um ambiente de trabalho tenso e desmotivador.</p>
+                    </div>
+                    <div class="consequencia-card glass-effect-inner" data-animate-on-scroll>
+                        <div class="consequencia-header">
+                            <i class="fas fa-chart-line-down icon-card" aria-hidden="true"></i>
+                            <h4>Queda na Produtividade</h4>
+                        </div>
+                        <p>Tempo é perdido esclarecendo mal-entendidos e refazendo tarefas, impactando resultados.</p>
+                    </div>
+                    <div class="consequencia-card glass-effect-inner" data-animate-on-scroll>
+                        <div class="consequencia-header">
+                            <i class="fas fa-user-slash icon-card" aria-hidden="true"></i>
+                            <h4>Aumento da Rotatividade</h4>
+                        </div>
+                        <p>Um ambiente com comunicação falha contribui para a insatisfação e saída de talentos.</p>
+                    </div>
+                     <div class="consequencia-card glass-effect-inner" data-animate-on-scroll>
+                        <div class="consequencia-header">
+                            <i class="fas fa-bullseye-slash icon-card" aria-hidden="true"></i>
+                            <h4>Decisões Ineficazes</h4>
+                        </div>
+                        <p>Informações distorcidas por ruídos levam a decisões equivocadas, prejudicando a estratégia.</p>
+                    </div>
+                     <div class="consequencia-card glass-effect-inner" data-animate-on-scroll>
+                        <div class="consequencia-header">
+                            <i class="far fa-image icon-card" aria-hidden="true"></i>
+                            <h4>Imagem da Empresa Prejudicada</h4>
+                        </div>
+                        <p>Ruídos na comunicação (interna ou externa) podem manchar a reputação da organização.</p>
+                    </div>
+                </div>
+                <p class="tip-consequencia">
+                    <strong>Prevenção:</strong> Investir em treinamento, promover feedback aberto e cultivar clareza são essenciais.
+                </p>
+            </section>
         </div>
+
+        <div class="canvas-full-width-row"> <!-- Nova linha para a comunicação em ação -->
+             <section id="comunicacao-em-acao" class="interactive-module glass-effect" data-animate-on-scroll>
+                <h3><i class="fas fa-comments-dollar icon" aria-hidden="true"></i>Comunicação em Ação: O Custo dos Ruídos</h3>
+                <p class="module-description">
+                    Veja como uma mensagem pode ser distorcida pela adição de ruídos.
+                    Clique nos botões abaixo para adicionar até 3 tipos de ruído à comunicação e observe o resultado.
+                </p>
+                <div class="comunicacao-container">
+                    <div id="historia-comunicacao-original" style="display:none;">
+                        Em uma reunião de planejamento estratégico, a líder de equipe, Sofia, apresentou claramente os objetivos do novo projeto para o próximo trimestre. Seu tom de voz era confiante e calmo, sua postura era aberta e receptiva, e ela manteve contato visual equilibrado com todos os membros da equipe, respondendo às perguntas com paciência e encorajamento. A equipe saiu da reunião sentindo-se motivada, informada e alinhada com as metas.
+                    </div>
+                    <div id="historia-comunicacao-display" class="historia-texto glass-effect-inner" aria-live="polite">
+                        Carregando comunicação...
+                    </div>
+                </div>
+                <div class="ruido-seletores-container">
+                    <h4>Selecione os Ruídos (Máx. 3):</h4>
+                    <div class="ruido-botoes-grid">
+                        <button class="modern-button ruido-toggle-button" data-ruido-id="incongruencia">
+                            <i class="fas fa-exchange-alt icon-btn" aria-hidden="true"></i>Incongruência
+                        </button>
+                        <button class="modern-button ruido-toggle-button" data-ruido-id="sinais_mistos">
+                            <i class="fas fa-meh-rolling-eyes icon-btn" aria-hidden="true"></i>Sinais Mistos
+                        </button>
+                        <button class="modern-button ruido-toggle-button" data-ruido-id="cultural">
+                            <i class="fas fa-globe icon-btn" aria-hidden="true"></i>Interp. Cultural
+                        </button>
+                        <button class="modern-button ruido-toggle-button" data-ruido-id="ambiente">
+                            <i class="fas fa-volume-up icon-btn" aria-hidden="true"></i>Ambiente Ruidoso
+                        </button>
+                        <button class="modern-button ruido-toggle-button" data-ruido-id="preconceito">
+                            <i class="fas fa-user-tag icon-btn" aria-hidden="true"></i>Preconceito
+                        </button>
+                    </div>
+                    <button id="resetar-comunicacao" class="modern-button danger small-btn" style="margin-top: var(--spacing-sm);">
+                         <i class="fas fa-undo icon-btn" aria-hidden="true"></i>Limpar Ruídos
+                    </button>
+                </div>
+            </section>
+        </div>
+
 
         <footer class="canvas-footer">
             <p>Infográfico Interativo CNV | 2024</p>
         </footer>
     </div>
+
+    <!-- Tooltip movido para fora do canvas para evitar problemas de overflow -->
+    <div id="decoder-tooltip" class="decoder-tooltip glass-effect">
+        <h4 id="tooltip-title"></h4>
+        <p id="tooltip-text"></p>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
