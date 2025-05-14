@@ -6,14 +6,11 @@
     <title>Infográfico Interativo: Comunicação Não Verbal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- GARANTIR QUE AS FONTES DESEJADAS ESTÃO AQUI -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- GARANTIR QUE O FONT AWESOME ESTÁ CORRETO E FUNCIONANDO -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ... (Resto do HTML como na última versão fornecida, sem alterações) ... -->
     <div id="page-progress-bar-container">
         <div id="page-progress-bar"></div>
     </div>
@@ -21,6 +18,7 @@
     <div class="infographic-canvas">
         <header class="canvas-header">
             <h1>COMUNICAÇÃO NÃO VERBAL <span class="highlight">NAS ORGANIZAÇÕES</span></h1>
+            <p class="header-subtitle">Desvendando o impacto da linguagem silenciosa para evitar ruídos e fortalecer relações.</p>
         </header>
 
         <aside class="canvas-sidebar">
@@ -34,13 +32,19 @@
                         <text x="50" y="55" text-anchor="middle" class="pie-label">70%+</text>
                     </svg>
                 </div>
-                <p>Mais de 70% da nossa comunicação é <strong>não verbal</strong>.</p>
+                <p>Mais de 70% da nossa comunicação é <strong>não verbal</strong>. Ignorá-la é perder grande parte da mensagem!</p>
             </div>
 
             <div id="congruencia-quiz" class="interactive-module quiz-module glass-effect" data-animate-on-scroll>
-                <h4><i class="fas fa-sync-alt icon"></i>Análise de Congruência</h4>
+                <div class="module-header">
+                    <h4><i class="fas fa-sync-alt icon"></i>Análise de Congruência</h4>
+                    <span id="quiz-progress" class="module-progress-indicator">1/4</span>
+                </div>
+                <div class="congruencia-explanation">
+                    <p><strong>Congruência</strong> é o alinhamento entre sua mensagem verbal (o que você diz) e sua comunicação não verbal (como você diz). Incongruências geram ruídos, desconfiança e mal-entendidos.</p>
+                </div>
                 <div class="quiz-container">
-                    <div id="situacao-texto">Carregando... <span id="quiz-progress"></span></div>
+                    <div id="situacao-texto">Carregando...</div>
                     <div class="opcoes-congruencia">
                         <button class="modern-button" data-resposta="congruente">Congruente</button>
                         <button class="modern-button" data-resposta="nao-congruente">Não Congruente</button>
@@ -52,40 +56,43 @@
                     </nav>
                 </div>
             </div>
-             <div class="fact-card small-fact glass-effect" data-animate-on-scroll>
-                <i class="fas fa-question-circle icon fact-icon-small"></i>
-                <p>Sinais não verbais são frequentemente <strong>mais confiáveis</strong> que palavras quando há contradição.</p>
-            </div>
         </aside>
 
         <main class="canvas-main-content">
             <section id="desafio-jorge" class="interactive-module story-module glass-effect" data-animate-on-scroll>
-                <h3><i class="fas fa-gamepad icon"></i>O Desafio de Jorge</h3>
+                <h3><i class="fas fa-comments icon"></i>Evitando Ruídos: O Desafio Interpessoal</h3>
+                <p class="story-intro">Em reuniões e interações, a falta de atenção à comunicação não verbal gera conflitos. Ajude a equipe a navegar por estas situações:</p>
                 <div class="story-container">
-                    <div id="story-text">Jorge está se preparando...</div>
+                    <div id="story-text">Carregando cenário...</div>
                     <div id="story-choices" class="choices-grid"></div>
                     <div class="story-feedback">
-                        <p id="audience-reaction">Aguardando sua ação...</p>
+                        <p id="audience-reaction">Aguardando sua escolha...</p>
                     </div>
                     <div class="story-metrics">
                         <div class="progress-bar-container"><div id="assertividade-bar" class="progress-bar-fill">50%</div></div>
                         <p id="game-end-feedback"></p>
                     </div>
-                    <button id="reiniciar-jogo" class="modern-button danger" style="display:none;">Reiniciar</button>
+                    <button id="reiniciar-jogo" class="modern-button danger" style="display:none;">Tentar Novamente</button>
                 </div>
             </section>
 
             <section id="checklist-pre-reuniao" class="interactive-module checklist-module glass-effect" data-animate-on-scroll>
-                <h3><i class="fas fa-clipboard-check icon"></i>Checklist Pré-Reunião (60s)</h3>
+                <h3><i class="fas fa-clipboard-check icon"></i>Checklist: Clareza Não Verbal</h3>
+                <div class="checklist-progress-container">
+                    <div class="checklist-progress-bar">
+                        <div class="checklist-progress-fill"></div>
+                    </div>
+                    <span class="checklist-progress-text">0/6</span>
+                </div>
                 <ul class="checklist">
                     <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Postura ereta e aberta</li>
                     <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Respiração calma e profunda</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Alinhamento do olhar (contato visual)</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Sorriso genuíno (se apropriado)</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Expressão facial neutra/positiva</li>
-                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Mãos visíveis, gestos naturais (evitar objetos)</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Contato visual equilibrado</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Sorriso genuíno (contextual)</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Expressão facial congruente</li>
+                    <li data-animate-on-scroll><i class="far fa-circle check-icon"></i> Gestos naturais e mãos visíveis</li>
                 </ul>
-                <p class="checklist-tip">Pratique esses pontos para aumentar sua confiança e impacto!</p>
+                <p class="checklist-tip">Consciência e prática levam à maestria!</p>
             </section>
         </main>
 
@@ -94,7 +101,7 @@
                 <h4><i class="fas fa-user-secret icon"></i>Decodificador Corporal</h4>
                 <div class="interactive-body-container">
                     <div class="interactive-body">
-                         <svg viewBox="0 0 150 300" class="body-silhouette">
+                        <svg viewBox="0 0 150 300" class="body-silhouette">
                              <defs><linearGradient id="bodyGradientUpdated" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c8d0d8;stop-opacity:1" /><stop offset="100%" style="stop-color:#475c6e;stop-opacity:1" /></linearGradient></defs>
                             <ellipse class="body-shape head-shape" cx="75" cy="35" rx="25" ry="28"/><rect class="body-shape neck-shape" x="65" y="60" width="20" height="15"/><path class="body-shape torso-shape" d="M50,75 Q75,70 100,75 L110,160 Q75,170 40,160 Z"/><path class="body-shape arm-shape" d="M50,80 Q35,100 30,130 L35,135 Q45,105 55,85 Z"/><path class="body-shape arm-shape" d="M100,80 Q115,100 120,130 L115,135 Q105,105 95,85 Z"/><path class="body-shape leg-shape" d="M45,160 L35,280 L55,280 L60,160 Z"/><path class="body-shape leg-shape" d="M105,160 L115,280 L95,280 L90,160 Z"/>
                         </svg>
@@ -111,30 +118,44 @@
                 </div>
             </section>
             <div class="fact-card small-fact bottom-fact glass-effect" data-animate-on-scroll>
-                 <i class="fas fa-chart-line icon fact-icon-small"></i>
-                <p>Empresas com alta <strong>inteligência emocional</strong> (que inclui leitura não verbal) têm melhor desempenho.</p>
+                 <i class="fas fa-brain icon fact-icon-small"></i> <!-- Ícone alterado -->
+                <p>Empresas com alta <strong>inteligência emocional</strong> (que inclui leitura não verbal) tendem a ter melhor desempenho e menor rotatividade.</p>
             </div>
         </aside>
 
-        <section class="canvas-bottom-row stats-block glass-effect" data-animate-on-scroll>
-            <h4><i class="fas fa-percentage icon"></i>Estatísticas Relevantes</h4>
-            <div class="stats-grid">
-                <div class="stat-item" data-animate-on-scroll>
-                    <div class="stat-value">55%</div><div class="stat-description">Linguagem Corporal</div>
-                </div>
-                <div class="stat-item" data-animate-on-scroll>
-                    <div class="stat-value">38%</div><div class="stat-description">Tom de Voz</div>
-                </div>
-                <div class="stat-item" data-animate-on-scroll>
-                    <div class="stat-value">7%</div><div class="stat-description">Palavras</div>
-                </div>
-            </div>
+        <section class="canvas-bottom-row ruídos-comunicacao-block glass-effect" data-animate-on-scroll>
+            <h4><i class="fas fa-volume-mute icon"></i>Entendendo os Ruídos na Comunicação</h4>
+            <p>Ruídos são quaisquer interferências que distorcem a mensagem. Na comunicação não verbal, podem ser:</p>
+            <ul>
+                <li><strong>Incongruência:</strong> Linguagem corporal contradizendo a fala.</li>
+                <li><strong>Sinais Mistos:</strong> Expressões faciais que não condizem com o tom de voz.</li>
+                <li><strong>Má Interpretação Cultural:</strong> Gestos com significados diferentes.</li>
+                <li><strong>Distrações Ambientais:</strong> Foco visual ou auditivo em outros elementos.</li>
+            </ul>
+            <p class="tip-ruido"><strong>Dica:</strong> Pratique a escuta ativa e observe o conjunto dos sinais para minimizar ruídos.</p>
         </section>
 
-        <section class="canvas-bottom-row quote-block glass-effect" data-animate-on-scroll>
-            <i class="fas fa-quote-left quote-icon-big"></i>
-            <p class="quote-text">"O aspecto mais importante da comunicação é ouvir o que não foi dito."</p>
-            <p class="quote-author">- Peter Drucker</p>
+        <section class="canvas-bottom-row quotes-slider-block glass-effect" data-animate-on-scroll>
+            <h4><i class="fas fa-comment-dots icon"></i>Inspirações sobre Comunicação</h4>
+            <div class="quotes-slider">
+                <div class="quote-slide active-quote">
+                    <p class="quote-text">"O aspecto mais importante da comunicação é ouvir o que não foi dito."</p>
+                    <p class="quote-author">- Peter Drucker</p>
+                </div>
+                <div class="quote-slide">
+                    <p class="quote-text">"As palavras mais importantes são aquelas que permanecem não ditas."</p>
+                    <p class="quote-author">- Sêneca</p>
+                </div>
+                <div class="quote-slide">
+                    <p class="quote-text">"Seu corpo comunica o tempo todo, mesmo quando você não diz uma palavra."</p>
+                    <p class="quote-author">- Amy Cuddy</p>
+                </div>
+                <!-- Adicione mais citações aqui -->
+            </div>
+            <div class="quote-nav">
+                <button class="nav-arrow-button prev-quote" title="Citação Anterior">❮</button>
+                <button class="nav-arrow-button next-quote" title="Próxima Citação">❯</button>
+            </div>
         </section>
 
 
