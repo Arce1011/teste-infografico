@@ -2,14 +2,14 @@
     --primary-color: #14213d; /* Azul Escuro Profundo */
     --secondary-color: #fca311; /* Laranja Vibrante para acentos */
     --accent-color: #e63946;   /* Vermelho Coral (mantido) */
-    --highlight-bg-base: rgba(255, 255, 255, 0.05); /* Base para glassmorphism */
-    --highlight-bg-hover: rgba(255, 255, 255, 0.1);
-    --text-dark: #000000; /* Preto para contraste com fundos claros/glass */
-    --text-on-dark-bg: #f0f8ff; /* Alice Blue para texto em fundos muito escuros */
-    --text-light-accent: #4a5568; /* Cinza para texto menos importante */
-    --border-glass: rgba(255, 255, 255, 0.18);
-    --shadow-color-light: rgba(0, 0, 0, 0.1);
-    --shadow-color-strong: rgba(0, 0, 0, 0.2);
+    --highlight-bg-base: rgba(255, 255, 255, 0.08); /* Base para glassmorphism - um pouco mais opaco */
+    --highlight-bg-hover: rgba(255, 255, 255, 0.12);
+    --text-dark: #000000; /* Preto para contraste com fundos claros/glass (raramente usado agora) */
+    --text-on-dark-bg: #f0f8ff; /* Alice Blue para texto em fundos muito escuros e painéis glass */
+    --text-light-accent: #bdc3c7; /* Cinza mais claro para texto menos importante nos painéis glass */
+    --border-glass: rgba(255, 255, 255, 0.15); /* Borda um pouco mais visível */
+    --shadow-color-light: rgba(0, 0, 0, 0.15);
+    --shadow-color-strong: rgba(0, 0, 0, 0.25);
 
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Lato', sans-serif;
@@ -20,6 +20,14 @@
     --spacing-xl: 1.75rem;
 }
 
+/* Estilos de foco para acessibilidade */
+*:focus-visible {
+    outline: 3px solid var(--secondary-color); /* Laranja para foco */
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px rgba(252, 163, 17, 0.4);
+}
+*:focus:not(:focus-visible) { outline: none; }
+
 html { scroll-behavior: smooth; box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
 
@@ -27,13 +35,12 @@ body {
     font-family: var(--font-body);
     line-height: 1.65;
     margin: 0;
-    /* Fundo do BODY com gradiente para o glassmorphism ter algo para "borrar" */
-    background: linear-gradient(135deg, #606c88 0%, #3f4c6b 100%);
-    color: var(--text-on-dark-bg); /* Cor padrão do texto para o fundo escuro */
+    background: linear-gradient(135deg, #373B44 0%, #28313B 100%); /* Gradiente de fundo mais escuro e sutil */
+    color: var(--text-on-dark-bg);
     font-size: 15px;
     display: flex;
     justify-content: center;
-    align-items: center; /* Centraliza o canvas verticalmente */
+    align-items: center;
     min-height: 100vh;
     padding: var(--spacing-md);
     overflow-x: hidden;
@@ -41,117 +48,109 @@ body {
 
 .infographic-canvas {
     width: 100%;
-    max-width: 1500px; /* Aumentado para preencher mais */
-    min-height: calc(100vh - var(--spacing-md) * 2 - 2px); /* -2px para a borda */
-    /* Fundo do Canvas - pode ser um gradiente ou cor sólida */
-    background-color: rgba(20, 33, 61, 0.8); /* Um azul escuro translúcido */
-    backdrop-filter: blur(20px); /* Blur mais forte no canvas principal */
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    box-shadow: 0 15px 35px var(--shadow-color-strong);
+    max-width: 1500px;
+    min-height: calc(100vh - var(--spacing-md) * 2 - 2px);
+    background-color: rgba(20, 33, 61, 0.75); /* Azul escuro principal com mais transparência */
+    backdrop-filter: blur(25px); /* Blur ainda mais forte */
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px; /* Mais arredondado */
+    box-shadow: 0 20px 40px var(--shadow-color-strong);
     padding: var(--spacing-lg);
     display: grid;
-    grid-template-columns: 0.9fr 1.6fr 0.9fr;
+    grid-template-columns: 0.85fr 1.7fr 0.85fr; /* Ajuste nas proporções */
     grid-template-rows: auto 1fr auto;
     grid-template-areas:
         "header header header"
         "sidebar main-content right-sidebar"
         "footer footer footer";
     gap: var(--spacing-lg);
-    overflow: hidden;
+    /* overflow: hidden;  Removido para garantir que o popup não seja cortado */
 }
 
-/* Ajustes de Responsividade */
-@media (max-width: 1200px) { /* Ajustar breakpoint */
+@media (max-width: 1200px) {
     .infographic-canvas {
-        grid-template-columns: 1fr 1.3fr;
+        grid-template-columns: 1fr 1.5fr; /* Ajustado */
         grid-template-areas:
             "header header"
             "sidebar main-content"
             "right-sidebar right-sidebar"
             "footer footer";
+        gap: var(--spacing-md);
     }
 }
-@media (max-width: 860px) { /* Ajustar breakpoint */
-    body { align-items: flex-start; padding: 0; } /* Remove centralização vertical */
+@media (max-width: 860px) {
+    body { align-items: flex-start; padding: 0; }
     .infographic-canvas {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         grid-template-areas: "header" "sidebar" "main-content" "right-sidebar" "footer";
-        min-height: 100vh; /* Ocupar toda a altura em mobile */
+        min-height: 100vh;
         border-radius: 0;
         padding: var(--spacing-md);
-        overflow-y: auto;
+        overflow-y: auto; /* Scroll na página inteira em mobile */
     }
 }
-
 
 .canvas-header {
     grid-area: header;
     text-align: center;
     padding-bottom: var(--spacing-md);
-    /* border-bottom: 1px solid var(--border-glass); */ /* Borda sutil */
 }
 .canvas-header h1 {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 4.5vw, 3.2rem); /* Maior */
+    font-size: clamp(2rem, 4.8vw, 3.5rem); /* Levemente aumentado */
     color: var(--text-on-dark-bg);
     margin: 0;
     font-weight: 700;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    text-shadow: 0 3px 6px rgba(0,0,0,0.35);
 }
 .canvas-header h1 .highlight {
     color: var(--secondary-color);
 }
 
-/* Estilo Glassmorphism para os painéis */
 .glass-effect {
     background: var(--highlight-bg-base);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px); /* Blur um pouco mais sutil nos painéis internos */
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-glass);
-    box-shadow: 0 8px 20px var(--shadow-color-light);
-    border-radius: 10px;
+    box-shadow: 0 8px 25px var(--shadow-color-light);
+    border-radius: 12px; /* Bordas mais suaves */
     padding: var(--spacing-md);
-    color: var(--text-on-dark-bg); /* Texto claro nos painéis glass */
+    color: var(--text-on-dark-bg);
+    transition: background 0.3s ease, box-shadow 0.3s ease; /* Adicionado transição */
 }
-.glass-effect:hover { /* Sutil no hover do painel */
+.glass-effect:hover {
     background: var(--highlight-bg-hover);
+    box-shadow: 0 10px 30px var(--shadow-color-light);
 }
 
 .canvas-sidebar, .canvas-main-content, .canvas-right-sidebar {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
-    overflow-y: auto; /* Scroll interno */
-    padding: 5px; /* Pequeno padding para não cortar sombras */
+    overflow-y: auto;
+    padding: 5px; /* Mantido */
+    position: relative; /* Mantido para ancoragem */
 }
-/* Scrollbar estilizado (opcional, funciona em Webkit/Blink) */
+/* ... (Scrollbar estilizado como antes) ... */
 .canvas-sidebar::-webkit-scrollbar,
 .canvas-main-content::-webkit-scrollbar,
-.canvas-right-sidebar::-webkit-scrollbar {
-    width: 8px;
-}
+.canvas-right-sidebar::-webkit-scrollbar { width: 8px; }
 .canvas-sidebar::-webkit-scrollbar-thumb,
 .canvas-main-content::-webkit-scrollbar-thumb,
-.canvas-right-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.2);
-    border-radius: 4px;
-}
+.canvas-right-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 .canvas-sidebar::-webkit-scrollbar-track,
 .canvas-main-content::-webkit-scrollbar-track,
-.canvas-right-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-}
+.canvas-right-sidebar::-webkit-scrollbar-track { background: transparent; }
 
 
 .interactive-module h3, .interactive-module h4, .fact-card h3 {
     font-family: var(--font-heading);
-    color: var(--text-on-dark-bg); /* Ajustado para painéis glass */
+    color: var(--text-on-dark-bg);
     margin-top: 0;
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.1rem; /* Ajustado */
+    margin-bottom: var(--spacing-md); /* Mais espaço */
+    font-size: 1.15rem; /* Um pouco maior */
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -160,135 +159,186 @@ body {
 }
 .interactive-module .icon, .fact-card .icon {
     margin-right: var(--spacing-sm);
-    color: var(--secondary-color); /* Laranja para ícones */
+    color: var(--secondary-color);
     font-size: 1.4em;
 }
 
 .fact-card { text-align: center; }
-.fact-card p { font-size: 0.9rem; margin-bottom: 0; line-height: 1.5; }
-.fact-card strong { color: var(--secondary-color); }
+.fact-card p { font-size: 0.9rem; margin-bottom: 0; line-height: 1.55; color: var(--text-light-accent); }
+.fact-card strong { color: var(--secondary-color); font-weight: 600; }
 
-.pie-chart-container { width: 110px; height: 110px; }
-.pie-chart .pie-label { font-size: 22px; fill: var(--text-on-dark-bg); }
-.pie-chart .pie-slice { stroke: var(--secondary-color); /* Laranja para a fatia */ }
+.pie-chart-container { width: 120px; height: 120px; margin: var(--spacing-sm) auto var(--spacing-md) auto; }
+.pie-chart .pie-label { font-size: 24px; fill: var(--text-on-dark-bg); }
+.pie-chart .pie-slice { stroke: var(--secondary-color); animation: draw-pie 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards; } /* Animação mais suave */
+@keyframes draw-pie { from { stroke-dasharray: 0 283; } to { stroke-dasharray: 204.2 283; } }
 
-.fact-icon-small { width: 32px; height: 32px; }
-.small-fact p { font-size: 0.8rem; }
-
+.fact-icon-small { width: 36px; height: 36px; float: left; margin-right: var(--spacing-sm); margin-top: var(--spacing-xs); }
+.small-fact p { text-align: left; font-size: 0.85rem; line-height: 1.5; color: var(--text-light-accent); }
+.bottom-fact { margin-top: auto; }
 
 /* Botões Modernos */
 .modern-button {
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: calc(var(--spacing-sm) + 2px) calc(var(--spacing-md) + 2px); /* Um pouco mais de padding */
     font-family: var(--font-heading);
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.95rem; /* Um pouco maior */
     color: var(--text-on-dark-bg);
-    background: rgba(255, 255, 255, 0.1); /* Glass */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 10px; /* Mais arredondado */
     cursor: pointer;
-    transition: all 0.2s ease-out;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transição mais elaborada */
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Sombra no texto do botão */
 }
 .modern-button:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 7px 18px rgba(0,0,0,0.18);
+    transform: translateY(-3px);
 }
 .modern-button:active:not(:disabled) {
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-    transform: translateY(0px);
-}
-.modern-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-.modern-button.danger { /* Para o botão reiniciar */
-    background: rgba(230, 57, 70, 0.7); /* Vermelho (accent-color) com glass */
-    border-color: rgba(230, 57, 70, 0.9);
-}
-.modern-button.danger:hover:not(:disabled) {
-    background: rgba(230, 57, 70, 0.85);
-}
-
-.nav-arrow-button { /* Botões de navegação do quiz */
     background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+.modern-button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: none; }
+.modern-button.danger { background: rgba(230, 57, 70, 0.6); border-color: rgba(230, 57, 70, 0.8); }
+.modern-button.danger:hover:not(:disabled) { background: rgba(230, 57, 70, 0.75); }
+
+.nav-arrow-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--text-on-dark-bg);
-    width: 35px; height: 35px;
+    width: 38px; height: 38px; /* Um pouco maior */
     border-radius: 50%;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 3px 7px rgba(0,0,0,0.1);
     transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
-.nav-arrow-button:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.15);
-    transform: scale(1.05);
-}
-.nav-arrow-button:disabled { opacity: 0.4; cursor: not-allowed; }
-
+.nav-arrow-button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.2); transform: scale(1.08); }
+.nav-arrow-button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
 /* Componentes Internos */
-.quiz-container, .story-container { padding: var(--spacing-sm); background: transparent; box-shadow: none; border:none; } /* Remove fundo e sombra duplicados */
+.quiz-container, .story-container { padding: 0; background: transparent; box-shadow: none; border:none; }
 #situacao-texto {
-    background: rgba(0,0,0,0.1); border-left-color: var(--secondary-color);
-    color: var(--text-on-dark-bg); padding: var(--spacing-sm);
+    background: rgba(255,255,255,0.06); border-left: 4px solid var(--secondary-color);
+    color: var(--text-on-dark-bg); padding: var(--spacing-sm); border-radius: 8px;
+    font-size: 0.95rem; /* Ajustado */
 }
 .feedback {
-    background: rgba(0,0,0,0.1); padding: var(--spacing-sm);
+    background: rgba(0,0,0,0.2); padding: var(--spacing-sm);
+    border: 1px solid var(--border-glass); border-radius: 8px;
+    margin-top: var(--spacing-sm); font-size: 0.9rem; /* Ajustado */
+}
+.feedback.correto { background-color: rgba(42, 157, 143, 0.45); color: #e0f2f1; border-color: rgba(42, 157, 143, 0.65); }
+.feedback.correto::before { color: #e0f2f1; }
+.feedback.incorreto { background-color: rgba(230, 57, 70, 0.45); color: #fce7e7; border-color: rgba(230, 57, 70, 0.65); }
+.feedback.incorreto::before { color: #fce7e7; }
+.navegacao-quiz { justify-content: space-between; padding: 0 var(--spacing-xs); /* Espaçar botões de seta */ }
+
+#story-text { background: rgba(255,255,255,0.06); border-left-color: var(--secondary-color); color: var(--text-on-dark-bg); padding: var(--spacing-sm); border-radius: 8px; font-size: 1rem; }
+.story-feedback { background: rgba(252, 163, 17, 0.3); color: var(--text-on-dark-bg); border: 1px solid rgba(252, 163, 17, 0.55); border-radius: 8px; padding: var(--spacing-sm); }
+.progress-bar-container { background-color: rgba(0,0,0,0.3); height: 26px; border-radius: 13px; }
+.progress-bar-fill { /* ID era #assertividade-bar, mas a classe é mais genérica */
+    height: 100%;
+    text-align: center;
+    border-radius: 13px;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease;
+    font-weight: 600; /* Mais destaque na porcentagem */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.4); /* Sombra no texto da barra */
+}
+/* Cores da barra e texto da barra já tratados no JS e CSS anterior */
+
+/* Decodificador */
+.decoder-module .interactive-body-container {
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: var(--spacing-sm);
+}
+.interactive-body {
+    position: relative;
+    width: 170px; height: 340px; /* Um pouco maior para preencher */
+    transform: scale(1); /* Sem escala inicial */
+    transform-origin: center center;
+}
+.body-silhouette {
+    width: 100%; height: 100%;
+    fill: url(#bodyGradientUpdated);
+    stroke: rgba(255,255,255,0.25);
+    stroke-width: 0.6;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3)); /* Sombra no SVG */
+}
+.body-point {
+    position: absolute;
+    width: 28px; height: 28px; /* Ajustado */
+    /* Estilo glass como antes, mas garantir que a cor do texto interno do span seja legível */
+    background: rgba(252, 163, 17, 0.4); /* Pontos com cor laranja glass */
+    border: 1px solid rgba(252, 163, 17, 0.6);
+    color: var(--text-on-dark-bg); /* Cor para o texto do span se for visível */
+}
+.body-point:hover, .body-point:focus-visible {
+    background: rgba(252, 163, 17, 0.6); /* Laranja mais forte no hover */
+}
+.body-point span { /* Tooltip */
+    background-color: var(--primary-color); /* Fundo escuro para tooltip */
+    color: var(--text-on-dark-bg);
+    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Popup */
+.info-popup-overlay {
+    background-color: rgba(0, 0, 0, 0.8); /* Overlay mais escuro */
+    backdrop-filter: blur(5px); /* Leve blur no overlay também */
+    -webkit-backdrop-filter: blur(5px);
+}
+.info-popup {
+    background: rgba(20, 33, 61, 0.9); /* Fundo do popup alinhado com o canvas */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: var(--text-on-dark-bg);
     border: 1px solid var(--border-glass);
+    border-top: 5px solid var(--secondary-color); /* Laranja no topo */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
-.feedback.correto { background-color: rgba(42, 157, 143, 0.3); color: #d1fae5; border-color: rgba(42, 157, 143, 0.5); }
-.feedback.correto::before { color: #d1fae5; }
-.feedback.incorreto { background-color: rgba(230, 57, 70, 0.3); color: #fee2e2; border-color: rgba(230, 57, 70, 0.5); }
-.feedback.incorreto::before { color: #fee2e2; }
-.navegacao-quiz { justify-content: space-around; }
-
-
-#story-text { background: rgba(0,0,0,0.1); border-left-color: var(--secondary-color); color: var(--text-on-dark-bg); padding: var(--spacing-sm);}
-.choices-grid button { /* Já estilizado por .modern-button se a classe for adicionada via JS */ }
-.story-feedback { background: rgba(252, 163, 17, 0.2); color: var(--text-on-dark-bg); border: 1px solid rgba(252, 163, 17, 0.4); }
-.story-feedback p { margin-bottom: 0; }
-.progress-bar-container { background-color: rgba(0,0,0,0.2); height: 24px; }
-#assertividade-bar.progress-bar-fill { /* Renomeado para evitar conflito de nome com o Bootstrap se usado */
-    background-color: var(--secondary-color); /* Laranja como cor base da barra */
-    line-height: 24px; font-size: 0.85rem; color: var(--primary-color);
+.info-popup h4 {
+    color: var(--secondary-color);
 }
-#game-end-feedback { color: var(--text-on-dark-bg); }
-
-.decoder-module .interactive-body-container { min-height: 300px; }
-.interactive-body { width: 160px; height: 320px; transform: scale(0.95); }
-.body-point { /* Já tem um bom estilo glass */ }
-
-.info-popup.glass-effect { /* Para o popup */
-    color: var(--text-dark); /* Texto escuro dentro do popup claro */
-    border-top-color: var(--secondary-color);
+.close-popup-button {
+    color: var(--text-on-dark-bg);
 }
-.info-popup.glass-effect h4 { color: var(--primary-color); }
-
+.close-popup-button:hover, .close-popup-button:focus-visible {
+    color: var(--secondary-color);
+}
 
 .canvas-footer {
     grid-area: footer; text-align: center; padding-top: var(--spacing-md);
     border-top: 1px solid var(--border-glass);
-    font-size: 0.85rem; color: rgba(255,255,255,0.7);
+    font-size: 0.85rem; color: rgba(255,255,255,0.6);
+    margin-top: var(--spacing-sm); /* Espaço antes do footer */
 }
 
-/* Animações de Entrada */
 [data-animate-on-scroll] {
     opacity: 0;
-    transform: translateY(30px) scale(0.98);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transform: translateY(25px) scale(0.98);
+    transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 [data-animate-on-scroll].is-visible {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
-/* ... (delays podem ser mantidos ou ajustados) ... */
