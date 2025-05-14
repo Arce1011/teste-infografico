@@ -16,16 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizProgressEl = document.getElementById('quiz-progress');
 
     function atualizarQuizProgress() {
-        if (quizProgressEl) { // Verifica se o elemento existe
-            quizProgressEl.textContent = `Situação ${situacaoAtualIndex + 1} de ${situacoesCongruencia.length}`;
+        if (quizProgressEl) {
+            quizProgressEl.textContent = `${situacaoAtualIndex + 1}/${situacoesCongruencia.length}`;
         }
     }
 
     function carregarSituacao(index) {
-        if (!situacaoTextoEl) return; // Sai se os elementos do quiz não existirem
+        if (!situacaoTextoEl || !feedbackCongruenciaEl || !opcoesCongruenciaBotoes.length || !btnAnterior || !btnProxima) return;
 
         const situacao = situacoesCongruencia[index];
-        situacaoTextoEl.firstChild.textContent = situacao.texto + ' '; // Atualiza apenas o texto, mantém o span
+        situacaoTextoEl.firstChild.textContent = situacao.texto + ' ';
         feedbackCongruenciaEl.innerHTML = '';
         feedbackCongruenciaEl.className = 'feedback';
         opcoesCongruenciaBotoes.forEach(btn => btn.disabled = false);
@@ -50,23 +50,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-    }
-    if (btnProxima) {
         btnProxima.addEventListener('click', () => {
             if (situacaoAtualIndex < situacoesCongruencia.length - 1) {
                 situacaoAtualIndex++;
                 carregarSituacao(situacaoAtualIndex);
             }
         });
-    }
-    if (btnAnterior) {
         btnAnterior.addEventListener('click', () => {
             if (situacaoAtualIndex > 0) {
                 situacaoAtualIndex--;
                 carregarSituacao(situacaoAtualIndex);
             }
         });
+        // Carregar primeira situação do quiz se elementos existem
+        carregarSituacao(situacaoAtualIndex);
     }
+
 
     // --- PARTE 2: JOGO DE DECISÕES ---
     const storyTextEl = document.getElementById('story-text');
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameEndFeedbackEl = document.getElementById('game-end-feedback');
 
     let assertividadeScore = 50;
-    const storyNodes = [
+    const storyNodes = [ /* ... (mesmos storyNodes da versão anterior) ... */
         { id: 0, text: "Jorge está se preparando. Ao entrar na sala de reunião para apresentar aos acionistas, ele...", choices: [
             { text: "Entra com passos firmes, olhando para os acionistas e cumprimentando com um leve aceno de cabeça.", effect: 15, reaction: "Os acionistas parecem receptivos e atentos.", nextNode: 1 },
             { text: "Entra apressado, olhando para suas anotações, sem fazer contato visual.", effect: -10, reaction: "Alguns acionistas trocam olhares, parecendo um pouco desconfortáveis.", nextNode: 1 },
@@ -108,20 +107,21 @@ document.addEventListener('DOMContentLoaded', () => {
         assertividadeScore = Math.max(0, Math.min(100, assertividadeScore));
         assertividadeBarEl.style.width = assertividadeScore + '%';
         assertividadeBarEl.textContent = assertividadeScore + '%';
-        if (assertividadeScore < 30) assertividadeBarEl.style.backgroundColor = 'var(--danger-color)';
-        else if (assertividadeScore < 70) assertividadeBarEl.style.backgroundColor = 'var(--warning-color)';
-        else assertividadeBarEl.style.backgroundColor = 'var(--accent-color)'; // Usando accent no lugar de success
+        if (assertividadeScore < 30) assertividadeBarEl.style.backgroundColor = 'var(--accent-color)'; // Vermelho
+        else if (assertividadeScore < 70) assertividadeBarEl.style.backgroundColor = '#fca311'; // Laranja (warning)
+        else assertividadeBarEl.style.backgroundColor = '#2a9d8f'; // Verde (success)
     }
 
-    function getGameEndFeedback(score) {
+    function getGameEndFeedback(score) { /* ... (mesma função) ... */
         if (score >= 85) return "Excelente! Sua comunicação não verbal foi muito assertiva e inspirou confiança.";
         if (score >= 60) return "Bom trabalho! Você demonstrou boa assertividade, mas há espaço para refinar alguns sinais.";
         if (score >= 30) return "Sua comunicação teve momentos de assertividade, mas alguns sinais não verbais podem ter prejudicado sua mensagem. Continue praticando!";
         return "Parece que sua comunicação não verbal não foi muito eficaz desta vez. Revise os conceitos e tente novamente para melhorar sua assertividade.";
     }
 
+
     function loadStoryNode(nodeId) {
-        if (!storyTextEl) return; // Sai se os elementos do jogo não existirem
+        if (!storyTextEl || !storyChoicesEl || !audienceReactionEl || !gameEndFeedbackEl || !reiniciarJogoBtn) return;
 
         const node = storyNodes.find(n => n.id === nodeId);
         if (!node) return;
@@ -129,16 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
         currentNodeId = nodeId;
         storyTextEl.textContent = node.text;
         storyChoicesEl.innerHTML = '';
-        if(gameEndFeedbackEl) gameEndFeedbackEl.textContent = '';
+        gameEndFeedbackEl.textContent = '';
 
         if (node.choices.length === 0) {
             audienceReactionEl.textContent = `Sua pontuação final de assertividade foi ${assertividadeScore}%.`;
-            if(gameEndFeedbackEl) gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore);
+            gameEndFeedbackEl.textContent = getGameEndFeedback(assertividadeScore);
             reiniciarJogoBtn.style.display = 'block';
             reiniciarJogoBtn.focus();
             return;
         }
-        if(reiniciarJogoBtn) reiniciarJogoBtn.style.display = 'none';
+        reiniciarJogoBtn.style.display = 'none';
 
         node.choices.forEach(choice => {
             const button = document.createElement('button');
@@ -160,9 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if(audienceReactionEl) audienceReactionEl.textContent = "Aguardando sua primeira ação...";
             loadStoryNode(0);
         });
+         // Carregar primeiro nó do jogo se elementos existem
+        loadStoryNode(currentNodeId);
+        updateAssertividade(0); // Inicializa a barra
     }
 
-    // --- PARTE 3: INFOGRÁFICO CRIATIVO (DECODIFICADOR) ---
+
+    // --- PARTE 3: DECODIFICADOR ---
     const bodyPoints = document.querySelectorAll('.body-point');
     const popupOverlay = document.getElementById('info-popup-overlay');
     const popup = document.getElementById('body-info-popup');
@@ -171,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closePopupButton = document.getElementById('close-popup');
     let lastFocusedElement = null;
 
-    const bodyInfo = {
+    const bodyInfo = { /* ... (mesmo bodyInfo da versão anterior, com mãos corrigidas) ... */
         head: { title: "Cabeça e Rosto", text: "Expressões faciais são cruciais. Sorrisos genuínos conectam, testas franzidas indicam preocupação ou desacordo. Acenos de cabeça podem significar concordância ou encorajamento." },
         eyes: { title: "Olhos", text: "Contato visual firme (sem encarar) transmite confiança e interesse. Desviar o olhar pode indicar insegurança, desonestidade ou desinteresse. Piscar excessivamente pode denotar nervosismo." },
         shoulders: { title: "Ombros", text: "Ombros eretos e relaxados indicam confiança e abertura. Ombros curvados ou tensos podem sinalizar submissão, estresse ou desânimo." },
@@ -183,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         legs: { title: "Pernas e Pés", text: "Pernas descruzadas e pés apontados para o interlocutor geralmente indicam abertura. Pernas cruzadas ou pés apontando para a saída podem sinalizar desconforto ou desejo de encerrar a conversa." }
     };
 
-    function openPopup(area) {
+    function openPopup(area) { /* ... (mesma função) ... */
         if (bodyInfo[area] && popupOverlay && popupTitle && popupText && closePopupButton) { // Verifica elementos
             lastFocusedElement = document.activeElement;
             popupTitle.textContent = bodyInfo[area].title;
@@ -192,8 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             closePopupButton.focus();
         }
     }
-
-    function closePopup() {
+    function closePopup() { /* ... (mesma função) ... */
         if (popupOverlay) {
             popupOverlay.classList.remove('visible');
             if (lastFocusedElement) {
@@ -202,63 +205,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    if (bodyPoints.length > 0) {
+    if (bodyPoints.length > 0 && closePopupButton && popupOverlay) {
         bodyPoints.forEach(point => {
             point.addEventListener('click', () => {
                 const area = point.dataset.area;
                 openPopup(area);
             });
         });
-    }
-    if (closePopupButton) {
         closePopupButton.addEventListener('click', closePopup);
-    }
-    if (popupOverlay) {
         popupOverlay.addEventListener('click', (event) => {
             if (event.target === popupOverlay) {
                 closePopup();
             }
         });
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && popupOverlay.classList.contains('visible')) {
+                closePopup();
+            }
+        });
     }
-    window.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && popupOverlay && popupOverlay.classList.contains('visible')) {
-            closePopup();
-        }
-    });
 
     // --- ANIMAÇÃO DE ROLAGEM ---
     const animatedElements = document.querySelectorAll('[data-animate-on-scroll]');
-    const flowBlocksToAnimate = document.querySelectorAll('.flow-block'); // Animar todos os flow-blocks
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15 // Um pouco mais cedo para flow-blocks maiores
-    };
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
 
     const scrollObserver = new IntersectionObserver((entries, observerInstance) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                if (!entry.target.hasAttribute('data-animate-on-scroll')) { // Para os flow-blocks, animar uma vez
-                    observerInstance.unobserve(entry.target);
-                } else if (entry.target.closest('.stats-grid .stat-item')) { // Elementos dentro do grid, podem reanimar se quiser
-                    // observerInstance.unobserve(entry.target); // Descomente para animar uma vez os stat-items
-                }
+                observerInstance.unobserve(entry.target); // Animar apenas uma vez
             }
         });
     }, observerOptions);
 
     animatedElements.forEach(el => scrollObserver.observe(el));
-    flowBlocksToAnimate.forEach(el => scrollObserver.observe(el)); // Observar também os flow-blocks
-
-
-    // Inicializar as partes que existem
-    if (document.getElementById('situacao-texto')) {
-        carregarSituacao(situacaoAtualIndex);
-    }
-    if (document.getElementById('story-text')) {
-        loadStoryNode(currentNodeId);
-        updateAssertividade(0);
-    }
 });

@@ -3,172 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infográfico Dinâmico: Comunicação Não Verbal</title>
+    <title>Infográfico Interativo: Comunicação Não Verbal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Lato:wght@300;400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="top-nav">
-        <a href="#intro" class="nav-link">Introdução</a>
-        <a href="#congruencia-quiz" class="nav-link">Congruência</a>
-        <a href="#desafio-jorge" class="nav-link">O Desafio</a>
-        <a href="#decodificador" class="nav-link">Decodificador</a>
-        <a href="#estatisticas" class="nav-link">Dados</a>
-    </nav>
+    <!-- A navegação superior pode ser removida se quisermos uma experiência de página única total -->
+    <!-- <nav class="top-nav"> ... </nav> -->
 
-    <header class="main-header">
-        <div class="header-content">
-            <h1>O Poder Silencioso da Comunicação Não Verbal</h1>
-            <p>Descubra como gestos, posturas e expressões moldam percepções e resultados nas organizações.</p>
-        </div>
-    </header>
+    <div class="infographic-canvas">
+        <header class="canvas-header">
+            <h1>COMUNICAÇÃO NÃO VERBAL <span class="highlight">NAS ORGANIZAÇÕES</span></h1>
+        </header>
 
-    <main class="infographic-flow">
-
-        <section id="intro" class="flow-block intro-block">
-            <div class="content-wrapper">
-                <h2><span class="icon">💬</span> Por que a Comunicação Não Verbal é Crucial?</h2>
-                <p>Estima-se que mais de <strong>70% da nossa comunicação</strong> seja não verbal. No ambiente corporativo, essa linguagem silenciosa pode determinar o sucesso de negociações, a eficácia da liderança e a dinâmica das equipes.</p>
-                <div class="stat-highlight" data-animate-on-scroll>
-                    <span class="stat-number">93%</span>
-                    <span class="stat-text">do impacto de uma mensagem é atribuído à linguagem corporal e tom de voz.</span>
+        <aside class="canvas-sidebar">
+            <div class="fact-card você-sabia" data-animate-on-scroll>
+                <h3>Você Sabia?</h3>
+                <div class="pie-chart-container">
+                    <!-- SVG do Gráfico de Pizza (Exemplo Simples) -->
+                    <svg viewBox="0 0 100 100" class="pie-chart">
+                        <circle cx="50" cy="50" r="45" fill="transparent" stroke="#e0e0e0" stroke-width="10"/>
+                        <!-- Fatias (exemplo: 70%) -->
+                        <circle cx="50" cy="50" r="45" fill="transparent" stroke="var(--accent-color)" stroke-width="10"
+                                stroke-dasharray="204.2 283" stroke-dashoffset="0" class="pie-slice" />
+                                <!-- 283 é a circunferência (2*PI*45), 204.2 é 70% de 283 -->
+                        <text x="50" y="55" text-anchor="middle" class="pie-label">70%+</text>
+                    </svg>
                 </div>
+                <p>Mais de 70% da nossa comunicação é <strong>não verbal</strong>.</p>
             </div>
-        </section>
 
-        <section id="congruencia-quiz" class="flow-block quiz-block">
-            <div class="content-wrapper">
-                <h2><span class="icon">🔄</span> Teste sua Percepção: Análise de Congruência</h2>
-                <p>A congruência entre o que é dito e como é dito é fundamental. Avalie as situações:</p>
+            <div id="congruencia-quiz" class="interactive-module quiz-module" data-animate-on-scroll>
+                <h4><span class="icon">🔄</span>Congruência</h4>
                 <div class="quiz-container">
-                    <div id="situacao-texto">Carregando situação... <span id="quiz-progress" class="quiz-progress-indicator"></span></div>
+                    <div id="situacao-texto">Carregando... <span id="quiz-progress"></span></div>
                     <div class="opcoes-congruencia">
                         <button data-resposta="congruente">Congruente</button>
                         <button data-resposta="nao-congruente">Não Congruente</button>
                     </div>
                     <div id="feedback-congruencia" class="feedback" aria-live="polite"></div>
-                    <nav class="navegacao-quiz" aria-label="Navegação do Quiz">
-                        <button id="anterior-situacao" disabled>❮ Anterior</button>
-                        <button id="proxima-situacao">Próxima ❯</button>
+                    <nav class="navegacao-quiz">
+                        <button id="anterior-situacao" disabled>❮</button>
+                        <button id="proxima-situacao">❯</button>
                     </nav>
                 </div>
             </div>
-        </section>
-
-        <section class="flow-block fact-block" data-animate-on-scroll>
-            <div class="content-wrapper narrow-content">
-                <img src="https://via.placeholder.com/100x100/219ebc/ffffff?Text=ÍconeApretoDeMão" alt="Ícone aperto de mão" class="fact-icon">
-                <h3>O Primeiro Contato</h3>
-                <p>Um aperto de mão firme e contato visual adequado podem estabelecer confiança em menos de <strong>7 segundos</strong>.</p>
+             <div class="fact-card small-fact" data-animate-on-scroll>
+                <img src="https://img.icons8.com/fluency/48/000000/questions.png" alt="Ícone Dúvida" class="fact-icon-small">
+                <p>Sinais não verbais são frequentemente mais confiáveis que palavras quando há contradição.</p>
             </div>
-        </section>
+        </aside>
 
-        <section id="desafio-jorge" class="flow-block story-block">
-            <div class="content-wrapper">
-                <h2><span class="icon">🎯</span> O Desafio de Jorge: Uma Apresentação Decisiva</h2>
-                <p>Suas escolhas não verbais guiarão Jorge. Veja o impacto de cada decisão.</p>
+        <main class="canvas-main-content">
+            <section id="desafio-jorge" class="interactive-module story-module" data-animate-on-scroll>
+                <h3><span class="icon">🎯</span>APRESENTAÇÃO: O Desafio de Jorge</h3>
                 <div class="story-container">
                     <div id="story-text">Jorge está se preparando...</div>
                     <div id="story-choices" class="choices-grid"></div>
                     <div class="story-feedback">
-                        <h4>Reação dos Acionistas:</h4>
-                        <p id="audience-reaction">Aguardando sua primeira ação...</p>
+                        <p id="audience-reaction">Aguardando sua ação...</p>
                     </div>
                     <div class="story-metrics">
-                        <h4>Assertividade da Comunicação:</h4>
-                        <div class="progress-bar-container"><div id="assertividade-bar" class="progress-bar" style="width: 50%;">50%</div></div>
-                        <p id="game-end-feedback" class="game-end-message"></p>
+                        <div class="progress-bar-container"><div id="assertividade-bar">50%</div></div>
+                        <p id="game-end-feedback"></p>
                     </div>
-                    <button id="reiniciar-jogo" style="display:none;">Reiniciar Jogo</button>
+                    <button id="reiniciar-jogo" style="display:none;">Reiniciar</button>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
 
-        <section class="flow-block fact-block mirrored-fact" data-animate-on-scroll>
-             <div class="content-wrapper narrow-content">
-                <img src="https://via.placeholder.com/100x100/fca311/ffffff?Text=ÍconePostura" alt="Ícone postura confiante" class="fact-icon">
-                <h3>Postura de Poder</h3>
-                <p>Adotar uma "postura de poder" (aberta e expansiva) por apenas 2 minutos pode aumentar os níveis de testosterona (confiança) e diminuir o cortisol (estresse).</p>
-            </div>
-        </section>
-
-        <section id="decodificador" class="flow-block decoder-block">
-            <div class="content-wrapper">
-                <h2><span class="icon">🧍</span> Decodificador Não Verbal Interativo</h2>
-                <p>Clique nos pontos da silhueta para explorar os significados:</p>
+        <aside class="canvas-right-sidebar">
+             <section id="decodificador" class="interactive-module decoder-module" data-animate-on-scroll>
+                <h4><span class="icon">🧍</span>Decodificador</h4>
                 <div class="interactive-body-container">
                     <div class="interactive-body">
-                        <svg viewBox="0 0 150 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="body-silhouette">
-                             <defs>
-                                <linearGradient id="bodyGradientUpdated" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#c8d0d8;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#475c6e;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <ellipse class="body-shape head-shape" cx="75" cy="35" rx="25" ry="28"/>
-                            <rect class="body-shape neck-shape" x="65" y="60" width="20" height="15"/>
-                            <path class="body-shape torso-shape" d="M50,75 Q75,70 100,75 L110,160 Q75,170 40,160 Z"/>
-                            <path class="body-shape arm-shape" d="M50,80 Q35,100 30,130 L35,135 Q45,105 55,85 Z"/>
-                            <path class="body-shape arm-shape" d="M100,80 Q115,100 120,130 L115,135 Q105,105 95,85 Z"/>
-                            <path class="body-shape leg-shape" d="M45,160 L35,280 L55,280 L60,160 Z"/>
-                            <path class="body-shape leg-shape" d="M105,160 L115,280 L95,280 L90,160 Z"/>
+                         <svg viewBox="0 0 150 300" class="body-silhouette">
+                             <defs><linearGradient id="bodyGradientUpdated" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c8d0d8;stop-opacity:1" /><stop offset="100%" style="stop-color:#475c6e;stop-opacity:1" /></linearGradient></defs>
+                            <ellipse class="body-shape head-shape" cx="75" cy="35" rx="25" ry="28"/><rect class="body-shape neck-shape" x="65" y="60" width="20" height="15"/><path class="body-shape torso-shape" d="M50,75 Q75,70 100,75 L110,160 Q75,170 40,160 Z"/><path class="body-shape arm-shape" d="M50,80 Q35,100 30,130 L35,135 Q45,105 55,85 Z"/><path class="body-shape arm-shape" d="M100,80 Q115,100 120,130 L115,135 Q105,105 95,85 Z"/><path class="body-shape leg-shape" d="M45,160 L35,280 L55,280 L60,160 Z"/><path class="body-shape leg-shape" d="M105,160 L115,280 L95,280 L90,160 Z"/>
                         </svg>
-                        <!-- Pontos Corrigidos (perspectiva do personagem) -->
-                        <button class="body-point" data-area="head" style="top: 11.5%; left: 50%;" aria-label="Informações sobre Cabeça e Rosto"><span>Cabeça</span></button>
-                        <button class="body-point" data-area="eyes" style="top: 15%; left: 50%;" aria-label="Informações sobre Olhos"><span>Olhos</span></button>
-                        <button class="body-point" data-area="shoulders" style="top: 24%; left: 50%;" aria-label="Informações sobre Ombros"><span>Ombros</span></button>
-                        <button class="body-point" data-area="torso" style="top: 39%; left: 50%;" aria-label="Informações sobre Torso"><span>Torso</span></button>
-                        <!-- Mão Direita do personagem (nossa esquerda) -->
-                        <button class="body-point" data-area="arm_right" style="top: 35%; left: 27%;" aria-label="Informações sobre Braço Direito"><span>Braço D.</span></button>
-                        <button class="body-point" data-area="hand_right" style="top: 46%; left: 20%;" aria-label="Informações sobre Mão Direita"><span>Mão D.</span></button>
-                        <!-- Mão Esquerda do personagem (nossa direita) -->
-                        <button class="body-point" data-area="arm_left" style="top: 35%; left: 73%;" aria-label="Informações sobre Braço Esquerdo"><span>Braço E.</span></button>
-                        <button class="body-point" data-area="hand_left" style="top: 46%; left: 80%;" aria-label="Informações sobre Mão Esquerda"><span>Mão E.</span></button>
-                        <button class="body-point" data-area="legs" style="top: 73%; left: 50%;" aria-label="Informações sobre Pernas e Pés"><span>Pernas</span></button>
+                        <button class="body-point" data-area="head" style="top: 11.5%; left: 50%;"><span>Cabeça</span></button>
+                        <button class="body-point" data-area="eyes" style="top: 15%; left: 50%;"><span>Olhos</span></button>
+                        <button class="body-point" data-area="shoulders" style="top: 24%; left: 50%;"><span>Ombros</span></button>
+                        <button class="body-point" data-area="torso" style="top: 39%; left: 50%;"><span>Torso</span></button>
+                        <button class="body-point" data-area="arm_right" style="top: 35%; left: 27%;"><span>Braço D.</span></button>
+                        <button class="body-point" data-area="hand_right" style="top: 46%; left: 20%;"><span>Mão D.</span></button>
+                        <button class="body-point" data-area="arm_left" style="top: 35%; left: 73%;"><span>Braço E.</span></button>
+                        <button class="body-point" data-area="hand_left" style="top: 46%; left: 80%;"><span>Mão E.</span></button>
+                        <button class="body-point" data-area="legs" style="top: 73%; left: 50%;"><span>Pernas</span></button>
                     </div>
                 </div>
+            </section>
+            <div class="fact-card small-fact bottom-fact" data-animate-on-scroll>
+                <img src="https://img.icons8.com/fluency/48/000000/graph-report.png" alt="Ícone Estatística" class="fact-icon-small">
+                <p>Empresas com alta inteligência emocional (que inclui leitura não verbal) têm melhor desempenho.</p>
             </div>
-            <div id="info-popup-overlay" class="info-popup-overlay" tabindex="-1">
-                <div id="body-info-popup" class="info-popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
-                    <button id="close-popup" class="close-popup-button" aria-label="Fechar Pop-up">×</button>
-                    <h4 id="popup-title"></h4>
-                    <p id="popup-text"></p>
-                </div>
+        </aside>
+
+
+        <div id="info-popup-overlay" class="info-popup-overlay">
+            <div id="body-info-popup" class="info-popup">
+                <button id="close-popup" class="close-popup-button">×</button>
+                <h4 id="popup-title"></h4>
+                <p id="popup-text"></p>
             </div>
-        </section>
+        </div>
 
-        <section id="estatisticas" class="flow-block stats-summary-block">
-            <div class="content-wrapper">
-                <h2><span class="icon">📊</span> Comunicação Não Verbal em Números</h2>
-                <div class="stats-grid">
-                    <div class="stat-item" data-animate-on-scroll>
-                        <div class="stat-value">55%</div>
-                        <div class="stat-description">Impacto da Linguagem Corporal (postura, gestos, expressões faciais)</div>
-                    </div>
-                    <div class="stat-item" data-animate-on-scroll>
-                        <div class="stat-value">38%</div>
-                        <div class="stat-description">Impacto do Tom de Voz (velocidade, entonação, volume)</div>
-                    </div>
-                    <div class="stat-item" data-animate-on-scroll>
-                        <div class="stat-value">7%</div>
-                        <div class="stat-description">Impacto das Palavras (conteúdo verbal)</div>
-                    </div>
-                    <div class="stat-item" data-animate-on-scroll>
-                        <div class="stat-value">60-80%</div>
-                        <div class="stat-description">Das impressões em entrevistas de emprego são formadas por sinais não verbais.</div>
-                    </div>
-                </div>
-                 <p class="conclusion-text">Dominar a comunicação não verbal não é apenas uma habilidade, é uma <strong>vantagem estratégica</strong> no mundo corporativo.</p>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>© 2024 Infográfico Dinâmico - Comunicação Não Verbal nas Organizações.</p>
-    </footer>
+        <footer class="canvas-footer">
+            <p>Infográfico Interativo CNV | 2024</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
